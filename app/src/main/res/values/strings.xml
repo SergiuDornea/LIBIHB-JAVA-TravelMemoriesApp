@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">LIBIHB-JAVA</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="life_is_better_in_hiking_boots_logo">Life is better in hiking boots logo</string>
 </resources>
