@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.fragment.splash;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.sergiu.libihb_java.R;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashScreen extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,5 @@ public class SplashScreen extends Fragment {
                 .build();
         //  navigate to the next screen after the delay
         findNavController(view).navigate(R.id.action_splashScreen_to_mainFragment, null, navOptions);
-
     }
 }
