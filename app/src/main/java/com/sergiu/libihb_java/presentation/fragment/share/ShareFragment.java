@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.presentation.fragment.main;
+package com.sergiu.libihb_java.presentation.fragment.share;
 
 import android.os.Bundle;
 
@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 
 import com.sergiu.libihb_java.R;
 
-public class MainFragment extends Fragment {
+public class ShareFragment extends Fragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +20,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_share, container, false);
     }
 }

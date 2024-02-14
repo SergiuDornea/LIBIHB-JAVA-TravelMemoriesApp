@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.main.MainFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.home.HomeFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_home" />
 </navigation>
