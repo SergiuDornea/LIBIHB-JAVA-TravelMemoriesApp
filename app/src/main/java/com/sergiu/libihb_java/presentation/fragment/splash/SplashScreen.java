@@ -49,6 +49,6 @@ public class SplashScreen extends Fragment {
                 .setPopExitAnim(R.anim.slide_out_to_right)
                 .build();
         //  navigate to the next screen after the delay
-        findNavController(view).navigate(R.id.action_splashScreen_to_mainFragment, null, navOptions);
+        findNavController(view).navigate(R.id.action_splashScreen_to_logInFragment, null, navOptions);
     }
 }
