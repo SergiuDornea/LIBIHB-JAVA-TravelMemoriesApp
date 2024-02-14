@@ -1,14 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_theme_light_background"
     tools:context=".presentation.fragment.log_in.LogInFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="LOG IN" />
+    <ImageView
+        android:id="@+id/logo_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:background="@color/md_theme_light_background"
+        android:contentDescription="@string/life_is_better_in_hiking_boots_logo"
+        android:src="@drawable/ic_logo_transparent2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.23"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/log_in_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/login"
+        android:textColor="@color/md_theme_light_primary"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_image_view" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email_input_text_field"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="48dp"
+        android:drawableStart="@drawable/ic_hiking_person"
+        android:hint="@string/email"
+        android:maxLines="1"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/md_theme_light_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_text_view"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password_input_text_field"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        android:drawableStart="@drawable/ic_password"
+        android:hint="@string/password"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:textColorHint="@color/md_theme_light_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_input_text_field"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <Button
+        android:id="@+id/log_in_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="152dp"
+        android:text="@string/login_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_button">
+
+        <TextView
+            android:id="@+id/dont_have_an_acc_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/don_t_have_an_account"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/log_in_button" />
+
+        <TextView
+            android:id="@+id/register_here_link_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/register_here"
+            android:textColor="@color/link_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/log_in_button" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

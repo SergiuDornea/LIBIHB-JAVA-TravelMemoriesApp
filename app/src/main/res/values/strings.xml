@@ -4,4 +4,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="life_is_better_in_hiking_boots_logo">Life is better in hiking boots logo</string>
     <string name="life_is_better_in_hiking_boots">LIFE IS BETTER IN HIKING BOOTS</string>
+    <string name="home">Home</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login:</string>
+    <string name="login_button">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register_here"> Register here</string>
+    <string name="register">Register:</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="log_in_here">Log in here</string>
+    <string name="phone_number">Phone number</string>
+    <string name="register_button_text">Register</string>
 </resources>

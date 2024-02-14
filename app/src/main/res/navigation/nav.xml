@@ -11,12 +11,36 @@
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
-            android:id="@+id/action_splashScreen_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_splashScreen_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.home.HomeFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.log_in.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.auth.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/action_authFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_authFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
 </navigation>
