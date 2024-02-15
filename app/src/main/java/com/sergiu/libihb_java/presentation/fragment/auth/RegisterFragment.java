@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sergiu.libihb_java.R;
-import com.sergiu.libihb_java.databinding.FragmentAuthBinding;
-import com.sergiu.libihb_java.databinding.FragmentLogInBinding;
+import com.sergiu.libihb_java.databinding.FragmentRegisterBinding;
 
-public class AuthFragment extends Fragment {
-    FragmentAuthBinding binding;
+
+public class RegisterFragment extends Fragment {
+    FragmentRegisterBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class AuthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAuthBinding.inflate(inflater, container, false);
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

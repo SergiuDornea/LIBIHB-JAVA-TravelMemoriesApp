@@ -33,9 +33,9 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.auth.AuthFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.auth.RegisterFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_auth" >
+        tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_authFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

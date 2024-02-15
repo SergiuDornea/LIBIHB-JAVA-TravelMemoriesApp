@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.auth.AuthFragment">
+    tools:context=".presentation.fragment.auth.RegisterFragment">
+
 
     <TextView
         android:id="@+id/register_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="32dp"
         android:text="@string/register"
         android:textColor="@color/md_theme_light_primary"
         android:textSize="36sp"
@@ -20,19 +21,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/a_email_input_text_field"
+        android:id="@+id/a_name_input_text_field"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
-        android:drawableStart="@drawable/ic_hiking_person"
-        android:hint="@string/email"
+        android:layout_marginTop="28dp"
+        android:drawableStart="@drawable/ic_name"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
         android:maxLines="1"
-        android:inputType="textEmailAddress"
         android:textColorHint="@color/md_theme_light_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_text_view"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/a_email_input_text_field"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:drawableStart="@drawable/ic_hiking_person"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:textColorHint="@color/md_theme_light_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a_name_input_text_field"
         app:layout_constraintWidth_percent="0.8" />
 
     <com.google.android.material.textfield.TextInputEditText
