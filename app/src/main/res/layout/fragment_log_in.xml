@@ -35,37 +35,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_image_view" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email_input_text_field"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_input_text_field_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="48dp"
-        android:drawableStart="@drawable/ic_hiking_person"
-        android:hint="@string/email"
-        android:maxLines="1"
-        android:inputType="textEmailAddress"
-        android:textColorHint="@color/md_theme_light_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/log_in_text_view"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintWidth_percent="0.8">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password_input_text_field"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_input_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_hiking_person"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColorHint="@color/md_theme_light_primary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_input_text_field_laout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="36dp"
-        android:drawableStart="@drawable/ic_password"
-        android:hint="@string/password"
-        android:maxLines="1"
-        android:inputType="textPassword"
-        android:textColorHint="@color/md_theme_light_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_input_text_field"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintTop_toBottomOf="@+id/email_input_text_field_layout"
+        app:layout_constraintWidth_percent="0.8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_password"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColorHint="@color/md_theme_light_primary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/log_in_button"

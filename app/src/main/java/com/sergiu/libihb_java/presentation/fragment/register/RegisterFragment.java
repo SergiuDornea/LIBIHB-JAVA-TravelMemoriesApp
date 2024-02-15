@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.presentation.fragment.auth;
+package com.sergiu.libihb_java.presentation.fragment.register;
 
 import android.os.Bundle;
 
