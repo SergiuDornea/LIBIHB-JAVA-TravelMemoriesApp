@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.sergiu.libihb_java.R;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

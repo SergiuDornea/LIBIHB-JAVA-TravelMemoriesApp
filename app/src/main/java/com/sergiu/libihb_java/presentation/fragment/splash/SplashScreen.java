@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 
 import com.sergiu.libihb_java.R;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends Fragment {
     @Override

@@ -5,20 +5,29 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateEmail;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidatePassword;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.LogInFormEvent;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+
 public class LogInViewModel extends ViewModel {
-    private final ValidateResult validateCredentialsUseCase;
+    private final ValidateEmail validateEmail = new ValidateEmail();
+    private final ValidatePassword validatePassword = new ValidatePassword();
 
     private final MutableLiveData<LogInFormState> formState = new MutableLiveData<>(new LogInFormState(null, null, null, null));
     public LiveData<LogInFormState> getFormState() {
         return formState;
     }
 
-    public LogInViewModel(ValidateResult validateCredentialsUseCase) {
-        this.validateCredentialsUseCase = validateCredentialsUseCase;
-    }
+//    @Inject
+//    public LogInViewModel(ValidateEmail validateEmail, ValidatePassword validatePassword) {
+//        this.validateEmail = validateEmail;
+//        this.validatePassword = validatePassword;
+//    }
 
     public void onEvent(LogInFormEvent event) {
         if (event instanceof LogInFormEvent.PasswordChanged) {
@@ -45,22 +54,16 @@ public class LogInViewModel extends ViewModel {
     }
 
     private void onSubmit() {
-        ValidateResult passValid = validateCredentialsUseCase.validatePassword(formState.getValue().getPassword());
-        ValidateResult emailValid = validateCredentialsUseCase.validateEmail(formState.getValue().getEmail());
+        ValidateResult passValid = validatePassword.validate(formState.getValue().getPassword());
+        ValidateResult emailValid = validateEmail.validate(formState.getValue().getEmail());
 
-        if (!passValid.isValid || !emailValid.isValid) {
+        if (!passValid.isValid() || !emailValid.isValid()) {
             updateFormState(new LogInFormState(
                     formState.getValue().getPassword(),
                     formState.getValue().getEmail(),
                     passValid.getMessageIfNotValid(),
                     emailValid.getMessageIfNotValid()
             ));
-            return;
-        }
-
-        viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success);
         }
     }
-}
 }

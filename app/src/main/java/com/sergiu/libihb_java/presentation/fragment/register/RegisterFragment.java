@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentRegisterBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 public class RegisterFragment extends Fragment {
     FragmentRegisterBinding binding;
