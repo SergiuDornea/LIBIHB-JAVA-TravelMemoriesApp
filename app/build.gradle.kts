@@ -49,4 +49,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
 
+    implementation ("com.google.dagger:hilt-android:2.44")
+    annotationProcessor ("com.google.dagger:hilt-compiler:2.44")
+
 }
