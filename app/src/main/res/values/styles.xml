@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="logoAppearance">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:background">@color/md_theme_light_background</item>
+        <item name="android:contentDescription">@string/life_is_better_in_hiking_boots_logo</item>
+    </style>
+
+    <style name="errorTextInputFieldAppearance">
+        <item name="android:gravity">bottom</item>
+        <item name="android:textColor">@color/md_theme_light_error</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>
