@@ -1,12 +1,10 @@
 package com.sergiu.libihb_java.presentation.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.sergiu.libihb_java.R;
+import androidx.appcompat.app.AppCompatActivity;
 
-import dagger.hilt.android.AndroidEntryPoint;
+import com.sergiu.libihb_java.R;
 
 
 public class MainActivity extends AppCompatActivity {

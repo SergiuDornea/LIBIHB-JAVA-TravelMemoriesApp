@@ -4,19 +4,16 @@ import static androidx.navigation.Navigation.findNavController;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavOptions;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sergiu.libihb_java.R;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavOptions;
 
-import dagger.hilt.android.AndroidEntryPoint;
+import com.sergiu.libihb_java.R;
 
 
 @SuppressLint("CustomSplashScreen")

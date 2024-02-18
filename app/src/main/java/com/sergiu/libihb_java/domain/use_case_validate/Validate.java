@@ -1,6 +1,5 @@
 package com.sergiu.libihb_java.domain.use_case_validate;
 
-// make this interface inheritable with the 'extends' keyword
 public interface Validate {
     // a method that checks if an inputted string is not blank and returns a boolean value
     boolean inputNotBlank(String inputType);

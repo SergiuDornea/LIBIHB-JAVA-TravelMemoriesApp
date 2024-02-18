@@ -1,6 +1,5 @@
 package com.sergiu.libihb_java.domain.use_case_validate;
 
-// Implementing Validate interface for name validation
 public class ValidateName implements Validate {
 
     // Constants to change easily if needed
@@ -14,15 +13,11 @@ public class ValidateName implements Validate {
         return !inputType.trim().isEmpty();
     }
 
-    // Check if the inputted string qualifies as a valid name
-    // A valid name must be at least 2 characters long
     @Override
     public boolean matchesRequiredType(String inputType) {
         return inputType.length() >= minNameLength;
     }
 
-    // Validate the name if everything is okay
-    // Returns a ValidateResult object
     @Override
     public ValidateResult validate(String inputType) {
         if (!inputNotBlank(inputType)) {

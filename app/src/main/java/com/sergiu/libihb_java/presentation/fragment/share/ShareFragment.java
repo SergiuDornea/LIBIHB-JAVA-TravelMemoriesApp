@@ -1,12 +1,11 @@
 package com.sergiu.libihb_java.presentation.fragment.share;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.sergiu.libihb_java.R;
 
