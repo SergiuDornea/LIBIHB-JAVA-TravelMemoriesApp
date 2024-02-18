@@ -13,7 +13,7 @@ public final class ValidationUtils {
     public static final int MIN_NAME_LEN = 2;
 
     public static final String INPUT_IS_BLANK_PASSWORD = "The password can't be empty";
-    public static final String DOES_NOT_MATCH_REQUIRED_TYPE_PASSWORD = "The email is not valid";
+    public static final String DOES_NOT_MATCH_REQUIRED_TYPE_PASSWORD = "The password is not valid";
     public static final String NOT_COMPLEX = "The password must include: lowercase and uppercase letters, digits, no white spaces";
     public static final String DOES_NOT_MATCH = "The passwords do not match";
 

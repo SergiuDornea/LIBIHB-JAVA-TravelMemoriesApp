@@ -8,6 +8,7 @@ import com.sergiu.libihb_java.domain.use_case_validate.ValidateEmail;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateName;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidatePassword;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidatePhone;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidateRepeatPassword;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.RegisterFormEvent;
 
@@ -19,8 +20,9 @@ public class RegisterViewModel extends ViewModel {
     private final ValidatePassword validatePassword = new ValidatePassword();
     private final ValidatePhone validatePhone = new ValidatePhone();
     private final ValidateName validateName = new ValidateName();
+    private final ValidateRepeatPassword validateRepeatPassword = new ValidateRepeatPassword();
 
-    private final MutableLiveData<RegisterFormState> formState = new MutableLiveData<>(new RegisterFormState(null, null, null, null, null, null, null, null));
+    private final MutableLiveData<RegisterFormState> formState = new MutableLiveData<>(new RegisterFormState(null, null, null, null, null, null, null, null, null, null));
 
     public LiveData<RegisterFormState> getFormState() {
         return formState;
@@ -28,16 +30,19 @@ public class RegisterViewModel extends ViewModel {
 
     public void onEvent(RegisterFormEvent event) {
         if (event instanceof RegisterFormEvent.PasswordChanged) {
-            updateFormState(new RegisterFormState(((RegisterFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), formState.getValue().getName(), formState.getValue().getPhone(),null, formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError()));
+            updateFormState(new RegisterFormState(((RegisterFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getRepeatPassword(),null, formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.EmailChanged) {
-            updateFormState(new RegisterFormState(formState.getValue().getPassword(), ((RegisterFormEvent.EmailChanged) event).email, formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getPasswordError(), null, formState.getValue().getNameError(), formState.getValue().getPhoneError()));
+            updateFormState(new RegisterFormState(formState.getValue().getPassword(), ((RegisterFormEvent.EmailChanged) event).email, formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), null, formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.NameChanged) {
-            updateFormState(new RegisterFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), ((RegisterFormEvent.NameChanged) event).name, formState.getValue().getPhone(), formState.getValue().getPasswordError(), formState.getValue().getEmailError(), null, formState.getValue().getPhoneError()));
+            updateFormState(new RegisterFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), ((RegisterFormEvent.NameChanged) event).name, formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), formState.getValue().getEmailError(), null, formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.PhoneChanged) {
-            updateFormState(new RegisterFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), formState.getValue().getName(), ((RegisterFormEvent.PhoneChanged) event).phone, formState.getValue().getPasswordError(), formState.getValue().getEmailError(), formState.getValue().getNameError(), null));
+            updateFormState(new RegisterFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), formState.getValue().getName(), ((RegisterFormEvent.PhoneChanged) event).phone, formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), formState.getValue().getEmailError(), formState.getValue().getNameError(), null, formState.getValue().getRepeatPasswordError()));
+        }
+        if (event instanceof RegisterFormEvent.RepeatedPasswordChanged) {
+            updateFormState(new RegisterFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), formState.getValue().getName(), formState.getValue().getPhone(), ((RegisterFormEvent.RepeatedPasswordChanged) event).repeteadPassword, formState.getValue().getPasswordError(), formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError(), null));
         }
         if (event == RegisterFormEvent.SubmitClicked) {
             onSubmit();
@@ -53,6 +58,7 @@ public class RegisterViewModel extends ViewModel {
         ValidateResult emailValid = validateEmail.validate(formState.getValue().getEmail());
         ValidateResult phoneValid = validatePhone.validate(formState.getValue().getPhone());
         ValidateResult nameValid = validateName.validate(formState.getValue().getName());
+        ValidateResult repeatPasswordValid = validateRepeatPassword.validateEqual(formState.getValue().getRepeatPassword(), formState.getValue().getPassword());
 
         if (!passValid.isValid() || !emailValid.isValid() || !phoneValid.isValid() || !nameValid.isValid()) {
             updateFormState(new RegisterFormState(
@@ -60,10 +66,12 @@ public class RegisterViewModel extends ViewModel {
                     formState.getValue().getEmail(),
                     formState.getValue().getPhone(),
                     formState.getValue().getName(),
+                    formState.getValue().getRepeatPassword(),
                     passValid.getMessageIfNotValid(),
                     emailValid.getMessageIfNotValid(),
                     nameValid.getMessageIfNotValid(),
-                    phoneValid.getMessageIfNotValid()));
+                    phoneValid.getMessageIfNotValid(),
+                    repeatPasswordValid.getMessageIfNotValid()));
         }
     }
 }

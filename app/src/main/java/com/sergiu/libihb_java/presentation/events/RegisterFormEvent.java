@@ -35,4 +35,12 @@ public abstract class RegisterFormEvent {
             this.phone = phone;
         }
     }
+
+    public static class RepeatedPasswordChanged extends RegisterFormEvent {
+        public final String repeteadPassword;
+
+        public RepeatedPasswordChanged(String repeteadPassword) {
+            this.repeteadPassword = repeteadPassword;
+        }
+    }
 }

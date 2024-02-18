@@ -2,24 +2,28 @@ package com.sergiu.libihb_java.presentation.fragment.register;
 
 public class RegisterFormState {
     private final String password;
+    private final String repeatPassword;
     private final String email;
     private final String name;
     private final String phone;
     private final String passwordError;
+    private final String repeatPasswordError;
     private final String emailError;
     private final String nameError;
     private final String phoneError;
 
-    public RegisterFormState(String password, String email, String name, String phone,
-                             String passwordError, String emailError, String nameError, String phoneError) {
+    public RegisterFormState(String password, String email, String name, String phone, String repeatPassword,
+                             String passwordError, String emailError, String nameError, String phoneError, String repeatPasswordError) {
         this.password = password != null ? password : "";
         this.email = email != null ? email : "";
         this.name = name != null ? name : "";
         this.phone = phone != null ? phone : "";
+        this.repeatPassword = repeatPassword != null ? repeatPassword : "";
         this.passwordError = passwordError;
         this.emailError = emailError;
         this.nameError = nameError;
         this.phoneError = phoneError;
+        this.repeatPasswordError = repeatPasswordError;
     }
 
     public String getPassword() {
@@ -38,6 +42,10 @@ public class RegisterFormState {
         return phone;
     }
 
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
     public String getPasswordError() {
         return passwordError;
     }
@@ -54,4 +62,7 @@ public class RegisterFormState {
         return phoneError;
     }
 
+    public String getRepeatPasswordError() {
+        return repeatPasswordError;
+    }
 }

@@ -42,6 +42,7 @@ public class RegisterFragment extends Fragment {
             binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
             binding.nameInputTextFieldLayout.setError(formState.getNameError());
             binding.phoneInputTextFieldLayout.setError(formState.getPhoneError());
+            binding.repeatPasswordInputTextFieldLayout.setError(formState.getRepeatPasswordError());
         });
 
         setTextWatchers();
@@ -97,6 +98,25 @@ public class RegisterFragment extends Fragment {
 
             }
         });
+
+        binding.repeatPasswordInputTextField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                viewModel.onEvent(new RegisterFormEvent.RepeatedPasswordChanged(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
 
         binding.nameInputTextField.addTextChangedListener(new TextWatcher() {
             @Override
