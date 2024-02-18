@@ -9,6 +9,8 @@ import com.sergiu.libihb_java.domain.use_case_validate.ValidatePassword;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.LogInFormEvent;
 
+import java.util.Objects;
+
 
 public class LogInViewModel extends ViewModel {
     private final ValidateEmail validateEmail = new ValidateEmail();
@@ -22,20 +24,12 @@ public class LogInViewModel extends ViewModel {
 
     public void onEvent(LogInFormEvent event) {
         if (event instanceof LogInFormEvent.PasswordChanged) {
-            updateFormState(new LogInFormState(
-                    ((LogInFormEvent.PasswordChanged) event).password,
-                    formState.getValue().getEmail(),
-                    null,
-                    formState.getValue().getEmailError()
-            ));
-        } else if (event instanceof LogInFormEvent.EmailChanged) {
-            updateFormState(new LogInFormState(
-                    formState.getValue().getPassword(),
-                    ((LogInFormEvent.EmailChanged) event).email,
-                    formState.getValue().getPasswordError(),
-                    null
-            ));
-        } else if (event == LogInFormEvent.SubmitClicked) {
+            updateFormState(new LogInFormState(((LogInFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), null, formState.getValue().getEmailError()));
+        }
+        if (event instanceof LogInFormEvent.EmailChanged) {
+            updateFormState(new LogInFormState(Objects.requireNonNull(formState.getValue()).getPassword(), ((LogInFormEvent.EmailChanged) event).email, formState.getValue().getPasswordError(), null));
+        }
+        if (event == LogInFormEvent.SubmitClicked) {
             onSubmit();
         }
     }
@@ -49,12 +43,7 @@ public class LogInViewModel extends ViewModel {
         ValidateResult emailValid = validateEmail.validate(formState.getValue().getEmail());
 
         if (!passValid.isValid() || !emailValid.isValid()) {
-            updateFormState(new LogInFormState(
-                    formState.getValue().getPassword(),
-                    formState.getValue().getEmail(),
-                    passValid.getMessageIfNotValid(),
-                    emailValid.getMessageIfNotValid()
-            ));
+            updateFormState(new LogInFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), passValid.getMessageIfNotValid(), emailValid.getMessageIfNotValid()));
         }
     }
 }

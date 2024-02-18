@@ -1,11 +1,11 @@
 package com.sergiu.libihb_java.domain.use_case_validate;
 
+import static com.sergiu.libihb_java.domain.utils.ValidationUtils.DOES_NOT_MATCH_REQUIRED_TYPE_EMAIL;
+import static com.sergiu.libihb_java.domain.utils.ValidationUtils.INPUT_IS_BLANK_EMAIL;
+
 import android.util.Patterns;
 
 public class ValidateEmail implements Validate {
-    private final String inputIsBlank = "The email can't be empty";
-    private final String doesNotMatchRequiredType = "The email is not valid";
-
     @Override
     public boolean inputNotBlank(String inputType) {
         return !inputType.trim().isEmpty();
@@ -19,10 +19,10 @@ public class ValidateEmail implements Validate {
     @Override
     public ValidateResult validate(String inputType) {
         if (!inputNotBlank(inputType)) {
-            return new ValidateResult(false, inputIsBlank);
+            return new ValidateResult(false, INPUT_IS_BLANK_EMAIL);
         }
         if (!matchesRequiredType(inputType)) {
-            return new ValidateResult(false, doesNotMatchRequiredType);
+            return new ValidateResult(false, DOES_NOT_MATCH_REQUIRED_TYPE_EMAIL);
         }
         return new ValidateResult(true);
     }

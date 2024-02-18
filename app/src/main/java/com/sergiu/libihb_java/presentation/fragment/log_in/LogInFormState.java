@@ -14,7 +14,6 @@ public class LogInFormState {
         this.emailError = emailError;
     }
 
-    // Implement getters for all fields:
     public String getPassword() {
         return password;
     }
@@ -29,9 +28,5 @@ public class LogInFormState {
 
     public String getEmailError() {
         return emailError;
-    }
-
-    public boolean hasErrors() {
-        return passwordError != null || emailError != null;
     }
 }

@@ -1,7 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.register;
 
 public class RegisterFormState {
-
     private final String password;
     private final String email;
     private final String name;
@@ -22,7 +21,6 @@ public class RegisterFormState {
         this.nameError = nameError;
         this.phoneError = phoneError;
     }
-
 
     public String getPassword() {
         return password;
@@ -56,7 +54,4 @@ public class RegisterFormState {
         return phoneError;
     }
 
-    public boolean hasErrors() {
-        return passwordError != null || emailError != null || nameError != null || phoneError != null;
-    }
 }

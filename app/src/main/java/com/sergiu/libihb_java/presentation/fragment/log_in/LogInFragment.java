@@ -25,7 +25,7 @@ public class LogInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        viewModel = new ViewModelProvider(this).get(LogInViewModel.class);
     }
 
     @Override
@@ -37,7 +37,6 @@ public class LogInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(LogInViewModel.class);
         viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
             binding.emailInputTextFieldLayout.setError(formState.getEmailError());
             binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
