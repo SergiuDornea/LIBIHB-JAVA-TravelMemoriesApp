@@ -17,7 +17,6 @@ import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentLogInBinding;
 import com.sergiu.libihb_java.presentation.events.LogInFormEvent;
 
-
 public class LogInFragment extends Fragment {
     private FragmentLogInBinding binding;
     private LogInViewModel viewModel;

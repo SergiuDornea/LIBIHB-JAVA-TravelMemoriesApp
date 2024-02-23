@@ -43,4 +43,29 @@
             android:id="@+id/action_authFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.contact.ContactFragment"
+        android:label="fragment_contact"
+        tools:layout="@layout/fragment_contact" />
+    <fragment
+        android:id="@+id/logOutFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.log_out.LogOutFragment"
+        android:label="fragment_log_out"
+        tools:layout="@layout/fragment_log_out" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.share.ShareFragment"
+        android:label="fragment_share"
+        tools:layout="@layout/fragment_share" />
 </navigation>
