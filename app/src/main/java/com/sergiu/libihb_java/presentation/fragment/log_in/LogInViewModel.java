@@ -44,6 +44,9 @@ public class LogInViewModel extends ViewModel {
 
         if (!passValid.isValid() || !emailValid.isValid()) {
             updateFormState(new LogInFormState(formState.getValue().getPassword(), formState.getValue().getEmail(), passValid.getMessageIfNotValid(), emailValid.getMessageIfNotValid()));
+        }else{
+            //TODO perform log in logic
+
         }
     }
 }
