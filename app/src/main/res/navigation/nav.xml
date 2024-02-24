@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/splashScreen">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/splashScreen"
@@ -18,7 +18,23 @@
         android:id="@+id/mainFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.home.HomeFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_mainFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_contactFragment"
+            app:destination="@id/contactFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_shareFragment"
+            app:destination="@id/shareFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_logOutFragment"
+            app:destination="@id/logOutFragment" />
+    </fragment>
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.log_in.LogInFragment"
