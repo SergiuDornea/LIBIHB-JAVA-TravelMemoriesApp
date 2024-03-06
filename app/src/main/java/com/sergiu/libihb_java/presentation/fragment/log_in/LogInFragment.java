@@ -47,19 +47,9 @@ public class LogInFragment extends Fragment {
 
 
     private void setListeners() {
-        binding.registerHereLinkTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_authFragment);
-            }
-        });
+        binding.registerHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_authFragment));
 
-        binding.logInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.onEvent(LogInFormEvent.SubmitClicked);
-            }
-        });
+        binding.logInButton.setOnClickListener(view -> viewModel.onEvent(LogInFormEvent.SubmitClicked));
     }
 
     private void setTextWatchers() {

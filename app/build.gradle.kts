@@ -34,6 +34,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    viewBinding {
+        enable = true;
+    }
 }
 
 dependencies {
@@ -53,4 +57,8 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.49")
     annotationProcessor ("com.google.dagger:hilt-compiler:2.44")
 
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 }
