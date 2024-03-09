@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
@@ -76,7 +75,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
         public void bind(TravelMemory travelMemory) {
             Context context = itemView.getContext();
             Glide.with(context).load(travelMemory.getImageList().get(0)).placeholder(R.drawable.rimetea).error(R.drawable.i_unavailable_img).into(memoryImage);
-            placeName.setText(travelMemory.getPlaceName());
+            placeName.setText(travelMemory.getMemoryName());
             dateOfTravel.setText(travelMemory.getDateOfTravel());
             location.setText(travelMemory.getPlaceLocationName());
         }

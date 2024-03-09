@@ -29,4 +29,10 @@
     <string name="place_name">Place name</string>
     <string name="place_location">Place location</string>
     <string name="date_of_travel">Date of travel</string>
+    <string name="greeting_add_new_song">Hello hiker!</string>
+    <string name="add_new_memory_label"> To add a new memory fill in those details:</string>
+    <string name="how_would_you_name_your_adventure">How would you name your adventure?</string>
+    <string name="maybe_you_want_to_describe_it">Maybe add a little description?</string>
+    <string name="picking_a_date_could_be_helpfull">Picking a date could be helpful:</string>
+    <string name="pick_a_date">Pick a date</string>
 </resources>
