@@ -25,4 +25,8 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="profile_image">Profile image</string>
+    <string name="add_new_memory">Add new memory</string>
+    <string name="place_name">Place name</string>
+    <string name="place_location">Place location</string>
+    <string name="date_of_travel">Date of travel</string>
 </resources>
