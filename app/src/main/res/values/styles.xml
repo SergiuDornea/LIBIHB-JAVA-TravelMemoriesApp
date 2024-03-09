@@ -14,4 +14,9 @@
         <item name="android:textColor">@color/md_theme_light_error</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="roundedCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

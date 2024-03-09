@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
@@ -43,7 +44,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
 
     @Override
     public int getItemCount() {
-        return  memoryList == null ? 0: memoryList.size();
+        return memoryList.size();
     }
 
     public static class TravelMemoriesViewHolder extends RecyclerView.ViewHolder{
@@ -58,6 +59,18 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
             this.placeName = itemView.findViewById(R.id.place_name_text_view);
             this.dateOfTravel = itemView.findViewById(R.id.date_of_travel_image_view);
             this.location = itemView.findViewById(R.id.place_location_text_view);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        int currentPosition = getAdapterPosition();
+                        if (currentPosition != RecyclerView.NO_POSITION) {
+                            itemClickListener.onItemClick(currentPosition);
+                        }
+                    }
+                }
+            });
         }
 
         public void bind(TravelMemory travelMemory) {
@@ -70,6 +83,13 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
 
 
     }
+
+    public void updateMemoryList(List<TravelMemory> songs) {
+        this.memoryList.clear();
+        this.memoryList.addAll(songs);
+        notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
