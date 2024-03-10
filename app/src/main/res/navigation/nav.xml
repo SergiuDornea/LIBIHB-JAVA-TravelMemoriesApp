@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/addMemory">
 
     <fragment
         android:id="@+id/splashScreen"
@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_mainFragment_to_logOutFragment"
             app:destination="@id/logOutFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addMemory"
+            app:destination="@id/addMemory" />
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
@@ -84,4 +87,8 @@
         android:name="com.sergiu.libihb_java.presentation.fragment.share.ShareFragment"
         android:label="fragment_share"
         tools:layout="@layout/fragment_share" />
+    <fragment
+        android:id="@+id/addMemory"
+        android:name="com.sergiu.libihb_java.presentation.fragment.add_memory.AddMemory"
+        android:label="AddMemory" />
 </navigation>

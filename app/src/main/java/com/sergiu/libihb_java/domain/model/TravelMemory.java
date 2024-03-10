@@ -7,14 +7,15 @@ import java.util.List;
 
 public class TravelMemory {
     private List<Integer> imageList;
-    private String placeName;
-    private LatLng coordinates;
+    private String memoryName;
+    private String memoryDescription;
     private String placeLocationName;
+    private LatLng coordinates;
     private String dateOfTravel;
 
-    public TravelMemory(List<Integer> imageList, String placeName, LatLng coordinates, String dateOfTravel,String placeLocationName) {
+    public TravelMemory(List<Integer> imageList, String memoryName, LatLng coordinates, String dateOfTravel, String placeLocationName) {
         this.imageList = imageList;
-        this.placeName = placeName;
+        this.memoryName = memoryName;
         this.coordinates = coordinates;
         this.dateOfTravel = dateOfTravel;
         this.placeLocationName = placeLocationName;
@@ -25,8 +26,8 @@ public class TravelMemory {
         return imageList;
     }
 
-    public String getPlaceName() {
-        return placeName;
+    public String getMemoryName() {
+        return memoryName;
     }
 
     public LatLng getCoordinates() {
