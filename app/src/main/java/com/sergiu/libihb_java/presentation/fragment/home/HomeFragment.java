@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sergiu.libihb_java.R;
+
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 
@@ -32,7 +33,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
