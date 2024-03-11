@@ -90,5 +90,14 @@
     <fragment
         android:id="@+id/addMemory"
         android:name="com.sergiu.libihb_java.presentation.fragment.add_memory.AddMemory"
-        android:label="AddMemory" />
+        android:label="AddMemory" >
+        <action
+            android:id="@+id/action_addMemory_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.map.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
