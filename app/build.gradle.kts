@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -36,7 +37,7 @@ android {
     }
 
     viewBinding {
-        enable = true;
+        enable = true
     }
 }
 
@@ -62,4 +63,7 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.2.0")
 }

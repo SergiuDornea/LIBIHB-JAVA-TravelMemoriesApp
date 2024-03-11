@@ -1,9 +1,11 @@
 package com.sergiu.libihb_java.presentation.fragment.add_memory;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentAddMemoryBinding;
+import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
+
 
 public class AddMemory extends Fragment {
     private FragmentAddMemoryBinding binding;
@@ -24,6 +28,7 @@ public class AddMemory extends Fragment {
         viewModel = new ViewModelProvider(this).get(AddMemoryViewModel.class);
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,13 +40,43 @@ public class AddMemory extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        MapsFragment mapsFragment = new MapsFragment();
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.map_container, mapsFragment)
+                .commit();
+
+        setObservers();
+
         setListeners();
     }
 
-    private void setListeners(){
+    private void setListeners() {
         binding.pickADateMaterialButton.setOnClickListener(view -> {
             DatePicker datePicker = new DatePicker();
             datePicker.show(requireActivity().getSupportFragmentManager(), "datePiker");
         });
+
+        binding.fabEnterMapFullScreen.setOnClickListener(v -> viewModel.toggleFullScreen());
+    }
+
+    private void setObservers() {
+        viewModel.getIisMapFullScreen().observe(getViewLifecycleOwner(), isFullScreen -> {
+            updateFullScreenButtonIcon(isFullScreen);
+            updateMapContainer(isFullScreen);
+        });
+    }
+
+    private void updateFullScreenButtonIcon(boolean isFullScreen) {
+        int iconResId = isFullScreen ? R.drawable.ic_exit_full_screen : R.drawable.ic_enter_full_screen;
+        binding.fabEnterMapFullScreen.setImageResource(iconResId);
+    }
+
+    private void updateMapContainer(boolean isFullScreen) {
+        int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        int targetHeight = (int) (screenHeight * 0.3);
+
+        ViewGroup.LayoutParams params = binding.mapContainer.getLayoutParams();
+        params.height = isFullScreen ? ViewGroup.LayoutParams.MATCH_PARENT : targetHeight;
+        binding.mapContainer.setLayoutParams(params);
     }
 }

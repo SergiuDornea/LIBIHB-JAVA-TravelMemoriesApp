@@ -35,4 +35,6 @@
     <string name="maybe_you_want_to_describe_it">Maybe add a little description?</string>
     <string name="picking_a_date_could_be_helpfull">Picking a date could be helpful:</string>
     <string name="pick_a_date">Pick a date</string>
+    <string name="choose_the_location">Choose the location:</string>
+    <string name="enter_map_full_screen">enter map full screen</string>
 </resources>
