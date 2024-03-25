@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,7 +59,7 @@ public class AddMemory extends Fragment {
     }
 
     private void setObservers() {
-        viewModel.getIisMapFullScreen().observe(getViewLifecycleOwner(), isFullScreen -> {
+        viewModel.getIsMapFullScreen().observe(getViewLifecycleOwner(), isFullScreen -> {
             updateFullScreenButtonIcon(isFullScreen);
             updateMapContainer(isFullScreen);
         });

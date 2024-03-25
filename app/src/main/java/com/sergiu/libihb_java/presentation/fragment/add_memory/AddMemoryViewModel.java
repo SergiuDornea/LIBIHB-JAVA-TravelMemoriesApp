@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModel;
 
 public class AddMemoryViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isMapFullScreen = new MutableLiveData<>(false);
-    public LiveData<Boolean> getIisMapFullScreen() {
+    public LiveData<Boolean> getIsMapFullScreen() {
         return isMapFullScreen;
     }
 
     public void toggleFullScreen() {
         isMapFullScreen.setValue(Boolean.FALSE.equals(isMapFullScreen.getValue()));
     }
-
 }
