@@ -1,10 +1,5 @@
 package com.sergiu.libihb_java.presentation.fragment.map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -12,6 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,15 +24,20 @@ import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMapsBinding;
 
 import java.util.List;
-import java.util.Map;
 
 public class MapsFragment extends Fragment {
     private FragmentMapsBinding binding;
     private GoogleMap map;
+    private OnLatLngSelectedListener onLatLngSelectedListener;
+    private final OnMapReadyCallback callback = googleMap -> map = googleMap;
 
-    private OnMapReadyCallback callback = googleMap -> {
-        map = googleMap;
-    };
+    public interface OnLatLngSelectedListener {
+        void onLatLngSelected(LatLng latLng);
+    }
+
+    public void setOnLatLngSelectedListener(OnLatLngSelectedListener listener) {
+        onLatLngSelectedListener = listener;
+    }
 
     @Nullable
     @Override
@@ -45,34 +51,44 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initializeMap();
+        setListeners();
+    }
+
+    private void initializeMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
-
-        setListeners();
     }
 
-    private void setListeners(){
+    private void setListeners() {
         binding.searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String location = binding.searchBar.getQuery().toString();
                 List<Address> addressList = null;
 
-                if(location != null){
-                    Geocoder geocoder = new Geocoder(requireContext());
-                    try {
-                        addressList = geocoder.getFromLocationName(location, 1);
-                    }catch (Exception e){
-                        Log.d("err", "onQueryTextSubmit: " + e);
-                    }
+                Geocoder geocoder = new Geocoder(requireContext());
+                try {
+                    addressList = geocoder.getFromLocationName(location, 1);
+                } catch (Exception e) {
+                    Log.d("err", "onQueryTextSubmit: " + e);
+                }
 
-                    assert addressList != null;
+                if (addressList != null && !addressList.isEmpty()) {
                     Address address = addressList.get(0);
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                    binding.searchBar.clearFocus();
+
+                    if (onLatLngSelectedListener != null) {
+                        onLatLngSelectedListener.onLatLngSelected(latLng);
+                    }
+                } else {
+                    // todo make text translatable
+                    Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
                 }
 
                 return true;

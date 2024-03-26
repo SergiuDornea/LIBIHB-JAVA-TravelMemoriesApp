@@ -37,5 +37,5 @@
     <string name="pick_a_date">Pick a date</string>
     <string name="choose_the_location">Choose the location:</string>
     <string name="enter_map_full_screen">enter map full screen</string>
-    <string name="search">Search</string>
+    <string name="search">Click on the magnifying glass to search for a location</string>
 </resources>

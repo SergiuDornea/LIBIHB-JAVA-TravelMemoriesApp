@@ -1,7 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.add_memory;
 
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,24 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentAddMemoryBinding;
 import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
 
 
-public class AddMemory extends Fragment {
+public class AddMemory extends Fragment implements MapsFragment.OnLatLngSelectedListener {
     private FragmentAddMemoryBinding binding;
-    private AddMemoryViewModel viewModel;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        viewModel = new ViewModelProvider(this).get(AddMemoryViewModel.class);
-    }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -40,11 +31,10 @@ public class AddMemory extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         MapsFragment mapsFragment = new MapsFragment();
+        mapsFragment.setOnLatLngSelectedListener(this);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.map_container, mapsFragment)
                 .commit();
-
-        setObservers();
 
         setListeners();
     }
@@ -55,27 +45,10 @@ public class AddMemory extends Fragment {
             datePicker.show(requireActivity().getSupportFragmentManager(), "datePiker");
         });
 
-        binding.fabEnterMapFullScreen.setOnClickListener(v -> viewModel.toggleFullScreen());
     }
 
-    private void setObservers() {
-        viewModel.getIsMapFullScreen().observe(getViewLifecycleOwner(), isFullScreen -> {
-            updateFullScreenButtonIcon(isFullScreen);
-            updateMapContainer(isFullScreen);
-        });
-    }
-
-    private void updateFullScreenButtonIcon(boolean isFullScreen) {
-        int iconResId = isFullScreen ? R.drawable.ic_exit_full_screen : R.drawable.ic_enter_full_screen;
-        binding.fabEnterMapFullScreen.setImageResource(iconResId);
-    }
-
-    private void updateMapContainer(boolean isFullScreen) {
-        int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
-        int targetHeight = (int) (screenHeight * 0.3);
-
-        ViewGroup.LayoutParams params = binding.mapContainer.getLayoutParams();
-        params.height = isFullScreen ? ViewGroup.LayoutParams.MATCH_PARENT : targetHeight;
-        binding.mapContainer.setLayoutParams(params);
+    @Override
+    public void onLatLngSelected(LatLng latLng) {
+        Log.d("lat", "Received LatLng: " + latLng.toString());
     }
 }
