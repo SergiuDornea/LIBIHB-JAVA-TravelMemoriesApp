@@ -10,7 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class MemoriesRoomRepository {
-    private TravelMemoryDao dao;
+    private final TravelMemoryDao dao;
 
     @Inject
     public MemoriesRoomRepository(TravelMemoryDao travelMemoryDao){

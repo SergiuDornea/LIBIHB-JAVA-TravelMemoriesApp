@@ -21,7 +21,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
     private final List<TravelMemory> memoryList = new ArrayList<>();
     private final OnItemClickListener itemClickListener;
 
-    public TravelMemoryAdapter(OnItemClickListener onItemClickListener){
+    public TravelMemoryAdapter(OnItemClickListener onItemClickListener) {
         this.itemClickListener = onItemClickListener;
     }
 
@@ -46,7 +46,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
         return memoryList.size();
     }
 
-    public static class TravelMemoriesViewHolder extends RecyclerView.ViewHolder{
+    public static class TravelMemoriesViewHolder extends RecyclerView.ViewHolder {
         private final ShapeableImageView memoryImage;
         private final TextView placeName;
         private final TextView dateOfTravel;
@@ -76,7 +76,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
             Context context = itemView.getContext();
             Glide.with(context).load(travelMemory.getImageList().get(0)).placeholder(R.drawable.rimetea).error(R.drawable.i_unavailable_img).into(memoryImage);
             placeName.setText(travelMemory.getMemoryName());
-            dateOfTravel.setText(travelMemory.getDateOfTravel());
+            dateOfTravel.setText(travelMemory.getDateOfTravel().toString());
             location.setText(travelMemory.getPlaceLocationName());
         }
 

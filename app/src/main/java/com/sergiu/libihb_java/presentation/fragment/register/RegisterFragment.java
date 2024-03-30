@@ -17,7 +17,9 @@ import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentRegisterBinding;
 import com.sergiu.libihb_java.presentation.events.RegisterFormEvent;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class RegisterFragment extends Fragment {
     private FragmentRegisterBinding binding;
     private RegisterViewModel viewModel;

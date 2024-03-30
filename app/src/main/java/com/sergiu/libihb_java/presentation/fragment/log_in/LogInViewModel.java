@@ -11,12 +11,23 @@ import com.sergiu.libihb_java.presentation.events.LogInFormEvent;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class LogInViewModel extends ViewModel {
-    private final ValidateEmail validateEmail = new ValidateEmail();
-    private final ValidatePassword validatePassword = new ValidatePassword();
+    private final ValidateEmail validateEmail;
+    private final ValidatePassword validatePassword;
 
     private final MutableLiveData<LogInFormState> formState = new MutableLiveData<>(new LogInFormState(null, null, null, null));
+
+    @Inject
+    public LogInViewModel(ValidateEmail validateEmail, ValidatePassword validatePassword){
+        this.validateEmail = validateEmail;
+        this.validatePassword = validatePassword;
+    }
+
 
     public LiveData<LogInFormState> getFormState() {
         return formState;

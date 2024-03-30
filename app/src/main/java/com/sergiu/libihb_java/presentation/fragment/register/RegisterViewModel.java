@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.sergiu.libihb_java.domain.use_case_validate.Validate;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateEmail;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateName;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidatePassword;
@@ -15,14 +16,29 @@ import com.sergiu.libihb_java.presentation.events.RegisterFormEvent;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class RegisterViewModel extends ViewModel {
-    private final ValidateEmail validateEmail = new ValidateEmail();
-    private final ValidatePassword validatePassword = new ValidatePassword();
-    private final ValidatePhone validatePhone = new ValidatePhone();
-    private final ValidateName validateName = new ValidateName();
-    private final ValidateRepeatPassword validateRepeatPassword = new ValidateRepeatPassword();
+    private final ValidateEmail validateEmail;
+    private final ValidatePassword validatePassword;
+    private final ValidatePhone validatePhone;
+    private final ValidateName validateName;
+    private final ValidateRepeatPassword validateRepeatPassword;
 
     private final MutableLiveData<RegisterFormState> formState = new MutableLiveData<>(new RegisterFormState(null, null, null, null, null, null, null, null, null, null));
+
+    @Inject
+    public RegisterViewModel(ValidateEmail validateEmail, ValidatePassword validatePassword, ValidatePhone validatePhone, ValidateName validateName, ValidateRepeatPassword validateRepeatPassword) {
+        this.validateEmail = validateEmail;
+        this.validatePassword = validatePassword;
+        this.validatePhone = validatePhone;
+        this.validateName = validateName;
+        this.validateRepeatPassword = validateRepeatPassword;
+    }
+
 
     public LiveData<RegisterFormState> getFormState() {
         return formState;
@@ -30,7 +46,7 @@ public class RegisterViewModel extends ViewModel {
 
     public void onEvent(RegisterFormEvent event) {
         if (event instanceof RegisterFormEvent.PasswordChanged) {
-            updateFormState(new RegisterFormState(((RegisterFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getRepeatPassword(),null, formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
+            updateFormState(new RegisterFormState(((RegisterFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), null, formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.EmailChanged) {
             updateFormState(new RegisterFormState(formState.getValue().getPassword(), ((RegisterFormEvent.EmailChanged) event).email, formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), null, formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));

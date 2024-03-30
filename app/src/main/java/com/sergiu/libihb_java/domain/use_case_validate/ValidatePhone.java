@@ -5,9 +5,18 @@ import static com.sergiu.libihb_java.domain.utils.ValidationUtils.DOES_NOT_MATCH
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.INPUT_IS_BLANK_PHONE;
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PHONE_NUMBER_LEN;
 
+import android.content.Context;
 import android.util.Patterns;
 
+import javax.inject.Inject;
+
 public class ValidatePhone implements Validate {
+    private final Context context;
+
+    @Inject
+    public ValidatePhone(Context context){
+        this.context = context;
+    }
 
     @Override
     public boolean inputNotBlank(String inputType) {

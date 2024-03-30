@@ -6,8 +6,18 @@ import static com.sergiu.libihb_java.domain.utils.ValidationUtils.MIN_PASSWORD_L
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.NOT_COMPLEX;
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PASSWORD_PATTERN;
 
+import android.content.Context;
+
+import javax.inject.Inject;
+
 
 public class ValidatePassword implements Validate {
+    private final Context context;
+
+    @Inject
+    public ValidatePassword(Context context){
+        this.context = context;
+    }
 
     @Override
     public boolean inputNotBlank(String inputType) {
