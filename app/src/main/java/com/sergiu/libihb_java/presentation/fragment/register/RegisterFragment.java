@@ -59,8 +59,10 @@ public class RegisterFragment extends Fragment {
                 int navDestination = navigationEvent.getDestinationId();
                 if (navDestination == R.id.mainFragment) {
                     navigateWithMessage(navDestination, getString(R.string.registration_successful));
-                } else if (navDestination == R.id.logInFragment) {
+                } else if (navDestination == R.id.loginFragment) {
                     navigateWithMessage(navDestination, getString(R.string.login_failed_after_register_successful));
+                } else if (navDestination == R.id.splashScreen) {
+                    Toast.makeText(requireContext(), R.string.email_is_already_used, Toast.LENGTH_SHORT).show();
                 } else {
                     navigateWithMessage(navDestination, getString(R.string.registration_failed));
                 }

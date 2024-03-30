@@ -10,11 +10,11 @@ import com.sergiu.libihb_java.R;
 import javax.inject.Inject;
 
 
-public class ValidatePassword implements Validate {
+public class ValidatePasswordRegister implements Validate {
     private final Context context;
 
     @Inject
-    public ValidatePassword(Context context) {
+    public ValidatePasswordRegister(Context context) {
         this.context = context;
     }
 

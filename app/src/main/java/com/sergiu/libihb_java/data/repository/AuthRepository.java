@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.data.repository;
 
+import static com.sergiu.libihb_java.domain.utils.ValidationUtils.EMAIL_IS_USED_CHECK;
+
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +31,7 @@ public class AuthRepository {
         this.executor = executor;
     }
 
-    public void registerUser(String name, String email, String phone, String password, CreateUserCallback callback) {
+    public void registerUser(String name, String email, String phone, String password, RegisterCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(executor, task -> {
                     if (task.isSuccessful()) {
@@ -60,7 +62,7 @@ public class AuthRepository {
                 });
     }
 
-    private void saveUserToFirestore(String userID, String name, String phone, CreateUserCallback callback) {
+    private void saveUserToFirestore(String userID, String name, String phone, RegisterCallback callback) {
         DocumentReference documentReference = fStore.collection(LIBIHB_USER_PATH_KEY).document(userID);
         Map<String, Object> user = new HashMap<>();
         user.put(NAME_KEY, name);
@@ -76,7 +78,7 @@ public class AuthRepository {
         void onFailure();
     }
 
-    public interface CreateUserCallback {
+    public interface RegisterCallback {
         void onSuccess();
 
         void onFailure();

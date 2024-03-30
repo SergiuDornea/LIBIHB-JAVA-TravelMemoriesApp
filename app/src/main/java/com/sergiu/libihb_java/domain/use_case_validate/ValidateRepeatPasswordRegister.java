@@ -6,11 +6,11 @@ import com.sergiu.libihb_java.R;
 
 import javax.inject.Inject;
 
-public class ValidateRepeatPassword extends ValidatePassword {
+public class ValidateRepeatPasswordRegister extends ValidatePasswordRegister {
     private final Context context;
 
     @Inject
-    public ValidateRepeatPassword(Context context) {
+    public ValidateRepeatPasswordRegister(Context context) {
         super(context);
         this.context = context;
     }

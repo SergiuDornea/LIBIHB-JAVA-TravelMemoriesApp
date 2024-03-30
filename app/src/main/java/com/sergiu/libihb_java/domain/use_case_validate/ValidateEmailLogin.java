@@ -7,11 +7,11 @@ import com.sergiu.libihb_java.R;
 
 import javax.inject.Inject;
 
-public class ValidateEmail implements Validate {
+public class ValidateEmailLogin implements Validate {
     private final Context context;
 
     @Inject
-    public ValidateEmail(Context context) {
+    public ValidateEmailLogin(Context context) {
         this.context = context;
     }
 
