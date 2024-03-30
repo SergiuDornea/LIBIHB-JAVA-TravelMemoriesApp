@@ -18,7 +18,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.ActivityMainBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding binding;
     private DrawerLayout drawerLayout;

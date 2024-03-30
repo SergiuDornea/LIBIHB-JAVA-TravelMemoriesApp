@@ -7,18 +7,20 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.sergiu.libihb_java.presentation.utils.converters.DateConverter;
 import com.sergiu.libihb_java.presentation.utils.converters.LatLngConverter;
-import com.sergiu.libihb_java.presentation.utils.converters.ListIntegerConverter;
+import com.sergiu.libihb_java.presentation.utils.converters.ListStringConverter;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "memories")
-@TypeConverters({ListIntegerConverter.class, LatLngConverter.class})
+@TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
 public class TravelMemory {
     @PrimaryKey(autoGenerate = true)
     private Long id;
     @ColumnInfo(name = "image_list")
-    private List<Integer> imageList;
+    private List<String> imageList;
     @ColumnInfo(name = "memroy_name")
     private String memoryName;
     @ColumnInfo(name = "memory_description")
@@ -28,18 +30,25 @@ public class TravelMemory {
     @ColumnInfo(name = "coordinates")
     private LatLng coordinates;
     @ColumnInfo(name = "date_of_travel")
-    private String dateOfTravel;
+    private Date dateOfTravel;
 
-    public TravelMemory(List<Integer> imageList, String memoryName, LatLng coordinates, String dateOfTravel, String placeLocationName) {
+    public TravelMemory(
+            List<String> imageList,
+            String memoryName,
+            String memoryDescription,
+            LatLng coordinates,
+            Date dateOfTravel,
+            String placeLocationName) {
         this.imageList = imageList;
         this.memoryName = memoryName;
+        this.memoryDescription = memoryDescription;
         this.coordinates = coordinates;
         this.dateOfTravel = dateOfTravel;
         this.placeLocationName = placeLocationName;
     }
 
 
-    public List<Integer> getImageList() {
+    public List<String> getImageList() {
         return imageList;
     }
 
@@ -51,7 +60,7 @@ public class TravelMemory {
         return coordinates;
     }
 
-    public String getDateOfTravel() {
+    public Date getDateOfTravel() {
         return dateOfTravel;
     }
 
@@ -71,7 +80,7 @@ public class TravelMemory {
         this.id = id;
     }
 
-    public void setImageList(List<Integer> imageList) {
+    public void setImageList(List<String> imageList) {
         this.imageList = imageList;
     }
 
@@ -91,7 +100,7 @@ public class TravelMemory {
         this.coordinates = coordinates;
     }
 
-    public void setDateOfTravel(String dateOfTravel) {
+    public void setDateOfTravel(Date dateOfTravel) {
         this.dateOfTravel = dateOfTravel;
     }
 }

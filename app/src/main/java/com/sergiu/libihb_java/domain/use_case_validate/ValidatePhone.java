@@ -1,13 +1,21 @@
 package com.sergiu.libihb_java.domain.use_case_validate;
 
-import static com.sergiu.libihb_java.domain.utils.ValidationUtils.DOES_NOT_HAVE_REQ_LEN;
-import static com.sergiu.libihb_java.domain.utils.ValidationUtils.DOES_NOT_MATCH_REQUIRED_TYPE_PHONE;
-import static com.sergiu.libihb_java.domain.utils.ValidationUtils.INPUT_IS_BLANK_PHONE;
-import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PHONE_NUMBER_LEN;
+import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PHONE_NUMBER_LENGTH;
 
+import android.content.Context;
 import android.util.Patterns;
 
+import com.sergiu.libihb_java.R;
+
+import javax.inject.Inject;
+
 public class ValidatePhone implements Validate {
+    private final Context context;
+
+    @Inject
+    public ValidatePhone(Context context) {
+        this.context = context;
+    }
 
     @Override
     public boolean inputNotBlank(String inputType) {
@@ -20,19 +28,19 @@ public class ValidatePhone implements Validate {
     }
 
     public boolean hasCorrectLength(String inputType) {
-        return inputType.length() == PHONE_NUMBER_LEN;
+        return inputType.length() == PHONE_NUMBER_LENGTH;
     }
 
     @Override
     public ValidateResult validate(String inputType) {
         if (!inputNotBlank(inputType)) {
-            return new ValidateResult(false, INPUT_IS_BLANK_PHONE);
+            return new ValidateResult(false, context.getString(R.string.input_is_blank_phone));
         }
         if (!matchesRequiredType(inputType)) {
-            return new ValidateResult(false, DOES_NOT_MATCH_REQUIRED_TYPE_PHONE);
+            return new ValidateResult(false, context.getString(R.string.does_not_match_required_type_phone));
         }
         if (!hasCorrectLength(inputType)) {
-            return new ValidateResult(false, DOES_NOT_HAVE_REQ_LEN);
+            return new ValidateResult(false, context.getString(R.string.does_not_have_req_len_phone));
         }
         return new ValidateResult(true);
     }

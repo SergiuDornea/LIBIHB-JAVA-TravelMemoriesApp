@@ -28,15 +28,15 @@ import java.util.List;
 public class MapsFragment extends Fragment {
     private FragmentMapsBinding binding;
     private GoogleMap map;
-    private OnLatLngSelectedListener onLatLngSelectedListener;
+    private OnAddressSelectedListener onAddressSelectedListener;
     private final OnMapReadyCallback callback = googleMap -> map = googleMap;
 
-    public interface OnLatLngSelectedListener {
-        void onLatLngSelected(LatLng latLng);
+    public interface OnAddressSelectedListener {
+        void onAddressSelected(Address address);
     }
 
-    public void setOnLatLngSelectedListener(OnLatLngSelectedListener listener) {
-        onLatLngSelectedListener = listener;
+    public void setOnAddressSelectedListener(OnAddressSelectedListener listener) {
+        onAddressSelectedListener = listener;
     }
 
     @Nullable
@@ -78,13 +78,14 @@ public class MapsFragment extends Fragment {
 
                 if (addressList != null && !addressList.isEmpty()) {
                     Address address = addressList.get(0);
+                    Log.d("adr", "onQueryTextSubmit: adress " + address.toString());
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
                     binding.searchBar.clearFocus();
 
-                    if (onLatLngSelectedListener != null) {
-                        onLatLngSelectedListener.onLatLngSelected(latLng);
+                    if (onAddressSelectedListener != null) {
+                        onAddressSelectedListener.onAddressSelected(address);
                     }
                 } else {
                     // todo make text translatable

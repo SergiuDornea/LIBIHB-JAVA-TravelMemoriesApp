@@ -2,7 +2,7 @@ package com.sergiu.libihb_java.presentation.events;
 
 public abstract class LogInFormEvent {
 
-    public static final LogInFormEvent SubmitClicked = new LogInFormEvent() {};
+    public static final LogInFormEvent LoginClicked = new LogInFormEvent() {};
 
     public static class PasswordChanged extends LogInFormEvent {
         public final String password;
