@@ -6,12 +6,15 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentLogInBinding;
@@ -23,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class LogInFragment extends Fragment {
     private FragmentLogInBinding binding;
     private LogInViewModel viewModel;
+    private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class LogInFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLogInBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -39,20 +43,40 @@ public class LogInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
-            binding.emailInputTextFieldLayout.setError(formState.getEmailError());
-            binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
-        });
+        navController = NavHostFragment.findNavController(LogInFragment.this);
 
         setTextWatchers();
         setListeners();
+        setObservers();
     }
 
 
     private void setListeners() {
         binding.registerHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_authFragment));
 
-        binding.logInButton.setOnClickListener(view -> viewModel.onEvent(LogInFormEvent.SubmitClicked));
+        binding.logInButton.setOnClickListener(view -> viewModel.onEvent(LogInFormEvent.LoginClicked));
+        viewModel.getNavigationEvent().observe(getViewLifecycleOwner(), navigationEvent -> {
+            if (navigationEvent != null) {
+                int navDestination = navigationEvent.getDestinationId();
+                if (navDestination == R.id.mainFragment) {
+                    navigateWithMessage(navDestination, getString(R.string.login_successful));
+                } else {
+                    navigateWithMessage(navDestination, getString(R.string.login_failed));
+                }
+            }
+        });
+    }
+
+    private void navigateWithMessage(int navDestination, String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        navController.navigate(navDestination);
+    }
+
+    private void setObservers() {
+        viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+            binding.emailInputTextFieldLayout.setError(formState.getEmailError());
+            binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
+        });
     }
 
     private void setTextWatchers() {

@@ -1,10 +1,10 @@
 package com.sergiu.libihb_java.domain.use_case_validate;
 
-import static com.sergiu.libihb_java.domain.utils.ValidationUtils.DOES_NOT_MATCH_REQUIRED_TYPE_NAME;
-import static com.sergiu.libihb_java.domain.utils.ValidationUtils.INPUT_IS_BLANK_NAME;
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.MIN_NAME_LEN;
 
 import android.content.Context;
+
+import com.sergiu.libihb_java.R;
 
 import javax.inject.Inject;
 
@@ -12,7 +12,7 @@ public class ValidateName implements Validate {
     private final Context context;
 
     @Inject
-    public ValidateName(Context context){
+    public ValidateName(Context context) {
         this.context = context;
     }
 
@@ -29,10 +29,10 @@ public class ValidateName implements Validate {
     @Override
     public ValidateResult validate(String inputType) {
         if (!inputNotBlank(inputType)) {
-            return new ValidateResult(false, INPUT_IS_BLANK_NAME);
+            return new ValidateResult(false, context.getString(R.string.input_is_blank_name));
         }
         if (!matchesRequiredType(inputType)) {
-            return new ValidateResult(false, DOES_NOT_MATCH_REQUIRED_TYPE_NAME);
+            return new ValidateResult(false, context.getString(R.string.does_not_match_required_type_name));
         }
         return new ValidateResult(true);
     }

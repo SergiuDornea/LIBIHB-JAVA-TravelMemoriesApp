@@ -29,7 +29,7 @@ public class AuthRepository {
         this.executor = executor;
     }
 
-    public void createUserWithEmailAndPassword(String name, String email, String phone, String password, CreateUserCallback callback) {
+    public void registerUser(String name, String email, String phone, String password, CreateUserCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(executor, task -> {
                     if (task.isSuccessful()) {
@@ -38,15 +38,15 @@ public class AuthRepository {
                             String userID = firebaseUser.getUid();
                             saveUserToFirestore(userID, name, phone, callback);
                         } else {
-                            Log.w(TAG, "createAccount: USER IS NULL");
+                            Log.w(TAG, "registerUser: USER IS NULL");
                         }
                     } else {
-                        Log.e(TAG, "createUserWithEmail: FAIL ", task.getException());
+                        Log.e(TAG, "registerUser: FAIL ", task.getException());
                     }
                 });
     }
 
-    public void signInWithEmailAndPassword(String email, String password, LoginCallback callback) {
+    public void loginUser(String email, String password, LoginCallback callback) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(executor, task -> {
                     if (task.isSuccessful()) {
@@ -54,7 +54,7 @@ public class AuthRepository {
                             callback.onSuccess();
                         }
                     } else {
-                        Log.e(TAG, "signInWithEmail: FAIL", task.getException());
+                        Log.e(TAG, "loginUser: FAIL", task.getException());
                         callback.onFailure();
                     }
                 });

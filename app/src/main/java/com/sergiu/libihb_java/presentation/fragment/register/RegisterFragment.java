@@ -6,12 +6,15 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentRegisterBinding;
@@ -23,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class RegisterFragment extends Fragment {
     private FragmentRegisterBinding binding;
     private RegisterViewModel viewModel;
+    private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class RegisterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -39,31 +43,44 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = NavHostFragment.findNavController(RegisterFragment.this);
+        setTextWatchers();
+        setListeners();
+        setObservers();
+    }
+
+    private void setListeners() {
+        binding.logInHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_authFragment_to_logInFragment));
+
+        binding.registerButton.setOnClickListener(view -> viewModel.onEvent(RegisterFormEvent.RegisterClicked));
+
+        viewModel.getNavigationEvent().observe(getViewLifecycleOwner(), navigationEvent -> {
+            if (navigationEvent != null) {
+                int navDestination = navigationEvent.getDestinationId();
+                if (navDestination == R.id.mainFragment) {
+                    navigateWithMessage(navDestination, getString(R.string.registration_successful));
+                } else if (navDestination == R.id.logInFragment) {
+                    navigateWithMessage(navDestination, getString(R.string.login_failed_after_register_successful));
+                } else {
+                    navigateWithMessage(navDestination, getString(R.string.registration_failed));
+                }
+            }
+        });
+    }
+
+    private void navigateWithMessage(int navDestination, String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        navController.navigate(navDestination);
+    }
+
+
+    private void setObservers() {
         viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
             binding.emailInputTextFieldLayout.setError(formState.getEmailError());
             binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
             binding.nameInputTextFieldLayout.setError(formState.getNameError());
             binding.phoneInputTextFieldLayout.setError(formState.getPhoneError());
             binding.repeatPasswordInputTextFieldLayout.setError(formState.getRepeatPasswordError());
-        });
-
-        setTextWatchers();
-        setListeners();
-    }
-
-    private void setListeners() {
-        binding.logInHereLinkTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_authFragment_to_logInFragment);
-            }
-        });
-
-        binding.registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.onEvent(RegisterFormEvent.RegisterClicked);
-            }
         });
     }
 
@@ -117,7 +134,6 @@ public class RegisterFragment extends Fragment {
 
             }
         });
-
 
 
         binding.nameInputTextField.addTextChangedListener(new TextWatcher() {
