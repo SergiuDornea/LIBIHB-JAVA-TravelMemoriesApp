@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.register;
 
+import javax.annotation.Nonnull;
+
 public class RegisterFormState {
     private final String password;
     private final String repeatPassword;
@@ -12,13 +14,13 @@ public class RegisterFormState {
     private final String nameError;
     private final String phoneError;
 
-    public RegisterFormState(String password, String email, String name, String phone, String repeatPassword,
+    public RegisterFormState(@Nonnull String password, @Nonnull String email, @Nonnull String name, @Nonnull String phone, @Nonnull String repeatPassword,
                              String passwordError, String emailError, String nameError, String phoneError, String repeatPasswordError) {
-        this.password = password != null ? password : "";
-        this.email = email != null ? email : "";
-        this.name = name != null ? name : "";
-        this.phone = phone != null ? phone : "";
-        this.repeatPassword = repeatPassword != null ? repeatPassword : "";
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.repeatPassword = repeatPassword;
         this.passwordError = passwordError;
         this.emailError = emailError;
         this.nameError = nameError;

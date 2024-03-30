@@ -20,7 +20,7 @@ public class LogInViewModel extends ViewModel {
     private final ValidateEmail validateEmail;
     private final ValidatePassword validatePassword;
 
-    private final MutableLiveData<LogInFormState> formState = new MutableLiveData<>(new LogInFormState(null, null, null, null));
+    private final MutableLiveData<LogInFormState> formState = new MutableLiveData<>(new LogInFormState("", "", "", ""));
 
     @Inject
     public LogInViewModel(ValidateEmail validateEmail, ValidatePassword validatePassword){
