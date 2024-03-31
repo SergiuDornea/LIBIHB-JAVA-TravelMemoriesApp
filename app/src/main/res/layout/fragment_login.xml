@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_light_background"
-    tools:context=".presentation.fragment.log_in.LogInFragment">
+    tools:context=".presentation.fragment.login.LoginFragment">
 
     <ImageView
         android:id="@+id/logo_image_view"
         style="@style/logoAppearance"
-        android:src="@drawable/ic_logo_transparent2"
+        app:srcCompat="@drawable/ic_logo_transparent2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.23"
         app:layout_constraintHorizontal_bias="0.497"

@@ -1,15 +1,15 @@
-package com.sergiu.libihb_java.presentation.fragment.log_in;
+package com.sergiu.libihb_java.presentation.fragment.login;
 
 import javax.annotation.Nonnull;
 
-public class LogInFormState {
+public class LoginFormState {
 
     private final String password;
     private final String email;
     private final String passwordError;
     private final String emailError;
 
-    public LogInFormState(@Nonnull String password, @Nonnull String email, String passwordError, String emailError) {
+    public LoginFormState(@Nonnull String password, @Nonnull String email, String passwordError, String emailError) {
         this.password = password;
         this.email = email;
         this.passwordError = passwordError;

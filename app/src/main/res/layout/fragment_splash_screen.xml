@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:background="@color/background_splashscreen"
         android:contentDescription="@string/life_is_better_in_hiking_boots_logo"
-        android:src="@drawable/ic_logo_transparent2"
+        app:srcCompat="@drawable/ic_logo_transparent2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"

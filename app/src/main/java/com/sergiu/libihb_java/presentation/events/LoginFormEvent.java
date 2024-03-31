@@ -1,10 +1,10 @@
 package com.sergiu.libihb_java.presentation.events;
 
-public abstract class LogInFormEvent {
+public abstract class LoginFormEvent {
 
-    public static final LogInFormEvent LoginClicked = new LogInFormEvent() {};
+    public static final LoginFormEvent LoginClicked = new LoginFormEvent() {};
 
-    public static class PasswordChanged extends LogInFormEvent {
+    public static class PasswordChanged extends LoginFormEvent {
         public final String password;
 
         public PasswordChanged(String password) {
@@ -12,7 +12,7 @@ public abstract class LogInFormEvent {
         }
     }
 
-    public static class EmailChanged extends LogInFormEvent {
+    public static class EmailChanged extends LoginFormEvent {
         public final String email;
 
         public EmailChanged(String email) {

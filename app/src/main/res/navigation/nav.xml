@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreen_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -39,10 +39,10 @@
             app:destination="@id/addMemory" />
     </fragment>
     <fragment
-        android:id="@+id/logInFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.log_in.LogInFragment"
-        android:label="fragment_log_in"
-        tools:layout="@layout/fragment_log_in" >
+        android:id="@+id/loginFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_logInFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -60,7 +60,7 @@
             app:destination="@id/mainFragment" />
         <action
             android:id="@+id/action_authFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"

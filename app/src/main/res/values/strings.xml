@@ -51,8 +51,10 @@
     <string name="does_not_have_req_len_phone">The phone number must have 10 digits</string>
     <string name="input_is_blank_password">The password can\'t be empty</string>
     <string name="the_password_must">The password must be at least</string>
+    <string name="incorrect_email_or_password">Incorrect email or password</string>
     <string name="characters_long">characters long</string>
     <string name="does_not_match">The passwords do not match</string>
+    <string name="email_is_already_used">User email or phone already exists</string>
     <string name="not_complex_password">The password must include: lowercase and uppercase letters, digits, no white spaces</string>
     <string name="input_is_blank_name">The name can\'t be empty</string>
     <string name="does_not_match_required_type_name">The phone name is not valid</string>

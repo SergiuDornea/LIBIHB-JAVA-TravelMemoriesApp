@@ -1,19 +1,20 @@
 package com.sergiu.libihb_java.presentation.fragment.register;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidateEmail;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidateEmailRegister;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateName;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidatePassword;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidatePasswordRegister;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidatePhone;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidateRepeatPassword;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidateRepeatPasswordRegister;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.RegisterFormEvent;
-
 
 import java.util.Objects;
 
@@ -23,24 +24,24 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class RegisterViewModel extends ViewModel {
-    private final ValidateEmail validateEmail;
-    private final ValidatePassword validatePassword;
+    private final ValidateEmailRegister validateEmailRegister;
+    private final ValidatePasswordRegister validatePasswordRegister;
     private final ValidatePhone validatePhone;
     private final ValidateName validateName;
-    private final ValidateRepeatPassword validateRepeatPassword;
+    private final ValidateRepeatPasswordRegister validateRepeatPassword;
     private final MutableLiveData<RegisterFormState> formState = new MutableLiveData<>(new RegisterFormState("", "", "", "", "", "", "", "", "", ""));
     private final MutableLiveData<NavigationEvent> navigationEvent = new MutableLiveData<>();
     private final AuthRepository authRepository;
 
     @Inject
-    public RegisterViewModel(ValidateEmail validateEmail,
-                             ValidatePassword validatePassword,
+    public RegisterViewModel(ValidateEmailRegister validateEmailRegister,
+                             ValidatePasswordRegister validatePasswordRegister,
                              ValidatePhone validatePhone,
                              ValidateName validateName,
-                             ValidateRepeatPassword validateRepeatPassword,
+                             ValidateRepeatPasswordRegister validateRepeatPassword,
                              AuthRepository authRepository) {
-        this.validateEmail = validateEmail;
-        this.validatePassword = validatePassword;
+        this.validateEmailRegister = validateEmailRegister;
+        this.validatePasswordRegister = validatePasswordRegister;
         this.validatePhone = validatePhone;
         this.validateName = validateName;
         this.validateRepeatPassword = validateRepeatPassword;
@@ -86,8 +87,8 @@ public class RegisterViewModel extends ViewModel {
     }
 
     private void onRegister() {
-        ValidateResult passValid = validatePassword.validate(Objects.requireNonNull(formState.getValue()).getPassword());
-        ValidateResult emailValid = validateEmail.validate(formState.getValue().getEmail());
+        ValidateResult passValid = validatePasswordRegister.validate(Objects.requireNonNull(formState.getValue()).getPassword());
+        ValidateResult emailValid = validateEmailRegister.validate(formState.getValue().getEmail());
         ValidateResult phoneValid = validatePhone.validate(formState.getValue().getPhone());
         ValidateResult nameValid = validateName.validate(formState.getValue().getName());
         ValidateResult repeatPasswordValid = validateRepeatPassword.validateEqual(formState.getValue().getRepeatPassword(), formState.getValue().getPassword());
@@ -110,7 +111,7 @@ public class RegisterViewModel extends ViewModel {
                     formState.getValue().getEmail(),
                     formState.getValue().getPhone(),
                     formState.getValue().getPassword(),
-                    new AuthRepository.CreateUserCallback() {
+                    new AuthRepository.RegisterCallback() {
                         @Override
                         public void onSuccess() {
                             authRepository.loginUser(
@@ -124,7 +125,7 @@ public class RegisterViewModel extends ViewModel {
 
                                         @Override
                                         public void onFailure() {
-                                            navigationEvent.postValue(new NavigationEvent(R.id.logInFragment));
+                                            navigationEvent.postValue(new NavigationEvent(R.id.loginFragment));
                                         }
                                     });
                         }
@@ -132,6 +133,11 @@ public class RegisterViewModel extends ViewModel {
                         @Override
                         public void onFailure() {
                             navigationEvent.postValue(new NavigationEvent(R.id.authFragment));
+                        }
+
+                        @Override
+                        public void onEmailOrPhoneAlreadyUsed() {
+                            navigationEvent.postValue(new NavigationEvent(DEFAULT_SCREEN_DESTINATION));
                         }
                     });
         }

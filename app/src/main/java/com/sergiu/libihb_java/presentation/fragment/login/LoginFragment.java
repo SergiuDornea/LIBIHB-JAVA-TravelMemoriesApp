@@ -1,4 +1,6 @@
-package com.sergiu.libihb_java.presentation.fragment.log_in;
+package com.sergiu.libihb_java.presentation.fragment.login;
+
+import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,33 +19,34 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.sergiu.libihb_java.R;
-import com.sergiu.libihb_java.databinding.FragmentLogInBinding;
-import com.sergiu.libihb_java.presentation.events.LogInFormEvent;
+
+import com.sergiu.libihb_java.databinding.FragmentLoginBinding;
+import com.sergiu.libihb_java.presentation.events.LoginFormEvent;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class LogInFragment extends Fragment {
-    private FragmentLogInBinding binding;
-    private LogInViewModel viewModel;
+public class LoginFragment extends Fragment {
+    private FragmentLoginBinding binding;
+    private LoginViewModel viewModel;
     private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(LogInViewModel.class);
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentLogInBinding.inflate(inflater, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = NavHostFragment.findNavController(LogInFragment.this);
+        navController = NavHostFragment.findNavController(LoginFragment.this);
 
         setTextWatchers();
         setListeners();
@@ -54,14 +57,14 @@ public class LogInFragment extends Fragment {
     private void setListeners() {
         binding.registerHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_authFragment));
 
-        binding.logInButton.setOnClickListener(view -> viewModel.onEvent(LogInFormEvent.LoginClicked));
+        binding.logInButton.setOnClickListener(view -> viewModel.onEvent(LoginFormEvent.LoginClicked));
         viewModel.getNavigationEvent().observe(getViewLifecycleOwner(), navigationEvent -> {
             if (navigationEvent != null) {
                 int navDestination = navigationEvent.getDestinationId();
                 if (navDestination == R.id.mainFragment) {
                     navigateWithMessage(navDestination, getString(R.string.login_successful));
                 } else {
-                    navigateWithMessage(navDestination, getString(R.string.login_failed));
+                    navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.incorrect_email_or_password));
                 }
             }
         });
@@ -69,6 +72,9 @@ public class LogInFragment extends Fragment {
 
     private void navigateWithMessage(int navDestination, String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        if (navDestination == DEFAULT_SCREEN_DESTINATION) {
+            return;
+        }
         navController.navigate(navDestination);
     }
 
@@ -87,7 +93,7 @@ public class LogInFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.onEvent(new LogInFormEvent.EmailChanged(s.toString()));
+                viewModel.onEvent(new LoginFormEvent.EmailChanged(s.toString()));
             }
 
             @Override
@@ -104,7 +110,7 @@ public class LogInFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.onEvent(new LogInFormEvent.PasswordChanged(s.toString()));
+                viewModel.onEvent(new LoginFormEvent.PasswordChanged(s.toString()));
             }
 
             @Override

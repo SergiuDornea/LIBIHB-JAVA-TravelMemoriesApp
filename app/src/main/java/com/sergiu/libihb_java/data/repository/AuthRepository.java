@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.data.repository;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,23 +30,6 @@ public class AuthRepository {
         this.executor = executor;
     }
 
-    public void registerUser(String name, String email, String phone, String password, CreateUserCallback callback) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(executor, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                        if (firebaseUser != null) {
-                            String userID = firebaseUser.getUid();
-                            saveUserToFirestore(userID, name, phone, callback);
-                        } else {
-                            Log.w(TAG, "registerUser: USER IS NULL");
-                        }
-                    } else {
-                        Log.e(TAG, "registerUser: FAIL ", task.getException());
-                    }
-                });
-    }
-
     public void loginUser(String email, String password, LoginCallback callback) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(executor, task -> {
@@ -60,7 +44,35 @@ public class AuthRepository {
                 });
     }
 
-    private void saveUserToFirestore(String userID, String name, String phone, CreateUserCallback callback) {
+    public void registerUser(String name, String email, String phone, String password, RegisterCallback callback) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(executor, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            String userID = firebaseUser.getUid();
+                            checkPhoneExists(phone, phoneExists -> {
+                                if (phoneExists) {
+                                    Log.d(TAG, "registerUser: PHONE ALREADY EXISTS");
+                                    callback.onEmailOrPhoneAlreadyUsed();
+                                } else {
+                                    saveUserToFirestore(userID, name, phone, callback);
+                                }
+                            });
+                        } else {
+                            Log.w(TAG, "registerUser: USER IS NULL");
+                        }
+                    } else {
+                        Log.e(TAG, "registerUser: FAIL ", task.getException());
+                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            Log.d(TAG, "registerUser: INSTANCE OF FirebaseAuthUserCollisionException");
+                            callback.onEmailOrPhoneAlreadyUsed();
+                        }
+                    }
+                });
+    }
+
+    private void saveUserToFirestore(String userID, String name, String phone, RegisterCallback callback) {
         DocumentReference documentReference = fStore.collection(LIBIHB_USER_PATH_KEY).document(userID);
         Map<String, Object> user = new HashMap<>();
         user.put(NAME_KEY, name);
@@ -70,15 +82,32 @@ public class AuthRepository {
                 .addOnFailureListener(e -> callback.onFailure());
     }
 
+    private void checkPhoneExists(String phone, PhoneCheckCallback callback) {
+        fStore.collection(LIBIHB_USER_PATH_KEY)
+                .whereEqualTo(PHONE_KEY, phone)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> callback.onPhoneChecked(!queryDocumentSnapshots.isEmpty()))
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "checkPhoneExists: FAIL ", e);
+                    callback.onPhoneChecked(false);
+                });
+    }
+
     public interface LoginCallback {
         void onSuccess();
 
         void onFailure();
     }
 
-    public interface CreateUserCallback {
+    public interface RegisterCallback {
         void onSuccess();
 
         void onFailure();
+
+        void onEmailOrPhoneAlreadyUsed();
+    }
+
+    public interface PhoneCheckCallback {
+        void onPhoneChecked(boolean phoneExists);
     }
 }
