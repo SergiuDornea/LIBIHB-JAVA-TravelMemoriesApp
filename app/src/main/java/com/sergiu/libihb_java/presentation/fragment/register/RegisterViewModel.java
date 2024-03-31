@@ -29,7 +29,7 @@ public class RegisterViewModel extends ViewModel {
     private final ValidatePhone validatePhone;
     private final ValidateName validateName;
     private final ValidateRepeatPasswordRegister validateRepeatPassword;
-    private final MutableLiveData<RegisterFormState> formState = new MutableLiveData<>(new RegisterFormState("", "", "", "", "", "", "", "", "", ""));
+    private final MutableLiveData<RegisterFormState> formState = new MutableLiveData<>(new RegisterFormState("", "", "", "", "", null, null, null, null, null));
     private final MutableLiveData<NavigationEvent> navigationEvent = new MutableLiveData<>();
     private final AuthRepository authRepository;
 

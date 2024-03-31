@@ -1,6 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.login;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
+import static com.sergiu.libihb_java.presentation.utils.ScreenSizeUtil.isScreenSmall;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -53,7 +54,6 @@ public class LoginFragment extends Fragment {
         setObservers();
     }
 
-
     private void setListeners() {
         binding.registerHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_authFragment));
 
@@ -79,10 +79,22 @@ public class LoginFragment extends Fragment {
     }
 
     private void setObservers() {
-        viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
-            binding.emailInputTextFieldLayout.setError(formState.getEmailError());
-            binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
-        });
+        setUpFormErrorAccordingToScreenSize();
+    }
+
+    private void setUpFormErrorAccordingToScreenSize() {
+        if (isScreenSmall(requireContext())) {
+            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+                binding.emailInputTextField.setError(formState.getEmailError());
+                binding.passwordInputTextField.setError(formState.getPasswordError());
+                binding.passwordInputTextFieldLayout.setPasswordVisibilityToggleEnabled(false);
+            });
+        } else {
+            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+                binding.emailInputTextFieldLayout.setError(formState.getEmailError());
+                binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
+            });
+        }
     }
 
     private void setTextWatchers() {

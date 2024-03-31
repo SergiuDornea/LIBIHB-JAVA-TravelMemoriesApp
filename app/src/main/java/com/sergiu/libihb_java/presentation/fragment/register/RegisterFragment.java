@@ -1,6 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.register;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
+import static com.sergiu.libihb_java.presentation.utils.ScreenSizeUtil.isScreenSmall;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -63,7 +64,7 @@ public class RegisterFragment extends Fragment {
                     navigateWithMessage(navDestination, getString(R.string.registration_successful));
                 } else if (navDestination == R.id.loginFragment) {
                     navigateWithMessage(navDestination, getString(R.string.login_failed_after_register_successful));
-                }else {
+                } else {
                     navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.email_is_already_used));
                 }
             }
@@ -79,13 +80,30 @@ public class RegisterFragment extends Fragment {
     }
 
     private void setObservers() {
-        viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
-            binding.emailInputTextFieldLayout.setError(formState.getEmailError());
-            binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
-            binding.nameInputTextFieldLayout.setError(formState.getNameError());
-            binding.phoneInputTextFieldLayout.setError(formState.getPhoneError());
-            binding.repeatPasswordInputTextFieldLayout.setError(formState.getRepeatPasswordError());
-        });
+        setUpFormErrorAccordingToScreenSize();
+    }
+
+    private void setUpFormErrorAccordingToScreenSize() {
+        if (isScreenSmall(requireContext())) {
+            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+                binding.emailInputTextField.setError(formState.getEmailError());
+                binding.passwordInputTextField.setError(formState.getPasswordError());
+                binding.nameInputTextField.setError(formState.getNameError());
+                binding.phoneInputTextField.setError(formState.getPhoneError());
+                binding.repeatPasswordInputTextField.setError(formState.getRepeatPasswordError());
+                binding.passwordInputTextFieldLayout.setPasswordVisibilityToggleEnabled(false);
+                binding.repeatPasswordInputTextFieldLayout.setPasswordVisibilityToggleEnabled(false);
+
+            });
+        } else {
+            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+                binding.emailInputTextFieldLayout.setError(formState.getEmailError());
+                binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
+                binding.nameInputTextFieldLayout.setError(formState.getNameError());
+                binding.phoneInputTextFieldLayout.setError(formState.getPhoneError());
+                binding.repeatPasswordInputTextFieldLayout.setError(formState.getRepeatPasswordError());
+            });
+        }
     }
 
     private void setTextWatchers() {

@@ -21,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class LoginViewModel extends ViewModel {
     private final ValidateEmailLogin validateEmailLogin;
     private final ValidatePasswordLogin validatePasswordLogin;
-    private final MutableLiveData<LoginFormState> formState = new MutableLiveData<>(new LoginFormState("", "", "", ""));
+    private final MutableLiveData<LoginFormState> formState = new MutableLiveData<>(new LoginFormState("", "", null, null));
     private final MutableLiveData<LoginViewModel.NavigationEvent> navigationEvent = new MutableLiveData<>();
     private final AuthRepository authRepository;
 
@@ -77,7 +77,6 @@ public class LoginViewModel extends ViewModel {
                             navigationEvent.postValue(new NavigationEvent(R.id.loginFragment));
                         }
                     });
-
         }
     }
 
