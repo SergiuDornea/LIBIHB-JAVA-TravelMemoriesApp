@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.login;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -62,7 +64,7 @@ public class LoginFragment extends Fragment {
                 if (navDestination == R.id.mainFragment) {
                     navigateWithMessage(navDestination, getString(R.string.login_successful));
                 } else {
-                    navigateWithMessage(navDestination, getString(R.string.incorrect_email_or_password));
+                    navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.incorrect_email_or_password));
                 }
             }
         });
@@ -70,6 +72,9 @@ public class LoginFragment extends Fragment {
 
     private void navigateWithMessage(int navDestination, String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        if (navDestination == DEFAULT_SCREEN_DESTINATION) {
+            return;
+        }
         navController.navigate(navDestination);
     }
 

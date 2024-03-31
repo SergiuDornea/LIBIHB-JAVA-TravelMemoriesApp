@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.register;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -61,10 +63,8 @@ public class RegisterFragment extends Fragment {
                     navigateWithMessage(navDestination, getString(R.string.registration_successful));
                 } else if (navDestination == R.id.loginFragment) {
                     navigateWithMessage(navDestination, getString(R.string.login_failed_after_register_successful));
-                } else if (navDestination == R.id.splashScreen) {
-                    Toast.makeText(requireContext(), R.string.email_is_already_used, Toast.LENGTH_SHORT).show();
-                } else {
-                    navigateWithMessage(navDestination, getString(R.string.registration_failed));
+                }else {
+                    navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.email_is_already_used));
                 }
             }
         });
@@ -72,9 +72,11 @@ public class RegisterFragment extends Fragment {
 
     private void navigateWithMessage(int navDestination, String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        if (navDestination == DEFAULT_SCREEN_DESTINATION) {
+            return;
+        }
         navController.navigate(navDestination);
     }
-
 
     private void setObservers() {
         viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {

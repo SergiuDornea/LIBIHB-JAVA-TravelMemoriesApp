@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.register;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.DEFAULT_SCREEN_DESTINATION;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -133,6 +135,10 @@ public class RegisterViewModel extends ViewModel {
                             navigationEvent.postValue(new NavigationEvent(R.id.authFragment));
                         }
 
+                        @Override
+                        public void onEmailOrPhoneAlreadyUsed() {
+                            navigationEvent.postValue(new NavigationEvent(DEFAULT_SCREEN_DESTINATION));
+                        }
                     });
         }
     }
