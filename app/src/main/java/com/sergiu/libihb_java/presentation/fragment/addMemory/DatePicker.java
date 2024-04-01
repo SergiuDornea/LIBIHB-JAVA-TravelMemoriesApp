@@ -1,10 +1,8 @@
-package com.sergiu.libihb_java.presentation.fragment.add_memory;
+package com.sergiu.libihb_java.presentation.fragment.addMemory;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
