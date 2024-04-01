@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
         travelMemoryAdapter = new TravelMemoryAdapter(position -> Log.d("click", "onItemClick: item clicked"));
 
         binding.fab.setOnClickListener(v -> {
-            navController.navigate(R.id.addMemory);
+            navController.navigate(R.id.addMemorySliderFragment);
         });
     }
 

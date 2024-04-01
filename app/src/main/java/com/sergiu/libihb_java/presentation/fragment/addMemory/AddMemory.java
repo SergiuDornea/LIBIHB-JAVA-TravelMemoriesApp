@@ -1,6 +1,5 @@
-package com.sergiu.libihb_java.presentation.fragment.add_memory;
+package com.sergiu.libihb_java.presentation.fragment.addMemory;
 
-import android.annotation.SuppressLint;
 import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,11 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentAddMemoryBinding;
-import com.sergiu.libihb_java.domain.model.TravelMemory;
-import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +26,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class AddMemory extends Fragment implements MapsFragment.OnAddressSelectedListener{
+public class AddMemory extends Fragment {
     private static final String TAG = AddMemory.class.getName();
     private static final Integer MAX_MEMORY_IMG = 5;
     private FragmentAddMemoryBinding binding;
@@ -57,23 +52,8 @@ public class AddMemory extends Fragment implements MapsFragment.OnAddressSelecte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setUpMapFragment();
         setListeners();
     }
-
-    @Override
-    public void onAddressSelected(Address address) {
-        this.address = address;
-    }
-
-    private void setUpMapFragment(){
-        MapsFragment mapsFragment = new MapsFragment();
-        mapsFragment.setOnAddressSelectedListener(this);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.map_container, mapsFragment)
-                .commit();
-    }
-
 
     private void setListeners() {
         binding.pickADateMaterialButton.setOnClickListener(view -> {
@@ -91,29 +71,9 @@ public class AddMemory extends Fragment implements MapsFragment.OnAddressSelecte
         binding.choosePhotosMaterialButton.setOnClickListener(view -> {
             choosePhotosFromGallery();
         });
-
-        binding.saveMemoryMaterialButton.setOnClickListener(view -> {
-            String memoryName = binding.memoryTextInputField.getText().toString();
-            String memoryDescription = binding.memoryDescriptionInputTextView.getText().toString();
-            String placeLocationName = address.getAddressLine(0);
-            LatLng coordinates = new LatLng(address.getLatitude(), address.getLongitude());;
-            Date dateOfTravel = date;
-
-            // Create TravelMemory object with user input
-            TravelMemory travelMemory = new TravelMemory(
-                    viewModel.getListOfImgUri().getValue(),
-                    memoryName,
-                    memoryDescription,
-                    coordinates,
-                    dateOfTravel,
-                    placeLocationName
-            );
-
-            viewModel.saveMemory(travelMemory) ;
-        });
     }
 
-    private void initializeActivityResultLauncher(){
+    private void initializeActivityResultLauncher() {
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(MAX_MEMORY_IMG), uris -> {
             if (uris.isEmpty()) {
                 Log.d(TAG, "No media selected");
@@ -134,5 +94,4 @@ public class AddMemory extends Fragment implements MapsFragment.OnAddressSelecte
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build());
     }
-
 }

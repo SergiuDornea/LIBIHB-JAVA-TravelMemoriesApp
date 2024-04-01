@@ -88,10 +88,8 @@ public class MapsFragment extends Fragment {
                         onAddressSelectedListener.onAddressSelected(address);
                     }
                 } else {
-                    // todo make text translatable
                     Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
                 }
-
                 return true;
             }
 

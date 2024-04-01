@@ -61,4 +61,6 @@
     <string name="input_is_blank_email">The email can\'t be empty</string>
     <string name="does_not_match_required_type_email">The email is not valid</string>
     <string name="app_logo">App logo</string>
+    <string name="choose_searched_location">Choose searched location</string>
+    <string name="tap_on_the_magnifying_glass_and_search_the_memory_location">Tap on the magnifying glass and search the memory location:</string>
 </resources>

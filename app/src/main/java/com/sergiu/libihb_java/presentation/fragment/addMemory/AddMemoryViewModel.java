@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.presentation.fragment.add_memory;
+package com.sergiu.libihb_java.presentation.fragment.addMemory;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
