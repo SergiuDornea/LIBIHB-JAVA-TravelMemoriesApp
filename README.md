@@ -58,4 +58,17 @@ Registration fields validation:
 ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/690628a1-197e-4d84-86a7-0c727716bb60)
 
  
-Once the user provides valid input it will be registerd using FirebaseAuth
+Once the user provides valid input it will be registerd using FirebaseAuth and redirected to the HomeScreen: 
+- Work in progress - the home screen holds a scrollable vertical list with all the saved memories
+- on the HomeScreen's bottom right corner is a floating button that lets the users add a new memory by redirecting them into the following sequence of screens:
+  ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/b725e226-b5ec-4a57-a638-06a6f580c827)
+  ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/e46c52c5-005e-4119-9466-f097af8eeddc)
+  ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/01aab20c-c3e6-4f51-b510-fd562384edf7)
+
+PREVIEW of allready completed hike memory data:
+
+[Screen_recording_20240404_002745.webm](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/ee43f217-cedb-4fc1-9497-01a87f707a4a)
+
+
+  
+
