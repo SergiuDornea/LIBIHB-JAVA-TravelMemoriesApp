@@ -2,7 +2,6 @@ package com.sergiu.libihb_java.presentation.fragment.addMemorySlider;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,8 +18,8 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.sergiu.libihb_java.databinding.FragmentAddMemorySliderBinding;
 import com.sergiu.libihb_java.presentation.adapters.AddMemoryFragmentsAdapter;
 import com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemory;
-import com.sergiu.libihb_java.presentation.fragment.confirmMemory.MemoryOverview;
 import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
+import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
 public class AddMemorySliderFragment extends Fragment {

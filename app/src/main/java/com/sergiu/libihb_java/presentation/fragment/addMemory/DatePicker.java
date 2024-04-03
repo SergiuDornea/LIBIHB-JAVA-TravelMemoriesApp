@@ -11,11 +11,12 @@ import java.util.Calendar;
 
 public class DatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private final OnDateSelectedListener onDateSelectedListener;
+
     public interface OnDateSelectedListener {
         void onDateSelected(int year, int month, int day);
     }
 
-    public DatePicker(OnDateSelectedListener onDateSelectedListener){
+    public DatePicker(OnDateSelectedListener onDateSelectedListener) {
         this.onDateSelectedListener = onDateSelectedListener;
     }
 

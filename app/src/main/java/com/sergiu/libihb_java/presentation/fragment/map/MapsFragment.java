@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,18 +26,19 @@ import com.sergiu.libihb_java.databinding.FragmentMapsBinding;
 
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MapsFragment extends Fragment {
     private FragmentMapsBinding binding;
     private GoogleMap map;
-    private OnAddressSelectedListener onAddressSelectedListener;
     private final OnMapReadyCallback callback = googleMap -> map = googleMap;
+    private MapsViewModel viewModel;
 
-    public interface OnAddressSelectedListener {
-        void onAddressSelected(Address address);
-    }
-
-    public void setOnAddressSelectedListener(OnAddressSelectedListener listener) {
-        onAddressSelectedListener = listener;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MapsViewModel.class);
     }
 
     @Nullable
@@ -62,6 +64,14 @@ public class MapsFragment extends Fragment {
         }
     }
 
+    public void setMarkerAtGivenLatLng(LatLng latLng) {
+        if (map != null) {
+            map.clear();
+            map.addMarker(new MarkerOptions().position(latLng));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+        }
+    }
+
     private void setListeners() {
         binding.searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -80,13 +90,11 @@ public class MapsFragment extends Fragment {
                     Address address = addressList.get(0);
                     Log.d("adr", "onQueryTextSubmit: adress " + address.toString());
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    map.addMarker(new MarkerOptions().position(latLng).title(location));
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                    setMarkerAtGivenLatLng(latLng);
                     binding.searchBar.clearFocus();
 
-                    if (onAddressSelectedListener != null) {
-                        onAddressSelectedListener.onAddressSelected(address);
-                    }
+                    viewModel.setCoordinates(latLng);
+                    viewModel.setPlaceLocationName(address.getFeatureName());
                 } else {
                     Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
                 }

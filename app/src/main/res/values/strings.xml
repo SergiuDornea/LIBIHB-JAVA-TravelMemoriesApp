@@ -63,4 +63,9 @@
     <string name="app_logo">App logo</string>
     <string name="choose_searched_location">Choose searched location</string>
     <string name="tap_on_the_magnifying_glass_and_search_the_memory_location">Tap on the magnifying glass and search the memory location:</string>
+    <string name="final_look">Take a final look at your almost saved memory</string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit">Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
+    <string name="date">Date</string>
+    <string name="location_name">Location name</string>
+    <string name="a_memory_image">A memory image</string>
 </resources>
