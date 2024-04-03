@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -22,23 +23,23 @@ public class MemoryOverviewViewModel extends ViewModel {
         this.memoriesRoomRepository = memoriesRoomRepository;
     }
 
-    public MutableLiveData<String> getPlaceLocationName(){
+    public LiveData<String> observePlaceLocationName(){
         return memoriesRoomRepository.getPlaceLocationName();
     }
 
-    public MutableLiveData<List<String>> getListOfImgUri() {
+    public LiveData<List<String>> observeListOfImgUri() {
         return memoriesRoomRepository.getListOfImgUri();
     }
-    public MutableLiveData<String> getMemoryName() {
+    public LiveData<String> observeMemoryName() {
         return memoriesRoomRepository.getMemoryName();
     }
-    public MutableLiveData<String> getMemoryDescription() {
+    public LiveData<String> observeMemoryDescription() {
         return memoriesRoomRepository.getMemoryDescription();
     }
-    public MutableLiveData<LatLng> getCoordinates() {
+    public LiveData<LatLng> observeCoordinates() {
         return memoriesRoomRepository.getCoordinates();
     }
-    public MutableLiveData<Date> getDateOfTravel() {
+    public LiveData<Date> observeDateOfTravel() {
         return memoriesRoomRepository.getDateOfTravel();
     }
 }

@@ -71,7 +71,11 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
 
         public void bind(TravelMemory travelMemory) {
             Context context = itemView.getContext();
-            Glide.with(context).load(travelMemory.getImageList().get(0)).placeholder(R.drawable.rimetea).error(R.drawable.i_unavailable_img).into(memoryImage);
+            Glide.with(context)
+                    .load(travelMemory.getImageList().get(0))
+                    .placeholder(R.drawable.rimetea)
+                    .error(R.drawable.i_unavailable_img)
+                    .into(memoryImage);
             placeName.setText(travelMemory.getMemoryName());
             dateOfTravel.setText(travelMemory.getDateOfTravel().toString());
             location.setText(travelMemory.getPlaceLocationName());
@@ -80,9 +84,9 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
 
     }
 
-    public void updateMemoryList(List<TravelMemory> songs) {
+    public void updateMemoryList(List<TravelMemory> memoryList) {
         this.memoryList.clear();
-        this.memoryList.addAll(songs);
+        this.memoryList.addAll(memoryList);
         notifyDataSetChanged();
     }
 
