@@ -22,63 +22,76 @@ public class MemoriesRoomRepository {
     private final MutableLiveData<Date> dateOfTravel = new MutableLiveData<>();
 
     @Inject
-    public MemoriesRoomRepository(TravelMemoryDao travelMemoryDao){
+    public MemoriesRoomRepository(TravelMemoryDao travelMemoryDao) {
         this.dao = travelMemoryDao;
     }
 
-    public MutableLiveData<List<String>> getListOfImgUri() {
+    public MutableLiveData<List<String>> observeListOfImgUri() {
         return listOfImgUri;
     }
-    public MutableLiveData<String> getMemoryName() {
+
+    public MutableLiveData<String> observeMemoryName() {
         return memoryName;
     }
-    public MutableLiveData<String> getMemoryDescription() {
+
+
+    public MutableLiveData<String> observeMemoryDescription() {
         return memoryDescription;
     }
-    public MutableLiveData<String> getPlaceLocationName() {
+
+    public MutableLiveData<String> observePlaceLocationName() {
         return placeLocationName;
     }
-    public MutableLiveData<LatLng> getCoordinates() {
+
+    public MutableLiveData<LatLng> observeCoordinates() {
         return coordinates;
     }
-    public MutableLiveData<Date> getDateOfTravel() {
+
+    public MutableLiveData<Date> observeDateOfTravel() {
         return dateOfTravel;
     }
+
     public void setListOfImgUri(List<String> list) {
         listOfImgUri.setValue(list);
     }
+
     public void setMemoryName(String name) {
         memoryName.setValue(name);
     }
+
     public void setMemoryDescription(String description) {
         memoryDescription.setValue(description);
     }
+
     public void setPlaceLocationName(String locationName) {
         placeLocationName.setValue(locationName);
     }
+
     public void setCoordinates(LatLng latLng) {
         coordinates.setValue(latLng);
     }
+
     public void setDateOfTravel(Date date) {
         dateOfTravel.setValue(date);
     }
 
-    public void insertTravelMemory(TravelMemory travelMemory){
+    public void insertTravelMemory(TravelMemory travelMemory) {
         dao.insertTravelMemory(travelMemory);
     }
-    public void updateTravelMemory(TravelMemory travelMemory){
+
+    public void updateTravelMemory(TravelMemory travelMemory) {
         dao.updateTravelMemory(travelMemory);
     }
 
-    public LiveData<List<TravelMemory>> getMemories(){
+    public LiveData<List<TravelMemory>> getMemories() {
         return dao.getMemories();
     }
 
-    public void deleteTravelMemory(TravelMemory travelMemory){
+    public void deleteTravelMemory(TravelMemory travelMemory) {
         dao.deleteTravelMemory(travelMemory);
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         dao.deleteAll();
     }
 }

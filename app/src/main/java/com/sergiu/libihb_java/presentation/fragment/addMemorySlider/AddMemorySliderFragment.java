@@ -14,14 +14,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.sergiu.libihb_java.databinding.FragmentAddMemorySliderBinding;
 import com.sergiu.libihb_java.presentation.adapters.AddMemoryFragmentsAdapter;
 import com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemory;
-import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview;
 import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
-import com.sergiu.libihb_java.presentation.fragment.splash.SplashScreen;
+import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
 public class AddMemorySliderFragment extends Fragment {

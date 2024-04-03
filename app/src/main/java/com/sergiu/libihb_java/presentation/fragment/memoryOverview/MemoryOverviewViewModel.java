@@ -1,7 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -19,27 +18,31 @@ public class MemoryOverviewViewModel extends ViewModel {
     private final MemoriesRoomRepository memoriesRoomRepository;
 
     @Inject
-    public MemoryOverviewViewModel(MemoriesRoomRepository memoriesRoomRepository){
+    public MemoryOverviewViewModel(MemoriesRoomRepository memoriesRoomRepository) {
         this.memoriesRoomRepository = memoriesRoomRepository;
     }
 
-    public LiveData<String> observePlaceLocationName(){
-        return memoriesRoomRepository.getPlaceLocationName();
+    public LiveData<String> observePlaceLocationName() {
+        return memoriesRoomRepository.observePlaceLocationName();
     }
 
     public LiveData<List<String>> observeListOfImgUri() {
-        return memoriesRoomRepository.getListOfImgUri();
+        return memoriesRoomRepository.observeListOfImgUri();
     }
+
     public LiveData<String> observeMemoryName() {
-        return memoriesRoomRepository.getMemoryName();
+        return memoriesRoomRepository.observeMemoryName();
     }
+
     public LiveData<String> observeMemoryDescription() {
-        return memoriesRoomRepository.getMemoryDescription();
+        return memoriesRoomRepository.observeMemoryDescription();
     }
+
     public LiveData<LatLng> observeCoordinates() {
-        return memoriesRoomRepository.getCoordinates();
+        return memoriesRoomRepository.observeCoordinates();
     }
+
     public LiveData<Date> observeDateOfTravel() {
-        return memoriesRoomRepository.getDateOfTravel();
+        return memoriesRoomRepository.observeDateOfTravel();
     }
 }
