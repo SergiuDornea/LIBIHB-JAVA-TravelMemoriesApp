@@ -1,8 +1,9 @@
 package com.sergiu.libihb_java.presentation.fragment.addMemory;
 
-import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,14 +32,12 @@ public class AddMemory extends Fragment {
     private static final Integer MAX_MEMORY_IMG = 5;
     private FragmentAddMemoryBinding binding;
     private AddMemoryViewModel viewModel;
-    private Address address;
     private Date date;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeActivityResultLauncher();
         viewModel = new ViewModelProvider(this).get(AddMemoryViewModel.class);
     }
 
@@ -52,18 +51,51 @@ public class AddMemory extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initializeActivityResultLauncher();
+        setTextWatchers();
         setListeners();
+    }
+
+    private void setTextWatchers() {
+        binding.memoryNameAutocompleteField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                viewModel.setMemoryName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        binding.memoryDescriptionAutocompleteField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                viewModel.setMemoryDescription(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void setListeners() {
         binding.pickADateMaterialButton.setOnClickListener(view -> {
-            DatePicker datePicker = new DatePicker(new DatePicker.OnDateSelectedListener() {
-                @Override
-                public void onDateSelected(int year, int month, int day) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year, month, day);
-                    date = calendar.getTime();
-                }
+            DatePicker datePicker = new DatePicker((year, month, day) -> {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+                date = calendar.getTime();
+                viewModel.setDateOfTravel(date);
             });
             datePicker.show(requireActivity().getSupportFragmentManager(), "datePiker");
         });

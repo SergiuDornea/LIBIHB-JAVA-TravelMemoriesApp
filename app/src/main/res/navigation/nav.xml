@@ -91,21 +91,31 @@
         android:id="@+id/addMemory"
         android:name="com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemory"
         android:label="AddMemory" >
+        <action
+            android:id="@+id/action_addMemory_to_mapsFragment2"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.map.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_memoryOverview2"
+            app:destination="@id/memoryOverview" />
+    </fragment>
     <fragment
         android:id="@+id/addMemorySliderFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.addMemorySlider.AddMemorySliderFragment"
         android:label="fragment_add_memory_slider"
         tools:layout="@layout/fragment_add_memory_slider" >
+        <action
+            android:id="@+id/action_addMemorySliderFragment_to_addMemory2"
+            app:destination="@id/addMemory" />
     </fragment>
     <fragment
         android:id="@+id/memoryOverview"
-        android:name="com.sergiu.libihb_java.presentation.fragment.confirmMemory.MemoryOverview"
+        android:name="com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview"
         android:label="fragment_memory_overview"
         tools:layout="@layout/fragment_memory_overview" />
 </navigation>

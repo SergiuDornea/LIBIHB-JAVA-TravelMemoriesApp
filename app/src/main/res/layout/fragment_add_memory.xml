@@ -33,36 +33,39 @@
         android:text="@string/add_new_memory_label"
         android:textColor="@color/md_theme_light_primary"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/memory_text_input_field"
+        app:layout_constraintBottom_toTopOf="@id/memory_name_autocomplete_field"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greeting_text_view" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/memory_text_input_field"
+        android:id="@+id/memory_name_autocomplete_field"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
         android:hint="@string/how_would_you_name_your_adventure"
         android:maxLines="2"
+        android:text=""
         android:textColorHint="@color/md_theme_light_primary"
-        app:layout_constraintBottom_toTopOf="@id/memory_description_input_text_view"
+        app:layout_constraintBottom_toTopOf="@id/memory_description_autocomplete_field"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/memory_name_text_view" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/memory_description_input_text_view"
+        android:id="@+id/memory_description_autocomplete_field"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
         android:hint="@string/maybe_you_want_to_describe_it"
         android:maxLines="4"
+        android:text=""
         android:textColorHint="@color/md_theme_light_primary"
         app:layout_constraintBottom_toTopOf="@id/pick_a_date_text_view"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/memory_text_input_field" />
+        app:layout_constraintTop_toBottomOf="@+id/memory_name_autocomplete_field" />
+
 
     <TextView
         android:id="@+id/pick_a_date_text_view"
@@ -77,13 +80,14 @@
         app:layout_constraintBottom_toTopOf="@id/pick_a_date_material_button"
         app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/memory_description_input_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/memory_description_autocomplete_field" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pick_a_date_material_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
+        android:autoSizeTextType="uniform"
         android:text="@string/pick_a_date"
         app:icon="@drawable/ic_calendar"
         app:iconGravity="textEnd"
@@ -99,7 +103,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:autoSizeTextType="uniform"
         android:text="@string/choose_up_to_5_photos"
         android:textColor="@color/md_theme_light_primary"
         android:textSize="18sp"
@@ -114,6 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
+        android:autoSizeTextType="uniform"
         android:text="@string/choose_photos_from_gallery"
         app:icon="@drawable/ic_add_photos"
         app:iconGravity="textEnd"
