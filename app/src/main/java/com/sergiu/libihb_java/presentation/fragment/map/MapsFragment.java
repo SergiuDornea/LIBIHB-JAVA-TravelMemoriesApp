@@ -34,6 +34,7 @@ public class MapsFragment extends Fragment {
     private GoogleMap map;
     private final OnMapReadyCallback callback = googleMap -> map = googleMap;
     private MapsViewModel viewModel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

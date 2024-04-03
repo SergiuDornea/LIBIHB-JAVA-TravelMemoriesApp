@@ -59,14 +59,11 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
             this.dateOfTravel = itemView.findViewById(R.id.date_of_travel_image_view);
             this.location = itemView.findViewById(R.id.place_location_text_view);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        int currentPosition = getAdapterPosition();
-                        if (currentPosition != RecyclerView.NO_POSITION) {
-                            itemClickListener.onItemClick(currentPosition);
-                        }
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    int currentPosition = getAdapterPosition();
+                    if (currentPosition != RecyclerView.NO_POSITION) {
+                        itemClickListener.onItemClick(currentPosition);
                     }
                 }
             });

@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMemoryOverviewBinding;
 import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
@@ -20,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MemoryOverview extends Fragment {
     private MemoryOverviewViewModel viewModel;
     private FragmentMemoryOverviewBinding binding;
+    private SupportMapFragment mapFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class MemoryOverview extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_overview);
         setObservers();
     }
 
@@ -47,8 +52,14 @@ public class MemoryOverview extends Fragment {
         viewModel.getPlaceLocationName().observe(getViewLifecycleOwner(), s -> binding.locationNameTextView.setText(s));
         viewModel.getDateOfTravel().observe(getViewLifecycleOwner(), date -> binding.dateTextView.setText(date.toString()));
         viewModel.getCoordinates().observe(getViewLifecycleOwner(), latLng -> {
-
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(googleMap -> {
+                    googleMap.addMarker(new MarkerOptions().position(latLng));
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8));
+                });
+            }
         });
+
         viewModel.getListOfImgUri().observe(getViewLifecycleOwner(), strings -> {
             binding.textView.setText(strings.get(0));
         });

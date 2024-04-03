@@ -83,7 +83,7 @@
             app:layout_constraintWidth_percent="0.4" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/map"
+            android:id="@+id/map_overview"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -94,4 +94,12 @@
             app:layout_constraintTop_toBottomOf="@id/date_text_view"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/form_overview_constraint_layout"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

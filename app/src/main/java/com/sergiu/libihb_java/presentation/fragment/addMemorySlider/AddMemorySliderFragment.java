@@ -14,6 +14,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.sergiu.libihb_java.databinding.FragmentAddMemorySliderBinding;
 import com.sergiu.libihb_java.presentation.adapters.AddMemoryFragmentsAdapter;
