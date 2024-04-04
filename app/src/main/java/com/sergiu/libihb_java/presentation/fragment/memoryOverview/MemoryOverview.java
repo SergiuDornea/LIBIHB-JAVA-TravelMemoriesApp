@@ -1,7 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MemoryOverview extends Fragment {
-    private static final String TAG = MemoryOverview.class.getSimpleName();
     private MemoryOverviewViewModel viewModel;
     private FragmentMemoryOverviewBinding binding;
     private SupportMapFragment mapFragment;
@@ -54,7 +52,8 @@ public class MemoryOverview extends Fragment {
     }
 
     private void setListeners() {
-        memoryOverviewAdapter = new MemoryOverviewAdapter(position -> Log.d(TAG, "setListeners: on deletion click"));
+        memoryOverviewAdapter = new MemoryOverviewAdapter(position -> memoryOverviewAdapter.removeImgUriFromList(position));
+        binding.saveMemoryMaterialButton.setOnClickListener(view -> viewModel.saveMemory());
     }
 
     private void setObservers() {

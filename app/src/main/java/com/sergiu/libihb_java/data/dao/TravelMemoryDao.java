@@ -1,6 +1,5 @@
 package com.sergiu.libihb_java.data.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,20 +11,23 @@ import com.sergiu.libihb_java.domain.model.TravelMemory;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 @Dao
 public interface TravelMemoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertTravelMemory(TravelMemory travelMemory);
+    Completable insertTravelMemory(TravelMemory travelMemory);
 
     @Update
-    void updateTravelMemory(TravelMemory travelMemory);
+    Completable updateTravelMemory(TravelMemory travelMemory);
 
     @Query("SELECT * from memories")
-    LiveData<List<TravelMemory>> getMemories();
+    Flowable<List<TravelMemory>> getMemories();
 
     @Delete
-    void deleteTravelMemory(TravelMemory travelMemory);
+    Completable deleteTravelMemory(TravelMemory travelMemory);
 
     @Query("DELETE from memories")
-    void deleteAll();
+    Completable deleteAll();
 }

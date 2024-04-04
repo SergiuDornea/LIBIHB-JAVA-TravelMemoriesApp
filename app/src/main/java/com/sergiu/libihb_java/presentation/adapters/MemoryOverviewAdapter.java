@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -44,15 +45,15 @@ public class MemoryOverviewAdapter extends RecyclerView.Adapter<MemoryOverviewAd
         return imgUriList.size();
     }
 
-
     public static class MemoryOverviewViewHolder extends RecyclerView.ViewHolder {
         private final ImageView memoryImage;
 
         public MemoryOverviewViewHolder(@NonNull View itemView, OnDeleteClickListener deleteClickListener) {
             super(itemView);
             this.memoryImage = itemView.findViewById(R.id.photo_image_overview);
+            ImageButton removeButton = itemView.findViewById(R.id.delete_image_button);
 
-            itemView.setOnClickListener(view -> {
+            removeButton.setOnClickListener(view -> {
                 if (deleteClickListener != null) {
                     int currentPosition = getAdapterPosition();
                     if (currentPosition != RecyclerView.NO_POSITION) {
@@ -75,6 +76,11 @@ public class MemoryOverviewAdapter extends RecyclerView.Adapter<MemoryOverviewAd
     public void updateImgUriList(List<String> imgUriList) {
         this.imgUriList.clear();
         this.imgUriList.addAll(imgUriList);
+        notifyDataSetChanged();
+    }
+
+    public void removeImgUriFromList(int position) {
+        imgUriList.remove(position);
         notifyDataSetChanged();
     }
 
