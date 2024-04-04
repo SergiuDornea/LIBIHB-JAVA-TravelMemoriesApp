@@ -1,6 +1,5 @@
 package com.sergiu.libihb_java.data.repository;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -11,6 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 
 public class MemoriesRoomRepository {
     private final TravelMemoryDao dao;
@@ -33,7 +35,6 @@ public class MemoriesRoomRepository {
     public MutableLiveData<String> observeMemoryName() {
         return memoryName;
     }
-
 
     public MutableLiveData<String> observeMemoryDescription() {
         return memoryDescription;
@@ -75,23 +76,35 @@ public class MemoriesRoomRepository {
         dateOfTravel.setValue(date);
     }
 
-    public void insertTravelMemory(TravelMemory travelMemory) {
-        dao.insertTravelMemory(travelMemory);
+    public List<String> getImageList() {
+        return listOfImgUri.getValue();
     }
 
-    public void updateTravelMemory(TravelMemory travelMemory) {
-        dao.updateTravelMemory(travelMemory);
+    public String getMemoryName() {
+        return memoryName.getValue();
     }
 
-    public LiveData<List<TravelMemory>> getMemories() {
+    public LatLng getCoordinates() {
+        return coordinates.getValue();
+    }
+
+    public Date getDateOfTravel() {
+        return dateOfTravel.getValue();
+    }
+
+    public String getPlaceLocationName() {
+        return placeLocationName.getValue();
+    }
+
+    public String getMemoryDescription() {
+        return memoryDescription.getValue();
+    }
+
+    public Completable insertTravelMemory(TravelMemory travelMemory) {
+        return dao.insertTravelMemory(travelMemory);
+    }
+
+    public Flowable<List<TravelMemory>> getMemories() {
         return dao.getMemories();
-    }
-
-    public void deleteTravelMemory(TravelMemory travelMemory) {
-        dao.deleteTravelMemory(travelMemory);
-    }
-
-    public void deleteAll() {
-        dao.deleteAll();
     }
 }

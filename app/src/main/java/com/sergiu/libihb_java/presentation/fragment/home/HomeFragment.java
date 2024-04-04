@@ -15,10 +15,12 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sergiu.libihb_java.R;
-
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private NavController navController;
@@ -51,14 +53,11 @@ public class HomeFragment extends Fragment {
 
     private void setListeners() {
         travelMemoryAdapter = new TravelMemoryAdapter(position -> Log.d("click", "onItemClick: item clicked"));
-
-        binding.fab.setOnClickListener(v -> {
-            navController.navigate(R.id.addMemorySliderFragment);
-        });
+        viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
+        binding.fab.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
     }
 
     private void setUpRecyclerview() {
-        travelMemoryAdapter.updateMemoryList(viewModel.getDummyMemories());
         binding.memoryRecyclerView.setAdapter(travelMemoryAdapter);
         binding.memoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
