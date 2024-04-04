@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addMemorySliderFragment"
             app:destination="@id/addMemorySliderFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_memoryDetailsFragment"
+            app:destination="@id/memoryDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -118,4 +121,9 @@
         android:name="com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview"
         android:label="fragment_memory_overview"
         tools:layout="@layout/fragment_memory_overview" />
+    <fragment
+        android:id="@+id/memoryDetailsFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.details.MemoryDetailsFragment"
+        android:label="fragment_memory_details"
+        tools:layout="@layout/fragment_memory_details" />
 </navigation>

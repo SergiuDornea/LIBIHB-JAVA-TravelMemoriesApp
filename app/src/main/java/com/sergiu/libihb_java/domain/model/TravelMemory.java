@@ -1,6 +1,10 @@
 package com.sergiu.libihb_java.domain.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -16,7 +20,7 @@ import java.util.List;
 
 @Entity(tableName = "memories")
 @TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
-public class TravelMemory {
+public class TravelMemory implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private Long id;
     @ColumnInfo(name = "image_list")
@@ -47,6 +51,21 @@ public class TravelMemory {
         this.placeLocationName = placeLocationName;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeStringList(imageList);
+        parcel.writeString(memoryName);
+        parcel.writeString(memoryDescription);
+        parcel.writeString(placeLocationName);
+        parcel.writeParcelable(coordinates, i);
+        parcel.writeLong(dateOfTravel.getTime());
+    }
 
     public List<String> getImageList() {
         return imageList;
