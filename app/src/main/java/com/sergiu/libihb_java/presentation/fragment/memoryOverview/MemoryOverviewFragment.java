@@ -24,7 +24,7 @@ import java.util.Objects;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MemoryOverview extends Fragment {
+public class MemoryOverviewFragment extends Fragment {
     private MemoryOverviewViewModel viewModel;
     private FragmentMemoryOverviewBinding binding;
     private SupportMapFragment mapFragment;
