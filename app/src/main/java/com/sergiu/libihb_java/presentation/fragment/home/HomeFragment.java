@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.presentation.fragment.home;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITION_KEY;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
-import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.MemoryDetailsFragment;
 
@@ -65,7 +65,8 @@ public class HomeFragment extends Fragment {
 
     private void navigateWithPosition(int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt(MEMORY_POSITION_KEY, position);
+        Log.d("HomeFragment", "navigateWithPosition: value " + viewModel.getMemoriesLiveData().getValue().get(position).getImageList());
+        bundle.putParcelable(MEMORY_POSITION_KEY, Objects.requireNonNull(viewModel.getMemoriesLiveData().getValue()).get(position));
 
         MemoryDetailsFragment memoryDetailsFragment = new MemoryDetailsFragment();
         memoryDetailsFragment.setArguments(bundle);

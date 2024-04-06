@@ -27,8 +27,8 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class AddMemory extends Fragment {
-    private static final String TAG = AddMemory.class.getName();
+public class AddMemoryFragment extends Fragment {
+    private static final String TAG = AddMemoryFragment.class.getName();
     private static final Integer MAX_MEMORY_IMG = 5;
     private FragmentAddMemoryBinding binding;
     private AddMemoryViewModel viewModel;
@@ -108,7 +108,7 @@ public class AddMemory extends Fragment {
     private void initializeActivityResultLauncher() {
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(MAX_MEMORY_IMG), uris -> {
             if (uris.isEmpty()) {
-                Log.d(TAG, "No media selected");
+                Log.d(TAG, "No media selected"); // todo change language maybe
             } else {
                 Log.d(TAG, "Number of items selected: " + uris.size());
                 List<String> uriStrings = new ArrayList<>();

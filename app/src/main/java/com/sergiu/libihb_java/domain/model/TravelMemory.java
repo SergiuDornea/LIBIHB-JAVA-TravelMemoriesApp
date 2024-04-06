@@ -4,7 +4,6 @@ package com.sergiu.libihb_java.domain.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -51,21 +50,30 @@ public class TravelMemory implements Parcelable {
         this.placeLocationName = placeLocationName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    protected TravelMemory(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        imageList = in.createStringArrayList();
+        memoryName = in.readString();
+        memoryDescription = in.readString();
+        placeLocationName = in.readString();
+        coordinates = in.readParcelable(LatLng.class.getClassLoader());
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeLong(id);
-        parcel.writeStringList(imageList);
-        parcel.writeString(memoryName);
-        parcel.writeString(memoryDescription);
-        parcel.writeString(placeLocationName);
-        parcel.writeParcelable(coordinates, i);
-        parcel.writeLong(dateOfTravel.getTime());
-    }
+    public static final Creator<TravelMemory> CREATOR = new Creator<TravelMemory>() {
+        @Override
+        public TravelMemory createFromParcel(Parcel in) {
+            return new TravelMemory(in);
+        }
+
+        @Override
+        public TravelMemory[] newArray(int size) {
+            return new TravelMemory[size];
+        }
+    };
 
     public List<String> getImageList() {
         return imageList;
@@ -121,5 +129,21 @@ public class TravelMemory implements Parcelable {
 
     public void setDateOfTravel(Date dateOfTravel) {
         this.dateOfTravel = dateOfTravel;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(id);
+        dest.writeStringList(imageList);
+        dest.writeString(memoryName);
+        dest.writeString(memoryDescription);
+        dest.writeString(placeLocationName);
+        dest.writeParcelable(coordinates, flags);
+        dest.writeLong(dateOfTravel.getTime());
     }
 }

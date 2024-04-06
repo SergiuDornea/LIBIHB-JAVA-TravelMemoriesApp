@@ -17,9 +17,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.sergiu.libihb_java.databinding.FragmentAddMemorySliderBinding;
 import com.sergiu.libihb_java.presentation.adapters.AddMemoryFragmentsAdapter;
-import com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemory;
+import com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemoryFragment;
 import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
-import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview;
+import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverviewFragment;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
 public class AddMemorySliderFragment extends Fragment {
@@ -51,9 +51,9 @@ public class AddMemorySliderFragment extends Fragment {
     private void setUpViewPager() {
         AddMemoryFragmentsAdapter fragmentAdapter = new AddMemoryFragmentsAdapter(requireActivity().getSupportFragmentManager(), getLifecycle());
 
-        fragmentAdapter.addFragment(new AddMemory());
+        fragmentAdapter.addFragment(new AddMemoryFragment());
         fragmentAdapter.addFragment(new MapsFragment());
-        fragmentAdapter.addFragment(new MemoryOverview());
+        fragmentAdapter.addFragment(new MemoryOverviewFragment());
 
         binding.fragmentViewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         binding.fragmentViewPager.setAdapter(fragmentAdapter);

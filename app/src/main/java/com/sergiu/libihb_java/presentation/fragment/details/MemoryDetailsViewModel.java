@@ -21,18 +21,4 @@ public class MemoryDetailsViewModel extends ViewModel {
     public MemoryDetailsViewModel(MemoriesRoomRepository memoriesRoomRepository) {
         this.memoriesRoomRepository = memoriesRoomRepository;
     }
-
-    public TravelMemory getMemoryFromPosition(int position) {
-        Flowable<TravelMemory> flowable =  memoriesRoomRepository.getMemories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(memories -> {
-                    if (position >= 0 && position < memories.size()) {
-                        return memories.get(position);
-                    } else {
-                        return null;
-                    }
-                });
-            return LiveDataReactiveStreams.fromPublisher(flowable).getValue();
-    }
 }

@@ -91,8 +91,8 @@
         android:label="fragment_share"
         tools:layout="@layout/fragment_share" />
     <fragment
-        android:id="@+id/addMemory"
-        android:name="com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemory"
+        android:id="@+id/addMemoryFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.addMemoryFragment.AddMemoryFragment"
         android:label="AddMemory" >
         <action
             android:id="@+id/action_addMemory_to_mapsFragment2"
@@ -105,7 +105,7 @@
         tools:layout="@layout/fragment_maps" >
         <action
             android:id="@+id/action_mapsFragment_to_memoryOverview2"
-            app:destination="@id/memoryOverview" />
+            app:destination="@id/memoryOverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMemorySliderFragment"
@@ -114,11 +114,11 @@
         tools:layout="@layout/fragment_add_memory_slider" >
         <action
             android:id="@+id/action_addMemorySliderFragment_to_addMemory2"
-            app:destination="@id/addMemory" />
+            app:destination="@id/addMemoryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/memoryOverview"
-        android:name="com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverview"
+        android:id="@+id/memoryOverviewFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.memoryOverviewFragment.MemoryOverviewFragment"
         android:label="fragment_memory_overview"
         tools:layout="@layout/fragment_memory_overview" />
     <fragment
