@@ -62,7 +62,9 @@ public class MemoryOverviewViewModel extends ViewModel {
                                 memoriesRoomRepository.getMemoryDescription(),
                                 memoriesRoomRepository.getCoordinates(),
                                 memoriesRoomRepository.getDateOfTravel(),
-                                memoriesRoomRepository.getPlaceLocationName()
+                                memoriesRoomRepository.getPlaceLocationName(),
+                                memoriesRoomRepository.getPlaceCountryName(),
+                                memoriesRoomRepository.getPlaceAdminName()
                         ))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

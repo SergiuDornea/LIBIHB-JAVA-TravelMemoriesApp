@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,6 +31,7 @@ public class MemoryOverviewFragment extends Fragment {
     private MemoryOverviewViewModel viewModel;
     private FragmentMemoryOverviewBinding binding;
     private SupportMapFragment mapFragment;
+    private NavController navController;
     private MemoryOverviewAdapter memoryOverviewAdapter;
 
     @Override
@@ -46,14 +50,19 @@ public class MemoryOverviewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_overview);
+        navController = NavHostFragment.findNavController(MemoryOverviewFragment.this);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
         setListeners();
         setObservers();
     }
 
     private void setListeners() {
         memoryOverviewAdapter = new MemoryOverviewAdapter(position -> memoryOverviewAdapter.removeImgUriFromList(position));
-        binding.saveMemoryMaterialButton.setOnClickListener(view -> viewModel.saveMemory());
+        binding.saveMemoryMaterialButton.setOnClickListener(view -> {
+            viewModel.saveMemory();
+            Toast.makeText(requireContext(), getString(R.string.memory_saved), Toast.LENGTH_SHORT).show();
+            navController.popBackStack();
+        });
     }
 
     private void setObservers() {

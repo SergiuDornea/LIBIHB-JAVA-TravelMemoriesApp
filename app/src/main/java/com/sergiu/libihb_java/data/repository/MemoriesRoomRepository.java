@@ -20,6 +20,8 @@ public class MemoriesRoomRepository {
     private final MutableLiveData<String> memoryName = new MutableLiveData<>();
     private final MutableLiveData<String> memoryDescription = new MutableLiveData<>();
     private final MutableLiveData<String> placeLocationName = new MutableLiveData<>();
+    private final MutableLiveData<String> placeCountryName = new MutableLiveData<>();
+    private final MutableLiveData<String> placeAdminName = new MutableLiveData<>();
     private final MutableLiveData<LatLng> coordinates = new MutableLiveData<>();
     private final MutableLiveData<Date> dateOfTravel = new MutableLiveData<>();
 
@@ -44,6 +46,14 @@ public class MemoriesRoomRepository {
         return placeLocationName;
     }
 
+    public MutableLiveData<String> observePlaceCountryName() {
+        return placeCountryName;
+    }
+
+    public MutableLiveData<String> observePlaceAdminName() {
+        return placeAdminName;
+    }
+
     public MutableLiveData<LatLng> observeCoordinates() {
         return coordinates;
     }
@@ -66,6 +76,14 @@ public class MemoriesRoomRepository {
 
     public void setPlaceLocationName(String locationName) {
         placeLocationName.setValue(locationName);
+    }
+
+    public void setPlaceCountryName(String countryName) {
+        placeCountryName.setValue(countryName);
+    }
+
+    public void setPlaceAdminName(String adminName) {
+        placeAdminName.setValue(adminName);
     }
 
     public void setCoordinates(LatLng latLng) {
@@ -94,6 +112,14 @@ public class MemoriesRoomRepository {
 
     public String getPlaceLocationName() {
         return placeLocationName.getValue();
+    }
+
+    public String getPlaceAdminName() {
+        return placeAdminName.getValue();
+    }
+
+    public String getPlaceCountryName() {
+        return placeCountryName.getValue();
     }
 
     public String getMemoryDescription() {

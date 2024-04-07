@@ -3,32 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_art2">
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/bg_art2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/photo_carousel_recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"   android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="40dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/form_overview_constraint_layout"
+        android:id="@+id/details_constraint_layout"
         android:layout_width="0dp"
         android:layout_height="500dp"
         android:background="@drawable/details_rounded_corners_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -37,19 +41,143 @@
             android:layout_height="0dp"
             android:autoSizeTextType="uniform"
             android:gravity="center"
+            android:maxLines="1"
+            android:paddingHorizontal="16dp"
             android:text="@string/title"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="36sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_map_constraint_layout"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/primary_rounded_corners_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_text_view"
+            app:layout_constraintWidth_percent="0.5">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map_details"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/title_text_view"
+            app:layout_constraintWidth_percent="0.45">
+
+            <TextView
+                android:id="@+id/details_location_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:paddingHorizontal="8dp"
+                android:text="@string/location_name"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_location_country_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autoSizeTextType="uniform"
+                android:paddingHorizontal="8dp"
+                android:text="@string/location_country"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_location_name_text_view" />
+
+            <TextView
+                android:id="@+id/details_location_admin_area_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autoSizeTextType="uniform"
+                android:paddingHorizontal="8dp"
+                android:text="@string/location_admin_area"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_location_country_text_view" />
+
+            <TextView
+                android:id="@+id/details_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autoSizeTextType="uniform"
+                android:paddingHorizontal="8dp"
+                android:text="@string/date"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_location_admin_area_text_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/inset_left_side_stroke"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_map_constraint_layout"
+            app:layout_constraintWidth_percent="0.5"
+            tools:layout_editor_absoluteX="190dp">
+
+            <TextView
+                android:id="@+id/description_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="@string/description"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit"
+                android:textColor="@color/md_theme_light_primary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_title_text_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

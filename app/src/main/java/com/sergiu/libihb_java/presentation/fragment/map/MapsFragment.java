@@ -30,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MapsFragment extends Fragment {
+    private static final String TAG = MapsFragment.class.getSimpleName();
     private FragmentMapsBinding binding;
     private GoogleMap map;
     private final OnMapReadyCallback callback = googleMap -> map = googleMap;
@@ -83,18 +84,20 @@ public class MapsFragment extends Fragment {
                 try {
                     addressList = geocoder.getFromLocationName(location, 1);
                 } catch (Exception e) {
-                    Log.d("err", "onQueryTextSubmit: " + e);
+                    Log.e(TAG, "onQueryTextSubmit: " + e);
                 }
 
                 if (addressList != null && !addressList.isEmpty()) {
                     Address address = addressList.get(0);
-                    Log.d("adr", "onQueryTextSubmit: adress " + address.toString());
+                    Log.d(TAG, "onQueryTextSubmit: adress " + address.toString());
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     setMarkerAtGivenLatLng(latLng);
                     binding.searchBar.clearFocus();
 
                     viewModel.setCoordinates(latLng);
                     viewModel.setPlaceLocationName(address.getFeatureName());
+                    viewModel.setPlaceCountryName(address.getCountryName());
+                    viewModel.setPlaceAdminName(address.getAdminArea());
                 } else {
                     Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
                 }

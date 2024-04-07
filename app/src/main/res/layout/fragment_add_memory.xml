@@ -11,14 +11,14 @@
         android:id="@+id/greeting_text_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="@string/greeting_add_new_song"
         android:textColor="@color/md_theme_light_primary"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/memory_name_text_view"
-        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
         android:textColor="@color/md_theme_light_primary"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/memory_name_autocomplete_field"
-        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHeight_percent="0.08"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greeting_text_view" />
 

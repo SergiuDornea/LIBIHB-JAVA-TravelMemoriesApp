@@ -14,12 +14,15 @@ import com.sergiu.libihb_java.presentation.utils.converters.DateConverter;
 import com.sergiu.libihb_java.presentation.utils.converters.LatLngConverter;
 import com.sergiu.libihb_java.presentation.utils.converters.ListStringConverter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Entity(tableName = "memories")
 @TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
 public class TravelMemory implements Parcelable {
+    private static final String DATE_FORMAT_PATTERN = "dd MMM yyyy";
     @PrimaryKey(autoGenerate = true)
     private Long id;
     @ColumnInfo(name = "image_list")
@@ -30,6 +33,10 @@ public class TravelMemory implements Parcelable {
     private String memoryDescription;
     @ColumnInfo(name = "place_location_name")
     private String placeLocationName;
+    @ColumnInfo(name = "place_country_name")
+    private String placeCountryName;
+    @ColumnInfo(name = "place_admin_area_name")
+    private String placeAdminAreaName;
     @ColumnInfo(name = "coordinates")
     private LatLng coordinates;
     @ColumnInfo(name = "date_of_travel")
@@ -41,13 +48,17 @@ public class TravelMemory implements Parcelable {
             String memoryDescription,
             LatLng coordinates,
             Date dateOfTravel,
-            String placeLocationName) {
+            String placeLocationName,
+            String placeCountryName,
+            String placeAdminAreaName) {
         this.imageList = imageList;
         this.memoryName = memoryName;
         this.memoryDescription = memoryDescription;
         this.coordinates = coordinates;
         this.dateOfTravel = dateOfTravel;
         this.placeLocationName = placeLocationName;
+        this.placeCountryName = placeCountryName;
+        this.placeAdminAreaName = placeAdminAreaName;
     }
 
     protected TravelMemory(Parcel in) {
@@ -60,6 +71,8 @@ public class TravelMemory implements Parcelable {
         memoryName = in.readString();
         memoryDescription = in.readString();
         placeLocationName = in.readString();
+        placeCountryName = in.readString();
+        placeAdminAreaName = in.readString();
         coordinates = in.readParcelable(LatLng.class.getClassLoader());
     }
 
@@ -91,8 +104,19 @@ public class TravelMemory implements Parcelable {
         return dateOfTravel;
     }
 
+    public String getFormattedDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN, Locale.getDefault());
+        return dateFormat.format(dateOfTravel);
+    }
+
     public String getPlaceLocationName() {
         return placeLocationName;
+    }
+    public String getPlaceCountryName() {
+        return placeCountryName;
+    }
+    public String getPlaceAdminAreaName() {
+        return placeAdminAreaName;
     }
 
     public Long getId() {
@@ -143,6 +167,8 @@ public class TravelMemory implements Parcelable {
         dest.writeString(memoryName);
         dest.writeString(memoryDescription);
         dest.writeString(placeLocationName);
+        dest.writeString(placeCountryName);
+        dest.writeString(placeAdminAreaName);
         dest.writeParcelable(coordinates, flags);
         dest.writeLong(dateOfTravel.getTime());
     }
