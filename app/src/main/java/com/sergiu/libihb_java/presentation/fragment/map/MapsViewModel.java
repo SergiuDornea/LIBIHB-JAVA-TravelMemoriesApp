@@ -25,4 +25,12 @@ public class MapsViewModel extends ViewModel {
     public void setPlaceLocationName(String locationName) {
         memoriesRoomRepository.setPlaceLocationName(locationName);
     }
+
+    public void setPlaceCountryName(String countryName) {
+        memoriesRoomRepository.setPlaceCountryName(countryName);
+    }
+
+    public void setPlaceAdminName(String adminName) {
+        memoriesRoomRepository.setPlaceAdminName(adminName);
+    }
 }

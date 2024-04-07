@@ -70,4 +70,8 @@
     <string name="a_memory_image">A memory image</string>
     <string name="remove_image_from_list_button">Remove image from list button</string>
     <string name="title">Title</string>
+    <string name="memory_saved">Memory saved</string>
+    <string name="description">Description:</string>
+    <string name="location_country">Location country</string>
+    <string name="location_admin_area">Location admin area</string>
 </resources>

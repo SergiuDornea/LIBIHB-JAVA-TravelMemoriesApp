@@ -108,7 +108,7 @@ public class AddMemoryFragment extends Fragment {
     private void initializeActivityResultLauncher() {
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(MAX_MEMORY_IMG), uris -> {
             if (uris.isEmpty()) {
-                Log.d(TAG, "No media selected"); // todo change language maybe
+                Log.d(TAG, "No media selected"); //todo change language maybe
             } else {
                 Log.d(TAG, "Number of items selected: " + uris.size());
                 List<String> uriStrings = new ArrayList<>();

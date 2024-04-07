@@ -77,7 +77,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
                     .error(R.drawable.i_unavailable_img)
                     .into(memoryImage);
             placeName.setText(travelMemory.getMemoryName());
-            dateOfTravel.setText(travelMemory.getDateOfTravel().toString());
+            dateOfTravel.setText(travelMemory.getFormattedDate());
             location.setText(travelMemory.getPlaceLocationName());
         }
 
