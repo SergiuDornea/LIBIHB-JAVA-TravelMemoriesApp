@@ -51,6 +51,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
         private final TextView placeName;
         private final TextView dateOfTravel;
         private final TextView location;
+        private Long id;
 
         public TravelMemoriesViewHolder(@NonNull View itemView, OnItemClickListener itemClickListener) {
             super(itemView);
@@ -63,7 +64,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
                 if (itemClickListener != null) {
                     int currentPosition = getAdapterPosition();
                     if (currentPosition != RecyclerView.NO_POSITION) {
-                        itemClickListener.onItemClick(currentPosition);
+                        itemClickListener.onItemClick(id);
                     }
                 }
             });
@@ -79,6 +80,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
             placeName.setText(travelMemory.getMemoryName());
             dateOfTravel.setText(travelMemory.getFormattedDate());
             location.setText(travelMemory.getPlaceLocationName());
+            id = travelMemory.getId();
         }
 
 
@@ -91,6 +93,6 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(Long id);
     }
 }

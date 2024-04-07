@@ -126,11 +126,16 @@ public class MemoriesRoomRepository {
         return memoryDescription.getValue();
     }
 
+    //DAO METHODS
     public Completable insertTravelMemory(TravelMemory travelMemory) {
         return dao.insertTravelMemory(travelMemory);
     }
 
     public Flowable<List<TravelMemory>> getMemories() {
         return dao.getMemories();
+    }
+
+    public Flowable<TravelMemory> getMemoryById(Long memoryId) {
+        return dao.getMemoryById(memoryId);
     }
 }

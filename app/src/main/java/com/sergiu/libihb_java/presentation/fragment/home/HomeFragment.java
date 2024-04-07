@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,19 +14,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.MemoryDetailsFragment;
 
-import java.util.Objects;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
+    private static final String TAG = HomeFragment.class.getSimpleName();
     private FragmentHomeBinding binding;
     private NavController navController;
     private HomeViewModel viewModel;
@@ -57,7 +53,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setListeners() {
-        travelMemoryAdapter = new TravelMemoryAdapter(this::navigateWithPosition);
+        travelMemoryAdapter = new TravelMemoryAdapter(this::navigateWithId);
         binding.fab.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
     }
 
@@ -65,11 +61,10 @@ public class HomeFragment extends Fragment {
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
     }
 
-    private void navigateWithPosition(int position) {
+    private void navigateWithId(Long id) {
         Bundle bundle = new Bundle();
-        Log.d("HomeFragment", "navigateWithPosition: value " + viewModel.getMemoriesLiveData().getValue().get(position).getImageList());
-        bundle.putParcelable(MEMORY_POSITION_KEY, Objects.requireNonNull(viewModel.getMemoriesLiveData().getValue()).get(position));
-
+        bundle.putLong(MEMORY_POSITION_KEY, id);
+        Log.d(TAG, "navigateWithId: " + id);
         MemoryDetailsFragment memoryDetailsFragment = new MemoryDetailsFragment();
         memoryDetailsFragment.setArguments(bundle);
 

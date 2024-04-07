@@ -1,9 +1,6 @@
 package com.sergiu.libihb_java.domain.model;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -21,7 +18,7 @@ import java.util.Locale;
 
 @Entity(tableName = "memories")
 @TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
-public class TravelMemory implements Parcelable {
+public class TravelMemory {
     private static final String DATE_FORMAT_PATTERN = "dd MMM yyyy";
     @PrimaryKey(autoGenerate = true)
     private Long id;
@@ -61,33 +58,6 @@ public class TravelMemory implements Parcelable {
         this.placeAdminAreaName = placeAdminAreaName;
     }
 
-    protected TravelMemory(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readLong();
-        }
-        imageList = in.createStringArrayList();
-        memoryName = in.readString();
-        memoryDescription = in.readString();
-        placeLocationName = in.readString();
-        placeCountryName = in.readString();
-        placeAdminAreaName = in.readString();
-        coordinates = in.readParcelable(LatLng.class.getClassLoader());
-    }
-
-    public static final Creator<TravelMemory> CREATOR = new Creator<TravelMemory>() {
-        @Override
-        public TravelMemory createFromParcel(Parcel in) {
-            return new TravelMemory(in);
-        }
-
-        @Override
-        public TravelMemory[] newArray(int size) {
-            return new TravelMemory[size];
-        }
-    };
-
     public List<String> getImageList() {
         return imageList;
     }
@@ -112,9 +82,11 @@ public class TravelMemory implements Parcelable {
     public String getPlaceLocationName() {
         return placeLocationName;
     }
+
     public String getPlaceCountryName() {
         return placeCountryName;
     }
+
     public String getPlaceAdminAreaName() {
         return placeAdminAreaName;
     }
@@ -153,23 +125,5 @@ public class TravelMemory implements Parcelable {
 
     public void setDateOfTravel(Date dateOfTravel) {
         this.dateOfTravel = dateOfTravel;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(id);
-        dest.writeStringList(imageList);
-        dest.writeString(memoryName);
-        dest.writeString(memoryDescription);
-        dest.writeString(placeLocationName);
-        dest.writeString(placeCountryName);
-        dest.writeString(placeAdminAreaName);
-        dest.writeParcelable(coordinates, flags);
-        dest.writeLong(dateOfTravel.getTime());
     }
 }
