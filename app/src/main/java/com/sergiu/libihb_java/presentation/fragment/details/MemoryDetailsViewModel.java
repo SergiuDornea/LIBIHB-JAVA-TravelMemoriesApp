@@ -1,6 +1,5 @@
 package com.sergiu.libihb_java.presentation.fragment.details;
 
-import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.data.repository.MemoriesRoomRepository;
@@ -20,5 +19,11 @@ public class MemoryDetailsViewModel extends ViewModel {
     @Inject
     public MemoryDetailsViewModel(MemoriesRoomRepository memoriesRoomRepository) {
         this.memoriesRoomRepository = memoriesRoomRepository;
+    }
+
+    public Flowable<TravelMemory> getMemoryById(long memoryId) {
+        return memoriesRoomRepository.getMemoryById(memoryId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

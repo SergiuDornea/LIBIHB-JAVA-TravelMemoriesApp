@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.fragment.details;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITION_KEY;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,9 +38,8 @@ public class MemoryDetailsFragment extends Fragment {
     private SupportMapFragment mapFragment;
     private NavController navController;
     private FragmentMemoryDetailsBinding binding;
-    private TravelMemory memory;
-
     private DetailsCarouselAdapter detailsCarouselAdapter;
+    private long id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,8 +47,7 @@ public class MemoryDetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MemoryDetailsViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            memory = bundle.getParcelable(MEMORY_POSITION_KEY);
-            Log.d(TAG, "onCreate: memory bundle not null");
+            id = bundle.getLong(MEMORY_POSITION_KEY);
         }
     }
 
@@ -64,9 +63,14 @@ public class MemoryDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(MemoryDetailsFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
+        setObservers();
         setListeners();
         setUpRecyclerView();
-        setUi();
+    }
+
+    @SuppressLint("CheckResult")
+    private void setObservers() {
+        viewModel.getMemoryById(id).subscribe(this::setUi);
     }
 
     private void setListeners() {
@@ -79,7 +83,7 @@ public class MemoryDetailsFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
     }
 
-    private void setUi() {
+    private void setUi(TravelMemory memory) {
         if (mapFragment != null) {
             mapFragment.getMapAsync(googleMap -> {
                 googleMap.addMarker(new MarkerOptions().position(memory.getCoordinates()));
@@ -93,10 +97,10 @@ public class MemoryDetailsFragment extends Fragment {
         binding.detailsLocationAdminAreaTextView.setText(memory.getPlaceAdminAreaName());
         binding.detailsLocationNameTextView.setText(memory.getPlaceLocationName());
         binding.descriptionTextView.setText(memory.getMemoryDescription());
+        detailsCarouselAdapter = new DetailsCarouselAdapter(memory.getImageList(), position -> Log.d(TAG, "setListeners: pos"));
     }
 
     private void setUpRecyclerView() {
-        detailsCarouselAdapter = new DetailsCarouselAdapter(memory.getImageList(), position -> Log.d(TAG, "setListeners: pos"));
         binding.photoCarouselRecycleView.setAdapter(detailsCarouselAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.photoCarouselRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
         dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.photoCarouselRecycleView.getContext(), R.drawable.item_divider)));

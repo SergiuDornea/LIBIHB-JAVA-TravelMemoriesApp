@@ -25,6 +25,9 @@ public interface TravelMemoryDao {
     @Query("SELECT * from memories")
     Flowable<List<TravelMemory>> getMemories();
 
+    @Query("SELECT * FROM memories WHERE id = :memoryId")
+    Flowable<TravelMemory> getMemoryById(long memoryId);
+
     @Delete
     Completable deleteTravelMemory(TravelMemory travelMemory);
 
