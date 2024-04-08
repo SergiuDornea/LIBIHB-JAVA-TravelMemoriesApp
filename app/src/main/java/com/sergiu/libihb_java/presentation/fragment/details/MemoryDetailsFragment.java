@@ -97,13 +97,18 @@ public class MemoryDetailsFragment extends Fragment {
         binding.detailsLocationAdminAreaTextView.setText(memory.getPlaceAdminAreaName());
         binding.detailsLocationNameTextView.setText(memory.getPlaceLocationName());
         binding.descriptionTextView.setText(memory.getMemoryDescription());
-        detailsCarouselAdapter = new DetailsCarouselAdapter(memory.getImageList(), position -> Log.d(TAG, "setListeners: pos"));
+        detailsCarouselAdapter.setImgUriList(memory.getImageList());
     }
 
     private void setUpRecyclerView() {
+        detailsCarouselAdapter = new DetailsCarouselAdapter(this::zoomClickedPictureIn);
         binding.photoCarouselRecycleView.setAdapter(detailsCarouselAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.photoCarouselRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
         dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.photoCarouselRecycleView.getContext(), R.drawable.item_divider)));
         binding.photoCarouselRecycleView.addItemDecoration(dividerItemDecoration);
+    }
+
+    private void zoomClickedPictureIn(int position){
+
     }
 }

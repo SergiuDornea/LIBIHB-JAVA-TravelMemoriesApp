@@ -19,8 +19,7 @@ public class DetailsCarouselAdapter extends RecyclerView.Adapter<DetailsCarousel
     private List<String> imgUriList = new ArrayList<>();
     private final OnItemClickListener onItemClickListener;
 
-    public DetailsCarouselAdapter(List<String> imgUriList, OnItemClickListener onItemClickListener) {
-        this.imgUriList = imgUriList;
+    public DetailsCarouselAdapter(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -51,6 +50,7 @@ public class DetailsCarouselAdapter extends RecyclerView.Adapter<DetailsCarousel
         public DetailsCarouselViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             this.memoryImage = itemView.findViewById(R.id.details_carousel_image_view);
+            memoryImage.setOnClickListener(view -> onItemClickListener.onItemClick(getAdapterPosition()));
         }
 
         public void bind(String imgUri) {
@@ -61,6 +61,12 @@ public class DetailsCarouselAdapter extends RecyclerView.Adapter<DetailsCarousel
                     .error(R.drawable.i_unavailable_img)
                     .into(memoryImage);
         }
+    }
+
+    public void setImgUriList(List<String> imgUriList) {
+        this.imgUriList.clear();
+        this.imgUriList.addAll(imgUriList);
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
