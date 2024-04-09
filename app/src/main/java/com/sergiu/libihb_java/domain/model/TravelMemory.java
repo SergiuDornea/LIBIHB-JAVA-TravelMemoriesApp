@@ -102,28 +102,4 @@ public class TravelMemory {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public void setImageList(List<String> imageList) {
-        this.imageList = imageList;
-    }
-
-    public void setMemoryName(String memoryName) {
-        this.memoryName = memoryName;
-    }
-
-    public void setMemoryDescription(String memoryDescription) {
-        this.memoryDescription = memoryDescription;
-    }
-
-    public void setPlaceLocationName(String placeLocationName) {
-        this.placeLocationName = placeLocationName;
-    }
-
-    public void setCoordinates(LatLng coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public void setDateOfTravel(Date dateOfTravel) {
-        this.dateOfTravel = dateOfTravel;
-    }
 }
