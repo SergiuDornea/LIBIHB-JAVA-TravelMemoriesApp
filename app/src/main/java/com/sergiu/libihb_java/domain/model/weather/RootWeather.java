@@ -2,7 +2,7 @@ package com.sergiu.libihb_java.domain.model.weather;
 
 import java.util.List;
 
-public class Root {
+public class RootWeather {
     private Coord coord;
     private List<Weather> weather;
     private String base;

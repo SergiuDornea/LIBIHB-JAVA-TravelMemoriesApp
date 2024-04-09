@@ -2,11 +2,13 @@ package com.sergiu.libihb_java.domain.model.weather;
 
 public class Main {
     private double temp;
-    private double feels_like;
-    private double temp_min;
-    private double temp_max;
+    private double feelsLike;
+    private double tempMin;
+    private double tempMax;
     private int pressure;
     private int humidity;
+    private int seaLevel;
+    private int grndLevel;
 
     public double getTemp() {
         return temp;
@@ -16,28 +18,28 @@ public class Main {
         this.temp = temp;
     }
 
-    public double getFeels_like() {
-        return feels_like;
+    public double getFeelsLike() {
+        return feelsLike;
     }
 
-    public void setFeels_like(double feels_like) {
-        this.feels_like = feels_like;
+    public void setFeelsLike(double feelsLike) {
+        this.feelsLike = feelsLike;
     }
 
-    public double getTemp_min() {
-        return temp_min;
+    public double getTempMin() {
+        return tempMin;
     }
 
-    public void setTemp_min(double temp_min) {
-        this.temp_min = temp_min;
+    public void setTempMin(double tempMin) {
+        this.tempMin = tempMin;
     }
 
-    public double getTemp_max() {
-        return temp_max;
+    public double getTempMax() {
+        return tempMax;
     }
 
-    public void setTemp_max(double temp_max) {
-        this.temp_max = temp_max;
+    public void setTempMax(double tempMax) {
+        this.tempMax = tempMax;
     }
 
     public int getPressure() {
@@ -54,5 +56,21 @@ public class Main {
 
     public void setHumidity(int humidity) {
         this.humidity = humidity;
+    }
+
+    public int getSeaLevel() {
+        return seaLevel;
+    }
+
+    public void setSeaLevel(int seaLevel) {
+        this.seaLevel = seaLevel;
+    }
+
+    public int getGrndLevel() {
+        return grndLevel;
+    }
+
+    public void setGrndLevel(int grndLevel) {
+        this.grndLevel = grndLevel;
     }
 }

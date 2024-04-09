@@ -4,7 +4,6 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITIO
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMemoryDetailsBinding;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
+import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.presentation.adapters.DetailsCarouselAdapter;
+import com.sergiu.libihb_java.presentation.utils.CurrentWeatherMapper;
 
 import java.util.Objects;
 
@@ -33,7 +34,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MemoryDetailsFragment extends Fragment {
-    private static final String TAG = MemoryDetailsFragment.class.getSimpleName();
     private MemoryDetailsViewModel viewModel;
     private SupportMapFragment mapFragment;
     private NavController navController;
@@ -70,7 +70,14 @@ public class MemoryDetailsFragment extends Fragment {
 
     @SuppressLint("CheckResult")
     private void setObservers() {
-        viewModel.getMemoryById(id).subscribe(this::setUi);
+        viewModel.getMemoryById(id).subscribe(memory -> {
+            setUi(memory);
+            viewModel.getCurrentWeatherByLatAndLong(memory.getCoordinates()).observe(getViewLifecycleOwner(), this::setCurrentWeatherUi);
+        });
+    }
+
+    private void setCurrentWeatherUi(CurrentWeather currentWeather) {
+        binding.weaterDetailsMainTextView.setText(currentWeather.getMain());
     }
 
     private void setListeners() {
@@ -108,7 +115,6 @@ public class MemoryDetailsFragment extends Fragment {
         binding.photoCarouselRecycleView.addItemDecoration(dividerItemDecoration);
     }
 
-    private void zoomClickedPictureIn(int position){
-
+    private void zoomClickedPictureIn(int position) {
     }
 }
