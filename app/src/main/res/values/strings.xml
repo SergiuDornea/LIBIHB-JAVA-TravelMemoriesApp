@@ -62,8 +62,8 @@
     <string name="does_not_match_required_type_email">The email is not valid</string>
     <string name="app_logo">App logo</string>
     <string name="choose_searched_location">Choose searched location</string>
-    <string name="tap_on_the_magnifying_glass_and_search_the_memory_location">Tap on the magnifying glass and search the memory location:</string>
-    <string name="final_look">Take a final look at your almost saved memory</string>
+    <string name="tap_on_the_magnifying_glass"><b>Tap</b> on the <b>magnifying glass</b> and search the memory <b>location</b>:</string>
+    <string name="final_look">Take a final look before saving</string>
     <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit">Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
     <string name="date">Date</string>
     <string name="location_name">Location name</string>
@@ -85,7 +85,9 @@
     <string name="_96">96</string>
     <string name="degrees">°</string>
     <string name="pick_a_location">Pick location</string>
-    <string name="photo_camera_image">photo camera image</string>
-    <string name="a_tikets_image">A tikets image</string>
+    <string name="photo_camera_image">photo camera artwork image</string>
+    <string name="a_tikets_image">A artwork tickets image</string>
     <string name="time_to_date_that_memory">Time to date that memory! Add a <b>date</b> and up to 5 gallery <b>pics</b> for the full flashback experience.</string>
+    <string name="a_map_artwork_image">a map artwork image</string>
+    <string name="save_memory">Save memory</string>
 </resources>
