@@ -7,101 +7,140 @@
     tools:context=".presentation.fragment.contact.ContactFragment"
     tools:ignore="MissingDefaultResource">
 
-    <TextView
-        android:id="@+id/greeting_text_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="center"
-        android:text="@string/greeting_add_new_song"
-        android:textColor="@color/md_theme_light_primary"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/art_image_view"
-        app:layout_constraintEnd_toStartOf="@+id/art_image_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/art_image_view"
-        app:layout_constraintWidth_percent="0.45" />
-
-    <ImageView
-        android:id="@+id/art_image_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/svg_memory_placeholde"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toEndOf="@id/greeting_text_view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.45" />
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/memory_form_constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
         android:background="@drawable/add_memory_rounded_corners_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHeight_percent="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/greeting_text_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/greeting_add_new_song"
+            android:textColor="@color/md_theme_light_onPrimary"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/art_image_view"
+            app:layout_constraintEnd_toStartOf="@+id/art_image_view"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/art_image_view"
+            app:layout_constraintWidth_percent="0.45" />
+
+        <ImageView
+            android:id="@+id/art_image_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/svg_memory_placeholde"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintHorizontal_bias="0.609"
+            app:layout_constraintStart_toEndOf="@id/greeting_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.45" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/memory_name_autocomplete_field"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="28dp"
             android:hint="@string/how_would_you_name_your_adventure"
             android:maxLines="2"
             android:text=""
-            android:textColorHint="@color/md_theme_light_primary"
-            app:layout_constraintBottom_toTopOf="@id/memory_description_autocomplete_field"
-            app:layout_constraintHeight_percent="0.1"
+            android:textColorHint="@color/md_theme_light_onPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/memory_description_autocomplete_field"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHorizontal_bias="0.437"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/art_image_view"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/memory_description_autocomplete_field"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
             android:hint="@string/maybe_you_want_to_describe_it"
             android:maxLines="4"
             android:text=""
-            android:textColorHint="@color/md_theme_light_primary"
-            app:layout_constraintHeight_percent="0.1"
+            android:textColorHint="@color/md_theme_light_onPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintHorizontal_bias="0.593"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/memory_name_autocomplete_field" />
+            app:layout_constraintTop_toBottomOf="@id/memory_name_autocomplete_field" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/ticket_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/a_tikets_image"
+        android:src="@drawable/tiket"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/memory_form_constraint_layout" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pick_a_date_material_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:text="@string/pick_a_date"
         app:icon="@drawable/ic_calendar"
         app:iconGravity="textEnd"
         app:iconTint="@color/md_theme_light_onPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/ticket_image_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintHorizontal_bias="0.593"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/art_image_view"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintStart_toEndOf="@id/ticket_image_view"
+        app:layout_constraintTop_toTopOf="@+id/ticket_image_view" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/choose_photos_material_button"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:autoSizeTextType="uniform"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/choose_photos_from_gallery"
         app:icon="@drawable/ic_add_photos"
         app:iconGravity="textEnd"
         app:iconTint="@color/md_theme_light_onPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/camera_image_view" />
+
+    <TextView
+        android:id="@+id/date_and_img_text_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:padding="16dp"
+        android:text="@string/time_to_date_that_memory"
+        android:textColor="@color/md_theme_light_primary"
+        app:layout_constraintBottom_toTopOf="@id/choose_photos_material_button"
+        app:layout_constraintEnd_toStartOf="@id/camera_image_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ticket_image_view" />
+
+    <ImageView
+        android:id="@+id/camera_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/a_tikets_image"
+        android:src="@drawable/camera"
+        app:layout_constraintBottom_toBottomOf="@+id/date_and_img_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ticket_image_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
