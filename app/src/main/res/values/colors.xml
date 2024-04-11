@@ -47,6 +47,7 @@
     <color name="md_theme_light_surfaceTint">#FF1B6C31</color>
     <color name="md_theme_light_outlineVariant">#FFC1C9BE</color>
     <color name="md_theme_light_scrim">#FF000000</color>
+    <color name="semiTransparentWhite">#B4FFFFFF</color>
     <color name="semiTransparentPrimary">#F11B6C31</color>
     <color name="transparent">#00FFFFFF</color>
 
