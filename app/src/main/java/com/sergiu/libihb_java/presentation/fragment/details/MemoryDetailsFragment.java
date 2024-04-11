@@ -26,7 +26,6 @@ import com.sergiu.libihb_java.databinding.FragmentMemoryDetailsBinding;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.presentation.adapters.DetailsCarouselAdapter;
-import com.sergiu.libihb_java.presentation.utils.CurrentWeatherMapper;
 
 import java.util.Objects;
 
@@ -76,10 +75,6 @@ public class MemoryDetailsFragment extends Fragment {
         });
     }
 
-    private void setCurrentWeatherUi(CurrentWeather currentWeather) {
-        binding.weaterDetailsMainTextView.setText(currentWeather.getMain());
-    }
-
     private void setListeners() {
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -105,6 +100,18 @@ public class MemoryDetailsFragment extends Fragment {
         binding.detailsLocationNameTextView.setText(memory.getPlaceLocationName());
         binding.descriptionTextView.setText(memory.getMemoryDescription());
         detailsCarouselAdapter.setImgUriList(memory.getImageList());
+    }
+
+    private void setCurrentWeatherUi(CurrentWeather currentWeather) {
+        binding.weatherMainTextView.setText(currentWeather.getMain());
+        binding.weatherTempTextView.setText(currentWeather.getTemp());
+        binding.sunriseTextView.setText(currentWeather.getSunrise());
+        binding.sunsetTextView.setText(currentWeather.getSunset());
+        binding.feelsLikeActualDataTextView.setText(currentWeather.getFeelsLike());
+        binding.windTextView.setText(currentWeather.getSpeed());
+        binding.maxTextView.setText(currentWeather.getTempMax());
+        binding.minTextView.setText(currentWeather.getTempMin());
+        binding.humidityTextView.setText(currentWeather.getHumidity());
     }
 
     private void setUpRecyclerView() {

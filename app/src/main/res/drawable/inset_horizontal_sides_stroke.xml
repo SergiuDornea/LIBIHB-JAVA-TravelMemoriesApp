@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     android:insetTop="-10dp"
-    android:insetRight="-10dp"
     android:insetBottom="-10dp">
 
     <shape
@@ -10,9 +9,7 @@
         <stroke
             android:width="9dp"
             android:color="@color/md_theme_light_primary" />
-        <solid android:color="@color/md_theme_light_onPrimary" />
-        <corners
-            android:bottomRightRadius="4dp"
-            android:topRightRadius="4dp" />
+        <solid android:color="@color/semiTransparentWhite" />
+        <corners android:radius="30dp"/>
     </shape>
 </inset>

@@ -1,9 +1,14 @@
 package com.sergiu.libihb_java.domain.model.weather;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Main {
     private double temp;
+    @SerializedName("feels_like")
     private double feelsLike;
+    @SerializedName("temp_min")
     private double tempMin;
+    @SerializedName("temp_max")
     private double tempMax;
     private int pressure;
     private int humidity;
