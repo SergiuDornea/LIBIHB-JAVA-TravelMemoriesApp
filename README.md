@@ -71,8 +71,10 @@ PREVIEW of already completed hike memory data:
 
 
 Memory Details Screen:
-https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp.git
+![Screenshot 2024-04-11 210250](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/1413d654-8cad-4d65-abc9-314d4b9c30d2)
+
 
 Home Screen:
-https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp.git  
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/0a5b734e-6be6-4bdc-ad4d-016b38bdbe85)
+
 
