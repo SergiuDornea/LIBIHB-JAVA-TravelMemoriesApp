@@ -74,4 +74,14 @@
     <string name="description">Description:</string>
     <string name="location_country">Location country</string>
     <string name="location_admin_area">Location admin area</string>
+    <string name="feels_like">Feels like:</string>
+    <string name="_10_12">10:12</string>
+    <string name="_23">23</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="sunrise_icon">sunrise icon</string>
+    <string name="sunset_icon">sunset icon</string>
+    <string name="_20_00">20:00</string>
+    <string name="_30">30 km/h</string>
+    <string name="_96">96</string>
+    <string name="degrees">°</string>
 </resources>
