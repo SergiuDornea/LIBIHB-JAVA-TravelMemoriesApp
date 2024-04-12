@@ -24,6 +24,9 @@ import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
 import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryOverviewFragment;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddMemorySliderFragment extends Fragment {
     private AddMemorySliderViewModel viewModel;
     private FragmentAddMemorySliderBinding binding;
@@ -62,8 +65,14 @@ public class AddMemorySliderFragment extends Fragment {
         binding.fragmentViewPager.setAdapter(fragmentAdapter);
         binding.fragmentViewPager.setPageTransformer(new ZoomOutFragmentAnimation());
 
+        List<Integer> tabIconList = new ArrayList<Integer>() {{
+            add(R.drawable.ic_edit_square);
+            add(R.drawable.ic_map);
+            add(R.drawable.ic_preview);
+        }};
+
         new TabLayoutMediator(binding.tabLayout, binding.fragmentViewPager, (tab, position) -> {
-            tab.setText(Integer.toString(position + 1));
+            tab.setIcon(tabIconList.get(position));
         }).attach();
     }
 
