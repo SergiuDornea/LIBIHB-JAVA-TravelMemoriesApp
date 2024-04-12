@@ -18,6 +18,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -33,10 +36,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
         initUI();
-
         setupNavigation();
-
         setDrawerCallback();
+        setOnBackPressedCallback();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.mainFragment) {
+            navController.navigate(R.id.mainFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        if (id == R.id.aboutFragment) {
+            navController.navigate(R.id.aboutFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        if (id == R.id.contactFragment) {
+            navController.navigate(R.id.contactFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        if (id == R.id.settingsFragment) {
+            navController.navigate(R.id.settingsFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        if (id == R.id.shareFragment) {
+            navController.navigate(R.id.shareFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        if (id == R.id.logOutFragment) {
+            navController.navigate(R.id.logOutFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+
+        return false;
     }
 
     private void setDrawerCallback() {
@@ -72,34 +105,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.mainFragment) {
-            navController.navigate(R.id.mainFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        if (id == R.id.aboutFragment) {
-            navController.navigate(R.id.aboutFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        if (id == R.id.contactFragment) {
-            navController.navigate(R.id.contactFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        if (id == R.id.settingsFragment) {
-            navController.navigate(R.id.settingsFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        if (id == R.id.shareFragment) {
-            navController.navigate(R.id.shareFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        if (id == R.id.logOutFragment) {
-            navController.navigate(R.id.logOutFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-
-        return false;
+    private void setOnBackPressedCallback() {
+        ArrayList<Integer> getBackHomeDestinations = new ArrayList<Integer>() {{
+            add(R.id.aboutFragment);
+            add(R.id.contactFragment);
+            add(R.id.settingsFragment);
+            add(R.id.shareFragment);
+        }};
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                int currentDestinationId = Objects.requireNonNull(navController.getCurrentDestination()).getId();
+                if (getBackHomeDestinations.contains(currentDestinationId)) {
+                    navController.navigate(R.id.mainFragment);
+                } else {
+                    finish();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 }

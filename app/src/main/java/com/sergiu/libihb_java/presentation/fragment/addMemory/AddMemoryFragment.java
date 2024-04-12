@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.sergiu.libihb_java.databinding.FragmentAddMemoryBinding;
 
@@ -33,6 +35,7 @@ public class AddMemoryFragment extends Fragment {
     private FragmentAddMemoryBinding binding;
     private AddMemoryViewModel viewModel;
     private Date date;
+    private NavController navController;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
     @Override
@@ -51,6 +54,7 @@ public class AddMemoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = NavHostFragment.findNavController(AddMemoryFragment.this);
         initializeActivityResultLauncher();
         setTextWatchers();
         setListeners();
@@ -100,9 +104,8 @@ public class AddMemoryFragment extends Fragment {
             datePicker.show(requireActivity().getSupportFragmentManager(), "datePiker");
         });
 
-        binding.choosePhotosMaterialButton.setOnClickListener(view -> {
-            choosePhotosFromGallery();
-        });
+        binding.choosePhotosMaterialButton.setOnClickListener(view -> choosePhotosFromGallery());
+        binding.backArrowImageButton.setOnClickListener(click -> navController.popBackStack());
     }
 
     private void initializeActivityResultLauncher() {

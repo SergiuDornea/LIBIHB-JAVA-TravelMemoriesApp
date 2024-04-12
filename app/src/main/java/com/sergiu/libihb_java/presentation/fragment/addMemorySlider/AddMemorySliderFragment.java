@@ -14,7 +14,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentAddMemorySliderBinding;
 import com.sergiu.libihb_java.presentation.adapters.AddMemoryFragmentsAdapter;
 import com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemoryFragment;
@@ -46,6 +48,7 @@ public class AddMemorySliderFragment extends Fragment {
         navController = NavHostFragment.findNavController(AddMemorySliderFragment.this);
         setListeners();
         setUpViewPager();
+        setAppBarVisibility();
     }
 
     private void setUpViewPager() {
@@ -76,5 +79,12 @@ public class AddMemorySliderFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+    }
+
+    private void setAppBarVisibility() {
+        AppBarLayout appBarLayout = requireActivity().findViewById(R.id.main_app_bar_layout);
+        if (appBarLayout != null) {
+            appBarLayout.setVisibility(View.GONE);
+        }
     }
 }

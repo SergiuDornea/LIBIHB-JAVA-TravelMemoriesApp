@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashScreen">
 
     <fragment
         android:id="@+id/splashScreen"
         android:name="com.sergiu.libihb_java.presentation.fragment.splash.SplashScreen"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreen_to_logInFragment"
             app:destination="@id/loginFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/mainFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.home.HomeFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_mainFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
@@ -45,7 +45,7 @@
         android:id="@+id/loginFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_logInFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -57,7 +57,7 @@
         android:id="@+id/authFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.register.RegisterFragment"
         android:label="fragment_auth"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_authFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -93,7 +93,7 @@
     <fragment
         android:id="@+id/addMemoryFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.addMemoryFragment.AddMemoryFragment"
-        android:label="AddMemory" >
+        android:label="AddMemory">
         <action
             android:id="@+id/action_addMemory_to_mapsFragment2"
             app:destination="@id/mapsFragment" />
@@ -102,7 +102,7 @@
         android:id="@+id/mapsFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.map.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" >
+        tools:layout="@layout/fragment_maps">
         <action
             android:id="@+id/action_mapsFragment_to_memoryOverview2"
             app:destination="@id/memoryOverviewFragment" />
@@ -111,7 +111,7 @@
         android:id="@+id/addMemorySliderFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.addMemorySlider.AddMemorySliderFragment"
         android:label="fragment_add_memory_slider"
-        tools:layout="@layout/fragment_add_memory_slider" >
+        tools:layout="@layout/fragment_add_memory_slider">
         <action
             android:id="@+id/action_addMemorySliderFragment_to_addMemory2"
             app:destination="@id/addMemoryFragment" />
