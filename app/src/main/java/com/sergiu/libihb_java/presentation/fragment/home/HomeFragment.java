@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
@@ -50,6 +52,7 @@ public class HomeFragment extends Fragment {
         setObservers();
         setListeners();
         setUpRecyclerview();
+        setAppBarVisibility();
     }
 
     private void setListeners() {
@@ -73,5 +76,16 @@ public class HomeFragment extends Fragment {
 
     private void setUpRecyclerview() {
         binding.memoryRecyclerView.setAdapter(travelMemoryAdapter);
+    }
+
+    private void setAppBarVisibility() {
+        AppBarLayout appBarLayout = requireActivity().findViewById(R.id.main_app_bar_layout);
+        if (appBarLayout != null) {
+            appBarLayout.setVisibility(View.VISIBLE);
+        }
+        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.home_title);
+        }
     }
 }

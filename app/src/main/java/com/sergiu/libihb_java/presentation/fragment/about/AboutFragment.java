@@ -1,13 +1,15 @@
 package com.sergiu.libihb_java.presentation.fragment.about;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 
 public class AboutFragment extends Fragment {
@@ -22,5 +24,18 @@ public class AboutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.about_us_title);
+        }
     }
 }

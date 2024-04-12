@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
-    id("com.google.dagger.hilt.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
 }
 

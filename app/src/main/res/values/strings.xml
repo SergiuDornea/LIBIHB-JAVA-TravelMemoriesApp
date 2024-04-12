@@ -89,5 +89,12 @@
     <string name="a_tikets_image">A artwork tickets image</string>
     <string name="time_to_date_that_memory">Time to date that memory! Add a <b>date</b> and up to 5 gallery <b>pics</b> for the full flashback experience.</string>
     <string name="a_map_artwork_image">a map artwork image</string>
+    <string name="artwork_image">a mountain artwork image</string>
     <string name="save_memory">Save memory</string>
+    <string name="home_title">Home</string>
+    <string name="settings_title">Settings</string>
+    <string name="share_title">Share</string>
+    <string name="contact_us_title">Contact us</string>
+    <string name="about_us_title">About us</string>
+    <string name="back_arrow_navigate_to_home_screen">a back arrow button to navigate to home screen</string>
 </resources>

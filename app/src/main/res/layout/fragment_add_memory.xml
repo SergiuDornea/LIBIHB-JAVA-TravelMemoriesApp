@@ -37,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/artwork_image"
             android:src="@drawable/svg_memory_placeholde"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.3"
@@ -106,9 +107,29 @@
         app:layout_constraintStart_toEndOf="@id/ticket_image_view"
         app:layout_constraintTop_toTopOf="@+id/ticket_image_view" />
 
+    <FrameLayout
+        android:id="@+id/back_arrow_frame_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/half_circle_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/choose_photos_material_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/choose_photos_material_button">
+
+        <ImageButton
+            android:id="@+id/back_arrow_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:contentDescription="@string/back_arrow_navigate_to_home_screen"
+            android:src="@drawable/ic_back_arrow" />
+    </FrameLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/choose_photos_material_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
@@ -118,7 +139,7 @@
         app:iconTint="@color/md_theme_light_onPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/back_arrow_frame_layout"
         app:layout_constraintTop_toBottomOf="@+id/camera_image_view" />
 
     <TextView
@@ -129,7 +150,7 @@
         android:padding="16dp"
         android:text="@string/time_to_date_that_memory"
         android:textColor="@color/md_theme_light_primary"
-        app:layout_constraintBottom_toTopOf="@id/choose_photos_material_button"
+        app:layout_constraintBottom_toTopOf="@id/back_arrow_frame_layout"
         app:layout_constraintEnd_toStartOf="@id/camera_image_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ticket_image_view" />
