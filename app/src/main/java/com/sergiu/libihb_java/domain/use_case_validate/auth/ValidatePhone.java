@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.domain.use_case_validate;
+package com.sergiu.libihb_java.domain.use_case_validate.auth;
 
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PHONE_NUMBER_LENGTH;
 
@@ -6,10 +6,12 @@ import android.content.Context;
 import android.util.Patterns;
 
 import com.sergiu.libihb_java.R;
+import com.sergiu.libihb_java.domain.use_case_validate.Validate;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 
 import javax.inject.Inject;
 
-public class ValidatePhone implements Validate {
+public class ValidatePhone implements Validate<String> {
     private final Context context;
 
     @Inject
