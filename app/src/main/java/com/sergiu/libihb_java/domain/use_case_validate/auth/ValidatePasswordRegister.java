@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.domain.use_case_validate;
+package com.sergiu.libihb_java.domain.use_case_validate.auth;
 
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.MIN_PASSWORD_LENGTH;
 import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PASSWORD_PATTERN;
@@ -6,11 +6,13 @@ import static com.sergiu.libihb_java.domain.utils.ValidationUtils.PASSWORD_PATTE
 import android.content.Context;
 
 import com.sergiu.libihb_java.R;
+import com.sergiu.libihb_java.domain.use_case_validate.Validate;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 
 import javax.inject.Inject;
 
 
-public class ValidatePasswordRegister implements Validate {
+public class ValidatePasswordRegister implements Validate<String> {
     private final Context context;
 
     @Inject

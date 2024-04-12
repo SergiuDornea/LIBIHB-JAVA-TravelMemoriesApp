@@ -1,8 +1,9 @@
-package com.sergiu.libihb_java.domain.use_case_validate;
+package com.sergiu.libihb_java.domain.use_case_validate.auth;
 
 import android.content.Context;
 
 import com.sergiu.libihb_java.R;
+import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 
 import javax.inject.Inject;
 

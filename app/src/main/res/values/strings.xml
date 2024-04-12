@@ -98,4 +98,9 @@
     <string name="about_us_title">About us</string>
     <string name="details_title">Details</string>
     <string name="back_arrow_navigate_to_home_screen">a back arrow button to navigate to home screen</string>
+    <string name="input_is_blank_title">The title can\'t be empty</string>
+    <string name="input_is_blank_description">The description can\'t be empty</string>
+    <string name="input_is_blank_address">The address can\'t be empty</string>
+    <string name="input_is_blank_date">The date can\'t be empty</string>
+    <string name="input_is_blank_img_list">You must choose at least one image</string>
 </resources>

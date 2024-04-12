@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidateEmailRegister;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidateName;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidatePasswordRegister;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidatePhone;
-import com.sergiu.libihb_java.domain.use_case_validate.ValidateRepeatPasswordRegister;
+import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateEmailRegister;
+import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateName;
+import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidatePasswordRegister;
+import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidatePhone;
+import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateRepeatPasswordRegister;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.RegisterFormEvent;
 
