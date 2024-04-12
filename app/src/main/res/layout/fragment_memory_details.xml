@@ -276,8 +276,8 @@
 
                 <ImageView
                     android:id="@+id/ic_humidity_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="19dp"
+                    android:layout_height="17dp"
                     android:contentDescription="@string/sunrise_icon"
                     android:src="@drawable/ic_humidity"
                     app:layout_constraintBottom_toBottomOf="parent"

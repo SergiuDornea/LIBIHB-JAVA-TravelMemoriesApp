@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMemoryDetailsBinding;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
@@ -65,6 +66,7 @@ public class MemoryDetailsFragment extends Fragment {
         setObservers();
         setListeners();
         setUpRecyclerView();
+        setToolbar();
     }
 
     @SuppressLint("CheckResult")
@@ -123,5 +125,12 @@ public class MemoryDetailsFragment extends Fragment {
     }
 
     private void zoomClickedPictureIn(int position) {
+    }
+
+    private void setToolbar() {
+        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.details_title);
+        }
     }
 }
