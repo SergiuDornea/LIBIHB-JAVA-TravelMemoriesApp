@@ -2,11 +2,11 @@ package com.sergiu.libihb_java.di;
 
 import android.content.Context;
 
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryLatLng;
+import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryCoordinates;
 import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryDate;
 import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryDescription;
 import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryImgList;
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryTitle;
+import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryName;
 import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateEmailLogin;
 import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateEmailRegister;
 import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateName;
@@ -59,8 +59,8 @@ public class ValidationModule {
     }
 
     @Provides
-    public ValidateMemoryTitle provideValidateMemoryTitle(Context context) {
-        return new ValidateMemoryTitle(context);
+    public ValidateMemoryName provideValidateMemoryTitle(Context context) {
+        return new ValidateMemoryName(context);
     }
 
     @Provides
@@ -69,8 +69,8 @@ public class ValidationModule {
     }
 
     @Provides
-    public ValidateMemoryLatLng provideValidateMemoryAddress(Context context) {
-        return new ValidateMemoryLatLng(context);
+    public ValidateMemoryCoordinates provideValidateMemoryAddress(Context context) {
+        return new ValidateMemoryCoordinates(context);
     }
 
     @Provides

@@ -3,9 +3,7 @@ package com.sergiu.libihb_java.presentation.fragment.addMemory;
 import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.data.repository.MemoriesRoomRepository;
-
-import java.util.Date;
-import java.util.List;
+import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
 import javax.inject.Inject;
 
@@ -20,19 +18,7 @@ public class AddMemoryViewModel extends ViewModel {
         this.memoriesRoomRepository = memoriesRoomRepository;
     }
 
-    public void setMemoryName(String name) {
-        memoriesRoomRepository.setMemoryName(name);
-    }
-
-    public void setMemoryDescription(String description) {
-        memoriesRoomRepository.setMemoryDescription(description);
-    }
-
-    public void setListOfImgUri(List<String> uriStrings) {
-        memoriesRoomRepository.setListOfImgUri(uriStrings);
-    }
-
-    public void setDateOfTravel(Date date) {
-        memoriesRoomRepository.setDateOfTravel(date);
+    public void onEvent(MemoryFormEvent formEvent) {
+        memoriesRoomRepository.onEvent(formEvent);
     }
 }

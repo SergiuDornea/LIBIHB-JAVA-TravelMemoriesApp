@@ -20,7 +20,7 @@ public class ValidateMemoryDate implements Validate<Date> {
 
     @Override
     public boolean inputNotBlank(Date inputType) {
-        return false;
+        return inputType != null;
     }
 
     @Override

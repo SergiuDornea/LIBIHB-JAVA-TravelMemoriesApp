@@ -20,6 +20,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.sergiu.libihb_java.databinding.FragmentAddMemoryBinding;
+import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,7 +69,7 @@ public class AddMemoryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.setMemoryName(s.toString());
+                viewModel.onEvent(new MemoryFormEvent.MemoryNameChanged(s.toString()));
             }
 
             @Override
@@ -83,7 +84,7 @@ public class AddMemoryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.setMemoryDescription(s.toString());
+                viewModel.onEvent(new MemoryFormEvent.MemoryDescriptionChanged(s.toString()));
             }
 
             @Override
@@ -99,7 +100,7 @@ public class AddMemoryFragment extends Fragment {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
                 date = calendar.getTime();
-                viewModel.setDateOfTravel(date);
+                viewModel.onEvent(new MemoryFormEvent.MemoryDateOfTravelChanged(date));
             });
             datePicker.show(requireActivity().getSupportFragmentManager(), "datePiker");
         });
@@ -119,7 +120,7 @@ public class AddMemoryFragment extends Fragment {
                     uriStrings.add(uri.toString());
                 }
                 Log.d(TAG, "URIs selected: " + uriStrings);
-                viewModel.setListOfImgUri(uriStrings);
+                viewModel.onEvent(new MemoryFormEvent.ImgListChanged(uriStrings));
             }
         });
     }

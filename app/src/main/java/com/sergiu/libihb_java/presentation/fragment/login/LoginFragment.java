@@ -50,24 +50,13 @@ public class LoginFragment extends Fragment {
         navController = NavHostFragment.findNavController(LoginFragment.this);
 
         setTextWatchers();
-        setListeners();
         setObservers();
+        setListeners();
     }
 
     private void setListeners() {
         binding.registerHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_logInFragment_to_authFragment));
-
         binding.logInButton.setOnClickListener(view -> viewModel.onEvent(LoginFormEvent.LoginClicked));
-        viewModel.getNavigationEvent().observe(getViewLifecycleOwner(), navigationEvent -> {
-            if (navigationEvent != null) {
-                int navDestination = navigationEvent.getDestinationId();
-                if (navDestination == R.id.mainFragment) {
-                    navigateWithMessage(navDestination, getString(R.string.login_successful));
-                } else {
-                    navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.incorrect_email_or_password));
-                }
-            }
-        });
     }
 
     private void navigateWithMessage(int navDestination, String message) {
@@ -80,17 +69,27 @@ public class LoginFragment extends Fragment {
 
     private void setObservers() {
         setUpFormErrorAccordingToScreenSize();
+        viewModel.getNavigationEvent().observe(getViewLifecycleOwner(), navigationEvent -> {
+            if (navigationEvent != null) {
+                int navDestination = navigationEvent.getDestinationId();
+                if (navDestination == R.id.mainFragment) {
+                    navigateWithMessage(navDestination, getString(R.string.login_successful));
+                } else {
+                    navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.incorrect_email_or_password));
+                }
+            }
+        });
     }
 
     private void setUpFormErrorAccordingToScreenSize() {
         if (isScreenSmall(requireContext())) {
-            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+            viewModel.observeFormState().observe(getViewLifecycleOwner(), formState -> {
                 binding.emailInputTextField.setError(formState.getEmailError());
                 binding.passwordInputTextField.setError(formState.getPasswordError());
                 binding.passwordInputTextFieldLayout.setPasswordVisibilityToggleEnabled(false);
             });
         } else {
-            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+            viewModel.observeFormState().observe(getViewLifecycleOwner(), formState -> {
                 binding.emailInputTextFieldLayout.setError(formState.getEmailError());
                 binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
             });

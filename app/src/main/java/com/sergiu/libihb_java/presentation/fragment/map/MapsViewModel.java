@@ -2,8 +2,8 @@ package com.sergiu.libihb_java.presentation.fragment.map;
 
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.data.repository.MemoriesRoomRepository;
+import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
 import javax.inject.Inject;
 
@@ -18,19 +18,7 @@ public class MapsViewModel extends ViewModel {
         this.memoriesRoomRepository = memoriesRoomRepository;
     }
 
-    public void setCoordinates(LatLng latLng) {
-        memoriesRoomRepository.setCoordinates(latLng);
-    }
-
-    public void setPlaceLocationName(String locationName) {
-        memoriesRoomRepository.setPlaceLocationName(locationName);
-    }
-
-    public void setPlaceCountryName(String countryName) {
-        memoriesRoomRepository.setPlaceCountryName(countryName);
-    }
-
-    public void setPlaceAdminName(String adminName) {
-        memoriesRoomRepository.setPlaceAdminName(adminName);
+    public void onEvent(MemoryFormEvent formEvent) {
+        memoriesRoomRepository.onEvent(formEvent);
     }
 }

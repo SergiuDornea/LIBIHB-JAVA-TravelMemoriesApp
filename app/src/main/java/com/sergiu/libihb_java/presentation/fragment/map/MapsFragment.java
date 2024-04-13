@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMapsBinding;
+import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
 import java.util.List;
 
@@ -94,10 +95,10 @@ public class MapsFragment extends Fragment {
                     setMarkerAtGivenLatLng(latLng);
                     binding.searchBar.clearFocus();
 
-                    viewModel.setCoordinates(latLng);
-                    viewModel.setPlaceLocationName(address.getFeatureName());
-                    viewModel.setPlaceCountryName(address.getCountryName());
-                    viewModel.setPlaceAdminName(address.getAdminArea());
+                    viewModel.onEvent(new MemoryFormEvent.MemoryCoordinatesChanged(latLng));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryPlaceCountryNameChanged(address.getCountryName()));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryPlaceLocationNameChanged(address.getFeatureName()));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryPlaceAdminNameChanged(address.getAdminArea()));
                 } else {
                     Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
                 }

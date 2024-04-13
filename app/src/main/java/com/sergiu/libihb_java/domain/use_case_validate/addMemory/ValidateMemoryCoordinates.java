@@ -9,12 +9,12 @@ import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 
 import javax.inject.Inject;
 
-public class ValidateMemoryLatLng implements Validate<LatLng> {
+public class ValidateMemoryCoordinates implements Validate<LatLng> {
     private static final int INVALID_LATLNG = -1;
     private final Context context;
 
     @Inject
-    public ValidateMemoryLatLng(Context context) {
+    public ValidateMemoryCoordinates(Context context) {
         this.context = context;
     }
 

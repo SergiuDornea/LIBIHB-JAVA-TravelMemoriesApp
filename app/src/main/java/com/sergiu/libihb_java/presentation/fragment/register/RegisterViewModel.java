@@ -49,7 +49,7 @@ public class RegisterViewModel extends ViewModel {
 
     }
 
-    public LiveData<RegisterFormState> getFormState() {
+    public LiveData<RegisterFormState> observeFormState() {
         return formState;
     }
 
@@ -59,23 +59,69 @@ public class RegisterViewModel extends ViewModel {
 
     public void onEvent(RegisterFormEvent event) {
         if (event instanceof RegisterFormEvent.PasswordChanged) {
-            updateFormState(new RegisterFormState(((RegisterFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), formState.getValue().getName(), formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), null, formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
+            updateFormState(new RegisterFormState(
+                    ((RegisterFormEvent.PasswordChanged) event).password,
+                    Objects.requireNonNull(formState.getValue()).getEmail(),
+                    formState.getValue().getName(),
+                    formState.getValue().getPhone(),
+                    formState.getValue().getRepeatPassword(),
+                    null,
+                    formState.getValue().getEmailError(),
+                    formState.getValue().getNameError(),
+                    formState.getValue().getPhoneError(),
+                    formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.EmailChanged) {
-            updateFormState(new RegisterFormState(Objects.requireNonNull(formState.getValue()).getPassword(), ((RegisterFormEvent.EmailChanged) event).email, formState.getValue().getName(),
-                    formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), null, formState.getValue().getNameError(), formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
+            updateFormState(new RegisterFormState(Objects.requireNonNull(
+                    formState.getValue()).getPassword(),
+                    ((RegisterFormEvent.EmailChanged) event).email,
+                    formState.getValue().getName(),
+                    formState.getValue().getPhone(),
+                    formState.getValue().getRepeatPassword(),
+                    formState.getValue().getPasswordError(),
+                    null,
+                    formState.getValue().getNameError(),
+                    formState.getValue().getPhoneError(),
+                    formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.NameChanged) {
-            updateFormState(new RegisterFormState(Objects.requireNonNull(formState.getValue()).getPassword(), formState.getValue().getEmail(), ((RegisterFormEvent.NameChanged) event).name,
-                    formState.getValue().getPhone(), formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), formState.getValue().getEmailError(), null, formState.getValue().getPhoneError(), formState.getValue().getRepeatPasswordError()));
+            updateFormState(new RegisterFormState(
+                    Objects.requireNonNull(formState.getValue()).getPassword(),
+                    formState.getValue().getEmail(),
+                    ((RegisterFormEvent.NameChanged) event).name,
+                    formState.getValue().getPhone(),
+                    formState.getValue().getRepeatPassword(),
+                    formState.getValue().getPasswordError(),
+                    formState.getValue().getEmailError(),
+                    null,
+                    formState.getValue().getPhoneError(),
+                    formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.PhoneChanged) {
-            updateFormState(new RegisterFormState(Objects.requireNonNull(formState.getValue()).getPassword(), formState.getValue().getEmail(), formState.getValue().getName(),
-                    ((RegisterFormEvent.PhoneChanged) event).phone, formState.getValue().getRepeatPassword(), formState.getValue().getPasswordError(), formState.getValue().getEmailError(), formState.getValue().getNameError(), null, formState.getValue().getRepeatPasswordError()));
+            updateFormState(new RegisterFormState(
+                    Objects.requireNonNull(formState.getValue()).getPassword(),
+                    formState.getValue().getEmail(),
+                    formState.getValue().getName(),
+                    ((RegisterFormEvent.PhoneChanged) event).phone,
+                    formState.getValue().getRepeatPassword(),
+                    formState.getValue().getPasswordError(),
+                    formState.getValue().getEmailError(),
+                    formState.getValue().getNameError(),
+                    null,
+                    formState.getValue().getRepeatPasswordError()));
         }
         if (event instanceof RegisterFormEvent.RepeatedPasswordChanged) {
-            updateFormState(new RegisterFormState(Objects.requireNonNull(formState.getValue()).getPassword(), formState.getValue().getEmail(), formState.getValue().getName(),
-                    formState.getValue().getPhone(), ((RegisterFormEvent.RepeatedPasswordChanged) event).repeteadPassword, formState.getValue().getPasswordError(), formState.getValue().getEmailError(), formState.getValue().getNameError(), formState.getValue().getPhoneError(), null));
+            updateFormState(new RegisterFormState(
+                    Objects.requireNonNull(formState.getValue()).getPassword(),
+                    formState.getValue().getEmail(),
+                    formState.getValue().getName(),
+                    formState.getValue().getPhone(),
+                    ((RegisterFormEvent.RepeatedPasswordChanged) event).repeteadPassword,
+                    formState.getValue().getPasswordError(),
+                    formState.getValue().getEmailError(),
+                    formState.getValue().getNameError(),
+                    formState.getValue().getPhoneError(),
+                    null));
         }
         if (event == RegisterFormEvent.RegisterClicked) {
             onRegister();
