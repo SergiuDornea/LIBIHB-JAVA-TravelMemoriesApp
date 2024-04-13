@@ -8,11 +8,11 @@ import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 
 import javax.inject.Inject;
 
-public class ValidateMemoryTitle implements Validate<String> {
+public class ValidateMemoryName implements Validate<String> {
     private final Context context;
 
     @Inject
-    public ValidateMemoryTitle(Context context) {
+    public ValidateMemoryName(Context context) {
         this.context = context;
     }
 

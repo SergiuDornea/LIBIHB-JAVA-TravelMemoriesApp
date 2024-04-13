@@ -54,9 +54,19 @@ public class RegisterFragment extends Fragment {
 
     private void setListeners() {
         binding.logInHereLinkTextView.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_authFragment_to_logInFragment));
-
         binding.registerButton.setOnClickListener(view -> viewModel.onEvent(RegisterFormEvent.RegisterClicked));
+    }
 
+    private void navigateWithMessage(int navDestination, String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        if (navDestination == DEFAULT_SCREEN_DESTINATION) {
+            return;
+        }
+        navController.navigate(navDestination);
+    }
+
+    private void setObservers() {
+        setUpFormErrorAccordingToScreenSize();
         viewModel.getNavigationEvent().observe(getViewLifecycleOwner(), navigationEvent -> {
             if (navigationEvent != null) {
                 int navDestination = navigationEvent.getDestinationId();
@@ -71,21 +81,9 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    private void navigateWithMessage(int navDestination, String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        if (navDestination == DEFAULT_SCREEN_DESTINATION) {
-            return;
-        }
-        navController.navigate(navDestination);
-    }
-
-    private void setObservers() {
-        setUpFormErrorAccordingToScreenSize();
-    }
-
     private void setUpFormErrorAccordingToScreenSize() {
         if (isScreenSmall(requireContext())) {
-            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+            viewModel.observeFormState().observe(getViewLifecycleOwner(), formState -> {
                 binding.emailInputTextField.setError(formState.getEmailError());
                 binding.passwordInputTextField.setError(formState.getPasswordError());
                 binding.nameInputTextField.setError(formState.getNameError());
@@ -96,7 +94,7 @@ public class RegisterFragment extends Fragment {
 
             });
         } else {
-            viewModel.getFormState().observe(getViewLifecycleOwner(), formState -> {
+            viewModel.observeFormState().observe(getViewLifecycleOwner(), formState -> {
                 binding.emailInputTextFieldLayout.setError(formState.getEmailError());
                 binding.passwordInputTextFieldLayout.setError(formState.getPasswordError());
                 binding.nameInputTextFieldLayout.setError(formState.getNameError());

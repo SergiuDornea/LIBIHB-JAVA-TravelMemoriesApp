@@ -1,11 +1,17 @@
 package com.sergiu.libihb_java.data.repository;
 
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
+import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
+import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryFormState;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,117 +22,212 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public class MemoriesRoomRepository {
     private final TravelMemoryDao dao;
-    private final MutableLiveData<List<String>> listOfImgUri = new MutableLiveData<>();
-    private final MutableLiveData<String> memoryName = new MutableLiveData<>();
-    private final MutableLiveData<String> memoryDescription = new MutableLiveData<>();
-    private final MutableLiveData<String> placeLocationName = new MutableLiveData<>();
-    private final MutableLiveData<String> placeCountryName = new MutableLiveData<>();
-    private final MutableLiveData<String> placeAdminName = new MutableLiveData<>();
-    private final MutableLiveData<LatLng> coordinates = new MutableLiveData<>();
-    private final MutableLiveData<Date> dateOfTravel = new MutableLiveData<>();
+    private SubmitCallback submitCallback;
+    private final MutableLiveData<MemoryFormState> formState = new MutableLiveData<>(
+            new MemoryFormState(
+                    new ArrayList<>(),
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    new LatLng(-1, -1),
+                    new Date(0),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            ));
 
     @Inject
     public MemoriesRoomRepository(TravelMemoryDao travelMemoryDao) {
         this.dao = travelMemoryDao;
     }
 
-    public MutableLiveData<List<String>> observeListOfImgUri() {
-        return listOfImgUri;
+    public void setSubmitCallback(SubmitCallback submitCallback) {
+        this.submitCallback = submitCallback;
     }
 
-    public MutableLiveData<String> observeMemoryName() {
-        return memoryName;
+    public LiveData<MemoryFormState> getFormState() {
+        return formState;
     }
 
-    public MutableLiveData<String> observeMemoryDescription() {
-        return memoryDescription;
+    public void onEvent(MemoryFormEvent event) {
+        if (event instanceof MemoryFormEvent.ImgListChanged) {
+            updateFormState(new MemoryFormState(
+                    ((MemoryFormEvent.ImgListChanged) event).imgList,
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getCoordinates(),
+                    formState.getValue().getDateOfTravel(),
+                    null,
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    formState.getValue().getCoordinatesError(),
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryNameChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    ((MemoryFormEvent.MemoryNameChanged) event).memoryName,
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getCoordinates(),
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    null,
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    formState.getValue().getCoordinatesError(),
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryDescriptionChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    ((MemoryFormEvent.MemoryDescriptionChanged) event).memoryDescription,
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getCoordinates(),
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    null,
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    formState.getValue().getCoordinatesError(),
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryPlaceLocationNameChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    ((MemoryFormEvent.MemoryPlaceLocationNameChanged) event).placeLocationName,
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getCoordinates(),
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    null,
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    formState.getValue().getCoordinatesError(),
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryPlaceCountryNameChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    ((MemoryFormEvent.MemoryPlaceCountryNameChanged) event).memoryPlaceCountryName,
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getCoordinates(),
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    null,
+                    formState.getValue().getPlaceAdminNameError(),
+                    formState.getValue().getCoordinatesError(),
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryPlaceAdminNameChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    ((MemoryFormEvent.MemoryPlaceAdminNameChanged) event).placeLocationAdminName,
+                    formState.getValue().getCoordinates(),
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    null,
+                    formState.getValue().getCoordinatesError(),
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryCoordinatesChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    ((MemoryFormEvent.MemoryCoordinatesChanged) event).coordinates,
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    null,
+                    formState.getValue().getDateOfTravelError()
+            ));
+        }
+        if (event instanceof MemoryFormEvent.MemoryDateOfTravelChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getCoordinates(),
+                    ((MemoryFormEvent.MemoryDateOfTravelChanged) event).dateOfTravel,
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    formState.getValue().getCoordinatesError(),
+                    null
+            ));
+        }
+        if (event == MemoryFormEvent.SubmitClicked) {
+            if (submitCallback != null) {
+                submitCallback.onSubmitClicked();
+            }
+        }
     }
 
-    public MutableLiveData<String> observePlaceLocationName() {
-        return placeLocationName;
+    public void updateFormState(MemoryFormState newState) {
+        formState.setValue(newState);
     }
 
-    public MutableLiveData<String> observePlaceCountryName() {
-        return placeCountryName;
-    }
-
-    public MutableLiveData<String> observePlaceAdminName() {
-        return placeAdminName;
-    }
-
-    public MutableLiveData<LatLng> observeCoordinates() {
-        return coordinates;
-    }
-
-    public MutableLiveData<Date> observeDateOfTravel() {
-        return dateOfTravel;
-    }
-
-    public void setListOfImgUri(List<String> list) {
-        listOfImgUri.setValue(list);
-    }
-
-    public void setMemoryName(String name) {
-        memoryName.setValue(name);
-    }
-
-    public void setMemoryDescription(String description) {
-        memoryDescription.setValue(description);
-    }
-
-    public void setPlaceLocationName(String locationName) {
-        placeLocationName.setValue(locationName);
-    }
-
-    public void setPlaceCountryName(String countryName) {
-        placeCountryName.setValue(countryName);
-    }
-
-    public void setPlaceAdminName(String adminName) {
-        placeAdminName.setValue(adminName);
-    }
-
-    public void setCoordinates(LatLng latLng) {
-        coordinates.setValue(latLng);
-    }
-
-    public void setDateOfTravel(Date date) {
-        dateOfTravel.setValue(date);
-    }
-
-    public List<String> getImageList() {
-        return listOfImgUri.getValue();
-    }
-
-    public String getMemoryName() {
-        return memoryName.getValue();
-    }
-
-    public LatLng getCoordinates() {
-        return coordinates.getValue();
-    }
-
-    public Date getDateOfTravel() {
-        return dateOfTravel.getValue();
-    }
-
-    public String getPlaceLocationName() {
-        return placeLocationName.getValue();
-    }
-
-    public String getPlaceAdminName() {
-        return placeAdminName.getValue();
-    }
-
-    public String getPlaceCountryName() {
-        return placeCountryName.getValue();
-    }
-
-    public String getMemoryDescription() {
-        return memoryDescription.getValue();
-    }
-
-    //DAO METHODS
     public Completable insertTravelMemory(TravelMemory travelMemory) {
         return dao.insertTravelMemory(travelMemory);
     }
@@ -137,5 +238,9 @@ public class MemoriesRoomRepository {
 
     public Flowable<TravelMemory> getMemoryById(Long memoryId) {
         return dao.getMemoryById(memoryId);
+    }
+
+    public interface SubmitCallback {
+        void onSubmitClicked();
     }
 }

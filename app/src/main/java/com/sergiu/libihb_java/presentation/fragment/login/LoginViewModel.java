@@ -22,7 +22,7 @@ public class LoginViewModel extends ViewModel {
     private final ValidateEmailLogin validateEmailLogin;
     private final ValidatePasswordLogin validatePasswordLogin;
     private final MutableLiveData<LoginFormState> formState = new MutableLiveData<>(new LoginFormState("", "", null, null));
-    private final MutableLiveData<LoginViewModel.NavigationEvent> navigationEvent = new MutableLiveData<>();
+    private final MutableLiveData<NavigationEvent> navigationEvent = new MutableLiveData<>();
     private final AuthRepository authRepository;
 
     @Inject
@@ -32,7 +32,7 @@ public class LoginViewModel extends ViewModel {
         this.authRepository = authRepository;
     }
 
-    public LiveData<LoginFormState> getFormState() {
+    public LiveData<LoginFormState> observeFormState() {
         return formState;
     }
 
@@ -42,10 +42,18 @@ public class LoginViewModel extends ViewModel {
 
     public void onEvent(LoginFormEvent event) {
         if (event instanceof LoginFormEvent.PasswordChanged) {
-            updateFormState(new LoginFormState(((LoginFormEvent.PasswordChanged) event).password, Objects.requireNonNull(formState.getValue()).getEmail(), null, formState.getValue().getEmailError()));
+            updateFormState(new LoginFormState(
+                    ((LoginFormEvent.PasswordChanged) event).password,
+                    Objects.requireNonNull(formState.getValue()).getEmail(),
+                    null,
+                    formState.getValue().getEmailError()));
         }
         if (event instanceof LoginFormEvent.EmailChanged) {
-            updateFormState(new LoginFormState(Objects.requireNonNull(formState.getValue()).getPassword(), ((LoginFormEvent.EmailChanged) event).email, formState.getValue().getPasswordError(), null));
+            updateFormState(new LoginFormState(
+                    Objects.requireNonNull(formState.getValue()).getPassword(),
+                    ((LoginFormEvent.EmailChanged) event).email,
+                    formState.getValue().getPasswordError(),
+                    null));
         }
         if (event == LoginFormEvent.LoginClicked) {
             onLogin();
