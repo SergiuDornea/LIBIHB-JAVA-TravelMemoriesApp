@@ -73,7 +73,10 @@ public class MemoryDetailsFragment extends Fragment {
     private void setObservers() {
         viewModel.getMemoryById(id).subscribe(memory -> {
             setUi(memory);
-            viewModel.getCurrentWeatherByLatAndLong(memory.getCoordinates()).observe(getViewLifecycleOwner(), this::setCurrentWeatherUi);
+            if (getView() != null) {
+                viewModel.getCurrentWeatherByLatAndLong(memory.getCoordinates())
+                        .observe(getViewLifecycleOwner(), this::setCurrentWeatherUi);
+            }
         });
     }
 

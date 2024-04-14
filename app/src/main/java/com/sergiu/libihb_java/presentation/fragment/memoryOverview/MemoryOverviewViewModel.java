@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
@@ -116,7 +117,7 @@ public class MemoryOverviewViewModel extends ViewModel {
                 ));
         } else {
             saveMemory();
-            saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(null, null));
+            saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DEFAULT, null));
         }
     }
 

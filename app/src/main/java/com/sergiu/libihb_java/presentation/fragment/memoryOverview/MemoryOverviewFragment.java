@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
@@ -94,7 +95,7 @@ public class MemoryOverviewFragment extends Fragment {
                     case CAUSE_COORDINATES:
                         navigateWithInteractiveMessage(R.id.mapsFragment, saveMemoryClickedEvent.getMessage());
                         break;
-                    default:
+                    case CAUSE_DEFAULT:
                         Toast.makeText(requireContext(), getString(R.string.memory_saved), Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.mainFragment);
                 }
