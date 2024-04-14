@@ -19,7 +19,7 @@ public class ValidateMemoryImgList implements Validate<List<String>> {
     }
     @Override
     public boolean inputNotBlank(List<String> inputType) {
-        return false;
+        return inputType.size() > 1;
     }
 
     @Override
