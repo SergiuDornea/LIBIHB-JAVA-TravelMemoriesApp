@@ -27,10 +27,13 @@ import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMemorySliderFragment extends Fragment {
+public class AddMemorySliderFragment extends Fragment implements MemoryOverviewFragment.NavigateCallback {
     private AddMemorySliderViewModel viewModel;
     private FragmentAddMemorySliderBinding binding;
     private NavController navController;
+    private final AddMemoryFragment addMemoryFragment = new AddMemoryFragment();
+    private final MapsFragment mapsFragment = new MapsFragment();
+    private final MemoryOverviewFragment memoryOverviewFragment = new MemoryOverviewFragment();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,15 +54,25 @@ public class AddMemorySliderFragment extends Fragment {
         navController = NavHostFragment.findNavController(AddMemorySliderFragment.this);
         setListeners();
         setUpViewPager();
+        memoryOverviewFragment.setNavigateCallback(this);
         setAppBarVisibility();
+    }
+
+    @Override
+    public void navigationCallback(int navigationDestination) {
+        if (navigationDestination == R.id.mapsFragment) {
+            binding.fragmentViewPager.setCurrentItem(1);
+        } else {
+            binding.fragmentViewPager.setCurrentItem(0);
+        }
     }
 
     private void setUpViewPager() {
         AddMemoryFragmentsAdapter fragmentAdapter = new AddMemoryFragmentsAdapter(requireActivity().getSupportFragmentManager(), getLifecycle());
 
-        fragmentAdapter.addFragment(new AddMemoryFragment());
-        fragmentAdapter.addFragment(new MapsFragment());
-        fragmentAdapter.addFragment(new MemoryOverviewFragment());
+        fragmentAdapter.addFragment(addMemoryFragment);
+        fragmentAdapter.addFragment(mapsFragment);
+        fragmentAdapter.addFragment(memoryOverviewFragment);
 
         binding.fragmentViewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         binding.fragmentViewPager.setAdapter(fragmentAdapter);

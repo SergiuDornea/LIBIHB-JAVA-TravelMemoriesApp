@@ -104,17 +104,16 @@ public class MemoryOverviewViewModel extends ViewModel {
                             memoryCoordinatesValid.getMessageIfNotValid(),
                             memoryDateValid.getMessageIfNotValid())
             );
+            if (!memoryCoordinatesValid.isValid())
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_COORDINATES, formState.getValue().getCoordinatesError()));
             if (!listValid.isValid())
                 saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_IMG_LIST, formState.getValue().getListOfImgUriError()));
-            if (!memoryNameValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_NAME, formState.getValue().getMemoryNameError()));
-            if (!memoryDescriptionValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DESCRIPTION, formState.getValue().getMemoryDescriptionError()));
             if (!memoryDateValid.isValid())
                 saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DATE, formState.getValue().getDateOfTravelError()));
-            if (!memoryCoordinatesValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_COORDINATES, formState.getValue().getCoordinatesError()
-                ));
+            if (!memoryDescriptionValid.isValid())
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DESCRIPTION, formState.getValue().getMemoryDescriptionError()));
+            if (!memoryNameValid.isValid())
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_NAME, formState.getValue().getMemoryNameError()));
         } else {
             saveMemory();
             saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DEFAULT, null));
