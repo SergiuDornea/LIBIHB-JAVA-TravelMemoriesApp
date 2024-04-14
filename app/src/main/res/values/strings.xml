@@ -104,4 +104,6 @@
     <string name="input_is_blank_date">The date can\'t be empty</string>
     <string name="input_is_blank_img_list">You must choose at least one image</string>
     <string name="ok">OK</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
