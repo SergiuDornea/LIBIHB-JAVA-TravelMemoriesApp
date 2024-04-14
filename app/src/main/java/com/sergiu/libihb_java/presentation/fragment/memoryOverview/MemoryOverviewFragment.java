@@ -46,6 +46,7 @@ public class MemoryOverviewFragment extends Fragment {
     private SupportMapFragment mapFragment;
     private NavController navController;
     private MemoryOverviewAdapter memoryOverviewAdapter;
+    private NavigateCallback navigateCallback;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +68,10 @@ public class MemoryOverviewFragment extends Fragment {
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
         setListeners();
         setObservers();
+    }
+
+    public void setNavigateCallback(NavigateCallback navigateCallback) {
+        this.navigateCallback = navigateCallback;
     }
 
     private void setListeners() {
@@ -111,7 +116,7 @@ public class MemoryOverviewFragment extends Fragment {
         snackbar.setAction(R.string.ok, v -> {
         });
         snackbar.show();
-//        navController.navigate(navDestination);
+        triggerNavigationCallback(navDestination);
     }
 
     private void setUpMemoryForm(MemoryFormState form) {
@@ -136,5 +141,15 @@ public class MemoryOverviewFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.memoryOverviewRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
         dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.memoryOverviewRecycleView.getContext(), R.drawable.overview_img_item_divider)));
         binding.memoryOverviewRecycleView.setAdapter(memoryOverviewAdapter);
+    }
+
+    private void triggerNavigationCallback(int destinationId) {
+        if (navigateCallback != null) {
+            navigateCallback.navigationCallback(destinationId);
+        }
+    }
+
+    public interface NavigateCallback {
+        void navigationCallback(int navigationDestination);
     }
 }

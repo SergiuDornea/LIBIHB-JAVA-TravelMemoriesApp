@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding binding;
     private DrawerLayout drawerLayout;
     private NavController navController;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
+    public void setDrawerLocked(boolean shouldLock) {
+        if (shouldLock) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            if (actionBarDrawerToggle != null) {
+                actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+            }
+        } else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            if (actionBarDrawerToggle != null) {
+                actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
+        }
+    }
+
     private void setDrawerCallback() {
         OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
         OnBackPressedCallback drawerCallback = new OnBackPressedCallback(true) {
@@ -97,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navController = navHostFragment.getNavController();
 
         NavigationView navigationView = binding.navView;
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, binding.toolbar, R.string.nav_open, R.string.nav_close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, binding.toolbar, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
