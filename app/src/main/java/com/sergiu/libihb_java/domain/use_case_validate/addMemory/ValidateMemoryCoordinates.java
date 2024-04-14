@@ -10,7 +10,7 @@ import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import javax.inject.Inject;
 
 public class ValidateMemoryCoordinates implements Validate<LatLng> {
-    private static final int INVALID_LATLNG = -1;
+    private static final int INVALID_LATLNG = 0;
     private final Context context;
 
     @Inject
@@ -25,7 +25,7 @@ public class ValidateMemoryCoordinates implements Validate<LatLng> {
 
     @Override
     public boolean matchesRequiredType(LatLng inputType) {
-        return inputType.latitude != INVALID_LATLNG && inputType.longitude != INVALID_LATLNG;
+        return inputType.latitude > INVALID_LATLNG && inputType.longitude > INVALID_LATLNG;
     }
 
     @Override

@@ -13,4 +13,5 @@ public final class Constants {
     public static final String CAUSE_IMG_LIST = "cause_img_list";
     public static final String CAUSE_COORDINATES = "cause_coordinates";
     public static final String CAUSE_DATE = "cause_date";
+    public static final String CAUSE_DEFAULT = "cause_default";
 }

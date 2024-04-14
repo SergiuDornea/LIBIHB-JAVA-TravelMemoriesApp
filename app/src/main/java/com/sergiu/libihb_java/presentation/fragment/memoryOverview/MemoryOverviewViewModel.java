@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
@@ -103,13 +104,12 @@ public class MemoryOverviewViewModel extends ViewModel {
                             memoryCoordinatesValid.getMessageIfNotValid(),
                             memoryDateValid.getMessageIfNotValid())
             );
-
+            if (!listValid.isValid())
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_IMG_LIST, formState.getValue().getListOfImgUriError()));
             if (!memoryNameValid.isValid())
                 saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_NAME, formState.getValue().getMemoryNameError()));
             if (!memoryDescriptionValid.isValid())
                 saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DESCRIPTION, formState.getValue().getMemoryDescriptionError()));
-            if (!listValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_IMG_LIST, formState.getValue().getListOfImgUriError()));
             if (!memoryDateValid.isValid())
                 saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DATE, formState.getValue().getDateOfTravelError()));
             if (!memoryCoordinatesValid.isValid())
@@ -117,7 +117,7 @@ public class MemoryOverviewViewModel extends ViewModel {
                 ));
         } else {
             saveMemory();
-            saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(null, null));
+            saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DEFAULT, null));
         }
     }
 

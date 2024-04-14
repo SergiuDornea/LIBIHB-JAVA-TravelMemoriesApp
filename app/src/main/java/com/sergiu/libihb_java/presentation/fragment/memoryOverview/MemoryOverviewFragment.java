@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.fragment.memoryOverview;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.sergiu.libihb_java.R;
@@ -30,12 +32,15 @@ import com.sergiu.libihb_java.databinding.FragmentMemoryOverviewBinding;
 import com.sergiu.libihb_java.presentation.adapters.MemoryOverviewAdapter;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
+import java.util.Date;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MemoryOverviewFragment extends Fragment {
+    private static final LatLng DEFAULT_COORDINATES = new LatLng(0, 0);
+    private static final Date DEFAULT_DATE = new Date(0);
     private MemoryOverviewViewModel viewModel;
     private FragmentMemoryOverviewBinding binding;
     private SupportMapFragment mapFragment;
@@ -90,7 +95,7 @@ public class MemoryOverviewFragment extends Fragment {
                     case CAUSE_COORDINATES:
                         navigateWithInteractiveMessage(R.id.mapsFragment, saveMemoryClickedEvent.getMessage());
                         break;
-                    default:
+                    case CAUSE_DEFAULT:
                         Toast.makeText(requireContext(), getString(R.string.memory_saved), Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.mainFragment);
                 }
@@ -113,12 +118,12 @@ public class MemoryOverviewFragment extends Fragment {
         binding.nameTextView.setText(form.getMemoryName());
         binding.descriptionTextView.setText(form.getMemoryDescription());
         binding.locationNameTextView.setText(form.getPlaceLocationName());
-        binding.dateTextView.setText(form.getDateOfTravel().toString());
+        binding.dateTextView.setText(form.getDateOfTravel() != null ? form.getDateOfTravel().toString() : DEFAULT_DATE.toString());
 
         if (mapFragment != null) {
             mapFragment.getMapAsync(googleMap -> {
-                googleMap.addMarker(new MarkerOptions().position(form.getCoordinates()));
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(form.getCoordinates(), 8));
+                googleMap.addMarker(new MarkerOptions().position(form.getCoordinates() != null ? form.getCoordinates() : DEFAULT_COORDINATES));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(form.getCoordinates() != null ? form.getCoordinates() : DEFAULT_COORDINATES, 8));
             });
         }
         memoryOverviewAdapter.updateImgUriList(form.getListOfImgUri());
