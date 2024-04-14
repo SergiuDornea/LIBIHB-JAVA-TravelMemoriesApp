@@ -72,6 +72,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
+    public void setDrawerLocked(boolean shouldLock) {
+        if (shouldLock) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+    }
+
     private void setDrawerCallback() {
         OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
         OnBackPressedCallback drawerCallback = new OnBackPressedCallback(true) {

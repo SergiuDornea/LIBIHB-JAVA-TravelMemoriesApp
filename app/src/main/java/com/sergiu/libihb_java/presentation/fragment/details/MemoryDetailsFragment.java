@@ -5,6 +5,9 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITIO
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,7 +15,10 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,11 +27,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMemoryDetailsBinding;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
+import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.DetailsCarouselAdapter;
 
 import java.util.Objects;
@@ -90,6 +98,33 @@ public class MemoryDetailsFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
     }
 
+    private void setToolbar() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDrawerLocked(true);
+        }
+        setMenuHost();
+        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.getMenu().clear();
+            toolbar.setTitle(R.string.details_title);
+        }
+    }
+
+    private void setMenuHost() {
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.details_menu, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+    }
+
     private void setUi(TravelMemory memory) {
         if (mapFragment != null) {
             mapFragment.getMapAsync(googleMap -> {
@@ -128,12 +163,5 @@ public class MemoryDetailsFragment extends Fragment {
     }
 
     private void zoomClickedPictureIn(int position) {
-    }
-
-    private void setToolbar() {
-        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.setTitle(R.string.details_title);
-        }
     }
 }

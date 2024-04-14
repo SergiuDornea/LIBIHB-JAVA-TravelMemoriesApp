@@ -19,6 +19,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
+import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.MemoryDetailsFragment;
 
@@ -79,6 +80,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void setAppBarVisibility() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDrawerLocked(false);
+        }
         AppBarLayout appBarLayout = requireActivity().findViewById(R.id.main_app_bar_layout);
         if (appBarLayout != null) {
             appBarLayout.setVisibility(View.VISIBLE);
