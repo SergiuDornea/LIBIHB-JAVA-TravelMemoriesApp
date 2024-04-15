@@ -18,6 +18,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentAddMemorySliderBinding;
+import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.AddMemoryFragmentsAdapter;
 import com.sergiu.libihb_java.presentation.fragment.addMemory.AddMemoryFragment;
 import com.sergiu.libihb_java.presentation.fragment.map.MapsFragment;
@@ -107,6 +108,9 @@ public class AddMemorySliderFragment extends Fragment implements MemoryOverviewF
         AppBarLayout appBarLayout = requireActivity().findViewById(R.id.main_app_bar_layout);
         if (appBarLayout != null) {
             appBarLayout.setVisibility(View.GONE);
+        }
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDrawerLocked(true);
         }
     }
 }

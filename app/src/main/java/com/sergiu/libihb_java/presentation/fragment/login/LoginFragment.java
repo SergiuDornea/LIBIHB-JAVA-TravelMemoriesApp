@@ -20,7 +20,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.sergiu.libihb_java.R;
-
 import com.sergiu.libihb_java.databinding.FragmentLoginBinding;
 import com.sergiu.libihb_java.presentation.events.LoginFormEvent;
 
@@ -48,7 +47,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(LoginFragment.this);
-
         setTextWatchers();
         setObservers();
         setListeners();

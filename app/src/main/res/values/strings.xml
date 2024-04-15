@@ -106,4 +106,8 @@
     <string name="ok">OK</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="memory_deleted">Memory deleted</string>
+    <string name="delete_memory">Delete memory</string>
+    <string name="delete_alert_dialog">Are you sure you want to permanently delete this memory?</string>
 </resources>
