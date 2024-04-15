@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.presentation.fragment.details;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITION_KEY;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -27,7 +29,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentMemoryDetailsBinding;
@@ -47,6 +48,7 @@ public class MemoryDetailsFragment extends Fragment {
     private NavController navController;
     private FragmentMemoryDetailsBinding binding;
     private DetailsCarouselAdapter detailsCarouselAdapter;
+    private TravelMemory currentMemory;
     private long id;
 
     @Override
@@ -71,15 +73,16 @@ public class MemoryDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(MemoryDetailsFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
+        setToolbar();
         setObservers();
         setListeners();
         setUpRecyclerView();
-        setToolbar();
     }
 
     @SuppressLint("CheckResult")
     private void setObservers() {
         viewModel.getMemoryById(id).subscribe(memory -> {
+            currentMemory = memory;
             setUi(memory);
             if (getView() != null) {
                 viewModel.getCurrentWeatherByLatAndLong(memory.getCoordinates())
@@ -120,6 +123,10 @@ public class MemoryDetailsFragment extends Fragment {
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.delete_memory) {
+                    showDeleteAlertDialog();
+                    return true;
+                }
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
@@ -163,5 +170,21 @@ public class MemoryDetailsFragment extends Fragment {
     }
 
     private void zoomClickedPictureIn(int position) {
+    }
+
+    private void showDeleteAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(R.string.delete_memory)
+                .setMessage(R.string.delete_alert_dialog)
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+                    viewModel.deleteMemory(currentMemory);
+                    Toast.makeText(requireContext(), getString(R.string.memory_deleted), Toast.LENGTH_SHORT).show();
+                    navController.popBackStack();
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                })
+                .setIcon(R.drawable.ic_delete)
+                .create()
+                .show();
     }
 }

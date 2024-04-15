@@ -1,18 +1,14 @@
 package com.sergiu.libihb_java.data.repository;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryFormState;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -238,6 +234,10 @@ public class MemoriesRoomRepository {
 
     public Flowable<TravelMemory> getMemoryById(Long memoryId) {
         return dao.getMemoryById(memoryId);
+    }
+
+    public Completable deleteTravelMemory(TravelMemory travelMemory) {
+        return dao.deleteTravelMemory(travelMemory);
     }
 
     public interface SubmitCallback {

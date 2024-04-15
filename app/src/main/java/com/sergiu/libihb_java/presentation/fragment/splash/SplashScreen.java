@@ -15,6 +15,7 @@ import androidx.navigation.NavOptions;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.sergiu.libihb_java.R;
+import com.sergiu.libihb_java.presentation.activity.MainActivity;
 
 
 @SuppressLint("CustomSplashScreen")
@@ -29,10 +30,7 @@ public class SplashScreen extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_splash_screen, container, false);
-        AppBarLayout appBar = requireActivity().findViewById(R.id.main_app_bar_layout);
-        if (appBar != null) {
-            appBar.setVisibility(View.GONE);
-        }
+        disableNavDrawerAnAppBar();
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (view != null && view.getContext() != null) {
                 navigateWithTransition(view);
@@ -51,5 +49,15 @@ public class SplashScreen extends Fragment {
                 .build();
         //  navigate to the next screen after the delay
         findNavController(view).navigate(R.id.action_splashScreen_to_logInFragment, null, navOptions);
+    }
+
+    private void disableNavDrawerAnAppBar() {
+        AppBarLayout appBar = requireActivity().findViewById(R.id.main_app_bar_layout);
+        if (appBar != null) {
+            appBar.setVisibility(View.GONE);
+        }
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDrawerLocked(true);
+        }
     }
 }

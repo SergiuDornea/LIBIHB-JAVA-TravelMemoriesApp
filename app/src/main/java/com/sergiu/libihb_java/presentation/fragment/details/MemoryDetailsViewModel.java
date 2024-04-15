@@ -49,4 +49,11 @@ public class MemoryDetailsViewModel extends ViewModel {
         weatherFlowable.subscribe();
         return LiveDataReactiveStreams.fromPublisher(weatherFlowable);
     }
+
+    public void deleteMemory(TravelMemory travelMemory) {
+        memoriesRoomRepository.deleteTravelMemory(travelMemory)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 }

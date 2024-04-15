@@ -3,7 +3,6 @@ package com.sergiu.libihb_java.presentation.fragment.home;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITION_KEY;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,6 @@ public class HomeFragment extends Fragment {
     private void navigateWithId(Long id) {
         Bundle bundle = new Bundle();
         bundle.putLong(MEMORY_POSITION_KEY, id);
-        Log.d(TAG, "navigateWithId: " + id);
         MemoryDetailsFragment memoryDetailsFragment = new MemoryDetailsFragment();
         memoryDetailsFragment.setArguments(bundle);
 
@@ -89,6 +87,7 @@ public class HomeFragment extends Fragment {
         }
         MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         if (toolbar != null) {
+            toolbar.getMenu().clear();
             toolbar.setTitle(R.string.home_title);
         }
     }
