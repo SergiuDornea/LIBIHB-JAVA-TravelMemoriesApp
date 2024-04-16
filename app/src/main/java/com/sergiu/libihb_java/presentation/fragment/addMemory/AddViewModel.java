@@ -10,11 +10,11 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class AddMemoryViewModel extends ViewModel {
+public class AddViewModel extends ViewModel {
     private final MemoriesRoomRepository memoriesRoomRepository;
 
     @Inject
-    public AddMemoryViewModel(MemoriesRoomRepository memoriesRoomRepository) {
+    public AddViewModel(MemoriesRoomRepository memoriesRoomRepository) {
         this.memoriesRoomRepository = memoriesRoomRepository;
     }
 

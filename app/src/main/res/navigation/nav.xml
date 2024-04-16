@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/editFragment">
 
     <fragment
         android:id="@+id/splashScreen"
         android:name="com.sergiu.libihb_java.presentation.fragment.splash.SplashScreen"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen">
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashScreen_to_logInFragment"
             app:destination="@id/loginFragment" />
@@ -39,7 +39,7 @@
             app:destination="@id/addMemorySliderFragment" />
         <action
             android:id="@+id/action_mainFragment_to_memoryDetailsFragment"
-            app:destination="@id/memoryDetailsFragment" />
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -91,8 +91,8 @@
         android:label="fragment_share"
         tools:layout="@layout/fragment_share" />
     <fragment
-        android:id="@+id/addMemoryFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.addMemoryFragment.AddMemoryFragment"
+        android:id="@+id/addFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.addFragment.AddMemoryFragment"
         android:label="AddMemory">
         <action
             android:id="@+id/action_addMemory_to_mapsFragment2"
@@ -105,25 +105,29 @@
         tools:layout="@layout/fragment_maps">
         <action
             android:id="@+id/action_mapsFragment_to_memoryOverview2"
-            app:destination="@id/memoryOverviewFragment" />
+            app:destination="@id/overviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMemorySliderFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.addMemorySlider.AddMemorySliderFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.addMemorySlider.SliderFragment"
         android:label="fragment_add_memory_slider"
-        tools:layout="@layout/fragment_add_memory_slider">
+        tools:layout="@layout/fragment_slider">
         <action
             android:id="@+id/action_addMemorySliderFragment_to_addMemory2"
-            app:destination="@id/addMemoryFragment" />
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
-        android:id="@+id/memoryOverviewFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.memoryOverviewFragment.MemoryOverviewFragment"
+        android:id="@+id/overviewFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.overviewFragment.MemoryOverviewFragment"
         android:label="fragment_memory_overview"
-        tools:layout="@layout/fragment_memory_overview" />
+        tools:layout="@layout/fragment_overview" />
     <fragment
-        android:id="@+id/memoryDetailsFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.details.MemoryDetailsFragment"
+        android:id="@+id/detailsFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment"
         android:label="fragment_memory_details"
-        tools:layout="@layout/fragment_memory_details" />
+        tools:layout="@layout/fragment_details" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.edit.EditFragment"
+        android:label="EditFragment" />
 </navigation>

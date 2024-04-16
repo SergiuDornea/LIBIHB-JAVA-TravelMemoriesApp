@@ -31,8 +31,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
-public class MemoryOverviewViewModel extends ViewModel {
-    private static final String TAG = MemoryOverviewViewModel.class.getSimpleName();
+public class OverviewViewModel extends ViewModel {
+    private static final String TAG = OverviewViewModel.class.getSimpleName();
     private final MemoriesRoomRepository memoriesRoomRepository;
     private final MutableLiveData<MemoryFormState> formState;
     private final ValidateMemoryImgList validateMemoryImgList;
@@ -43,7 +43,7 @@ public class MemoryOverviewViewModel extends ViewModel {
     private final MutableLiveData<SaveMemoryClickedEvent> saveMemoryClickedEvent = new MutableLiveData<>();
 
     @Inject
-    public MemoryOverviewViewModel(
+    public OverviewViewModel(
             MemoriesRoomRepository memoriesRoomRepository,
             ValidateMemoryImgList validateMemoryImgList,
             ValidateMemoryName validateMemoryName,

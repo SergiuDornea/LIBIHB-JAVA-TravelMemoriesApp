@@ -28,8 +28,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.sergiu.libihb_java.R;
-import com.sergiu.libihb_java.databinding.FragmentMemoryOverviewBinding;
-import com.sergiu.libihb_java.presentation.adapters.MemoryOverviewAdapter;
+import com.sergiu.libihb_java.databinding.FragmentOverviewBinding;
+import com.sergiu.libihb_java.presentation.adapters.OverviewAdapter;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
 import java.util.Date;
@@ -38,33 +38,33 @@ import java.util.Objects;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MemoryOverviewFragment extends Fragment {
+public class OverviewFragment extends Fragment {
     private static final LatLng DEFAULT_COORDINATES = new LatLng(0, 0);
     private static final Date DEFAULT_DATE = new Date(0);
-    private MemoryOverviewViewModel viewModel;
-    private FragmentMemoryOverviewBinding binding;
+    private OverviewViewModel viewModel;
+    private FragmentOverviewBinding binding;
     private SupportMapFragment mapFragment;
     private NavController navController;
-    private MemoryOverviewAdapter memoryOverviewAdapter;
+    private OverviewAdapter memoryOverviewAdapter;
     private NavigateCallback navigateCallback;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MemoryOverviewViewModel.class);
+        viewModel = new ViewModelProvider(this).get(OverviewViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentMemoryOverviewBinding.inflate(inflater, container, false);
+        binding = FragmentOverviewBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = NavHostFragment.findNavController(MemoryOverviewFragment.this);
+        navController = NavHostFragment.findNavController(OverviewFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
         setListeners();
         setObservers();
@@ -75,7 +75,7 @@ public class MemoryOverviewFragment extends Fragment {
     }
 
     private void setListeners() {
-        memoryOverviewAdapter = new MemoryOverviewAdapter(position -> memoryOverviewAdapter.removeImgUriFromList(position));
+        memoryOverviewAdapter = new OverviewAdapter(position -> memoryOverviewAdapter.removeImgUriFromList(position));
         binding.saveMemoryMaterialButton.setOnClickListener(view -> viewModel.onEvent(MemoryFormEvent.SubmitClicked));
     }
 
@@ -86,16 +86,16 @@ public class MemoryOverviewFragment extends Fragment {
                 String cause = saveMemoryClickedEvent.getCause();
                 switch (cause) {
                     case CAUSE_NAME:
-                        navigateWithInteractiveMessage(R.id.addMemoryFragment, saveMemoryClickedEvent.getMessage());
+                        navigateWithInteractiveMessage(R.id.addFragment, saveMemoryClickedEvent.getMessage());
                         break;
                     case CAUSE_DESCRIPTION:
-                        navigateWithInteractiveMessage(R.id.addMemoryFragment, saveMemoryClickedEvent.getMessage());
+                        navigateWithInteractiveMessage(R.id.addFragment, saveMemoryClickedEvent.getMessage());
                         break;
                     case CAUSE_DATE:
-                        navigateWithInteractiveMessage(R.id.addMemoryFragment, saveMemoryClickedEvent.getMessage());
+                        navigateWithInteractiveMessage(R.id.addFragment, saveMemoryClickedEvent.getMessage());
                         break;
                     case CAUSE_IMG_LIST:
-                        navigateWithInteractiveMessage(R.id.addMemoryFragment, saveMemoryClickedEvent.getMessage());
+                        navigateWithInteractiveMessage(R.id.addFragment, saveMemoryClickedEvent.getMessage());
                         break;
                     case CAUSE_COORDINATES:
                         navigateWithInteractiveMessage(R.id.mapsFragment, saveMemoryClickedEvent.getMessage());

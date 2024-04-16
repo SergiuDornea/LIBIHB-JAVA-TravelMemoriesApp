@@ -20,7 +20,7 @@ import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
-import com.sergiu.libihb_java.presentation.fragment.details.MemoryDetailsFragment;
+import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -67,8 +67,8 @@ public class HomeFragment extends Fragment {
     private void navigateWithId(Long id) {
         Bundle bundle = new Bundle();
         bundle.putLong(MEMORY_POSITION_KEY, id);
-        MemoryDetailsFragment memoryDetailsFragment = new MemoryDetailsFragment();
-        memoryDetailsFragment.setArguments(bundle);
+        DetailsFragment detailsFragment = new DetailsFragment();
+        detailsFragment.setArguments(bundle);
 
         navController.navigate(R.id.action_mainFragment_to_memoryDetailsFragment, bundle);
     }

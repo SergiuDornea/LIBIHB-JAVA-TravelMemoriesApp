@@ -28,8 +28,7 @@ public class SplashScreen extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_splash_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_splash, container, false);
         disableNavDrawerAnAppBar();
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (view != null && view.getContext() != null) {
@@ -39,7 +38,6 @@ public class SplashScreen extends Fragment {
         return view;
     }
 
-    // a function that creates a smooth transition to the next fragment
     private void navigateWithTransition(View view) {
         NavOptions navOptions = new NavOptions.Builder()
                 .setEnterAnim(R.anim.slide_in_from_right)
@@ -47,7 +45,7 @@ public class SplashScreen extends Fragment {
                 .setPopEnterAnim(R.anim.slide_in_from_left)
                 .setPopExitAnim(R.anim.slide_out_to_right)
                 .build();
-        //  navigate to the next screen after the delay
+
         findNavController(view).navigate(R.id.action_splashScreen_to_logInFragment, null, navOptions);
     }
 

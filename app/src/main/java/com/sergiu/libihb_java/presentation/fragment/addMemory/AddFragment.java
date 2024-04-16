@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.sergiu.libihb_java.databinding.FragmentAddMemoryBinding;
+import com.sergiu.libihb_java.databinding.FragmentAddBinding;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
 import java.util.ArrayList;
@@ -30,11 +30,11 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class AddMemoryFragment extends Fragment {
-    private static final String TAG = AddMemoryFragment.class.getName();
+public class AddFragment extends Fragment {
+    private static final String TAG = AddFragment.class.getName();
     private static final Integer MAX_MEMORY_IMG = 5;
-    private FragmentAddMemoryBinding binding;
-    private AddMemoryViewModel viewModel;
+    private FragmentAddBinding binding;
+    private AddViewModel viewModel;
     private Date date;
     private NavController navController;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
@@ -42,20 +42,20 @@ public class AddMemoryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(AddMemoryViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AddViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAddMemoryBinding.inflate(inflater, container, false);
+        binding = FragmentAddBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = NavHostFragment.findNavController(AddMemoryFragment.this);
+        navController = NavHostFragment.findNavController(AddFragment.this);
         initializeActivityResultLauncher();
         setTextWatchers();
         setListeners();

@@ -110,4 +110,11 @@
     <string name="memory_deleted">Memory deleted</string>
     <string name="delete_memory">Delete memory</string>
     <string name="delete_alert_dialog">Are you sure you want to permanently delete this memory?</string>
+    <string name="edit_your_memory">Edit your memory</string>
+    <string name="save_edited_memory">Save edited memory</string>
+    <string name="memory_description">Memory description</string>
+    <string name="location_admin">Location admin</string>
+    <string name="location">Location</string>
+    <string name="country">Country</string>
+    <string name="a_empty_image_holder_with_a_add_sign_in_the_center">A empty image holder with a add sign in the center</string>
 </resources>
