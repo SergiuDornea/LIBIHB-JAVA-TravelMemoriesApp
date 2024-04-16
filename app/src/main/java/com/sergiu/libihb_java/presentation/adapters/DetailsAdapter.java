@@ -15,11 +15,11 @@ import com.sergiu.libihb_java.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsCarouselAdapter extends RecyclerView.Adapter<DetailsCarouselAdapter.DetailsCarouselViewHolder> {
-    private List<String> imgUriList = new ArrayList<>();
+public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsCarouselViewHolder> {
+    private final List<String> imgUriList = new ArrayList<>();
     private final OnItemClickListener onItemClickListener;
 
-    public DetailsCarouselAdapter(OnItemClickListener onItemClickListener) {
+    public DetailsAdapter(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -27,7 +27,7 @@ public class DetailsCarouselAdapter extends RecyclerView.Adapter<DetailsCarousel
     @Override
     public DetailsCarouselViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_details_carousel, parent, false);
+                .inflate(R.layout.item_details, parent, false);
         return new DetailsCarouselViewHolder(view, onItemClickListener);
     }
 

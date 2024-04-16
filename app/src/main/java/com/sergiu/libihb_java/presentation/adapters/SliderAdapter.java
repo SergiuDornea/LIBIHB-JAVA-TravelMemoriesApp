@@ -8,10 +8,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
-public class AddMemoryFragmentsAdapter extends FragmentStateAdapter {
+public class SliderAdapter extends FragmentStateAdapter {
     private final ArrayList<Fragment> fragmentList = new ArrayList<>();
 
-    public AddMemoryFragmentsAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public SliderAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 

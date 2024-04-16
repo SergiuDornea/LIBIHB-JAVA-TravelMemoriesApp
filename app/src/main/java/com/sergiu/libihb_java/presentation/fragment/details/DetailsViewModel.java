@@ -20,12 +20,12 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
-public class MemoryDetailsViewModel extends ViewModel {
+public class DetailsViewModel extends ViewModel {
     private final MemoriesRoomRepository memoriesRoomRepository;
     private final WeatherRepository weatherRepository;
 
     @Inject
-    public MemoryDetailsViewModel(MemoriesRoomRepository memoriesRoomRepository, WeatherRepository weatherRepository) {
+    public DetailsViewModel(MemoriesRoomRepository memoriesRoomRepository, WeatherRepository weatherRepository) {
         this.memoriesRoomRepository = memoriesRoomRepository;
         this.weatherRepository = weatherRepository;
     }

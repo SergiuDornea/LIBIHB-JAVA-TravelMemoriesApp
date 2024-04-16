@@ -16,11 +16,11 @@ import com.sergiu.libihb_java.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemoryOverviewAdapter extends RecyclerView.Adapter<MemoryOverviewAdapter.MemoryOverviewViewHolder> {
+public class OverviewAdapter extends RecyclerView.Adapter<OverviewAdapter.MemoryOverviewViewHolder> {
     private final List<String> imgUriList = new ArrayList<>();
     private final OnDeleteClickListener onDeleteClickListener;
 
-    public MemoryOverviewAdapter(OnDeleteClickListener onDeleteClickListener) {
+    public OverviewAdapter(OnDeleteClickListener onDeleteClickListener) {
         this.onDeleteClickListener = onDeleteClickListener;
     }
 
@@ -28,7 +28,7 @@ public class MemoryOverviewAdapter extends RecyclerView.Adapter<MemoryOverviewAd
     @Override
     public MemoryOverviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_overview_photo, parent, false);
+                .inflate(R.layout.item_overview, parent, false);
         return new MemoryOverviewViewHolder(view, onDeleteClickListener);
     }
 
@@ -51,7 +51,7 @@ public class MemoryOverviewAdapter extends RecyclerView.Adapter<MemoryOverviewAd
         public MemoryOverviewViewHolder(@NonNull View itemView, OnDeleteClickListener deleteClickListener) {
             super(itemView);
             this.memoryImage = itemView.findViewById(R.id.photo_image_overview);
-            ImageButton removeButton = itemView.findViewById(R.id.delete_image_button);
+            ImageButton removeButton = itemView.findViewById(R.id.delete_image_button_overview);
 
             removeButton.setOnClickListener(view -> {
                 if (deleteClickListener != null) {

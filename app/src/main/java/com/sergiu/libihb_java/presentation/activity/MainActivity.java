@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navController.navigate(R.id.shareFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-        if (id == R.id.logOutFragment) {
-            navController.navigate(R.id.logOutFragment);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
 
         return false;
     }

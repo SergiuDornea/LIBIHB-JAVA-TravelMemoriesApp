@@ -31,30 +31,30 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
-import com.sergiu.libihb_java.databinding.FragmentMemoryDetailsBinding;
+import com.sergiu.libihb_java.databinding.FragmentDetailsBinding;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
-import com.sergiu.libihb_java.presentation.adapters.DetailsCarouselAdapter;
+import com.sergiu.libihb_java.presentation.adapters.DetailsAdapter;
 
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MemoryDetailsFragment extends Fragment {
-    private MemoryDetailsViewModel viewModel;
+public class DetailsFragment extends Fragment {
+    private DetailsViewModel viewModel;
     private SupportMapFragment mapFragment;
     private NavController navController;
-    private FragmentMemoryDetailsBinding binding;
-    private DetailsCarouselAdapter detailsCarouselAdapter;
+    private FragmentDetailsBinding binding;
+    private DetailsAdapter detailsCarouselAdapter;
     private TravelMemory currentMemory;
     private long id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MemoryDetailsViewModel.class);
+        viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getLong(MEMORY_POSITION_KEY);
@@ -64,14 +64,14 @@ public class MemoryDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentMemoryDetailsBinding.inflate(inflater, container, false);
+        binding = FragmentDetailsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = NavHostFragment.findNavController(MemoryDetailsFragment.this);
+        navController = NavHostFragment.findNavController(DetailsFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
         setToolbar();
         setObservers();
@@ -162,7 +162,7 @@ public class MemoryDetailsFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        detailsCarouselAdapter = new DetailsCarouselAdapter(this::zoomClickedPictureIn);
+        detailsCarouselAdapter = new DetailsAdapter(this::zoomClickedPictureIn);
         binding.photoCarouselRecycleView.setAdapter(detailsCarouselAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.photoCarouselRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
         dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.photoCarouselRecycleView.getContext(), R.drawable.item_divider)));

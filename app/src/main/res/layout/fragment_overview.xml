@@ -8,7 +8,7 @@
     android:background="@drawable/sps_light_green_bg">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/take_a_look_text_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
@@ -36,7 +36,7 @@
         app:layout_constraintHeight_percent="0.6"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView">
+        app:layout_constraintTop_toBottomOf="@id/take_a_look_text_view">
 
         <TextView
             android:id="@+id/name_text_view"
@@ -117,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/form_overview_constraint_layout"
-        tools:listitem="@layout/item_overview_photo" />
+        tools:listitem="@layout/item_overview" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_memory_material_button"
