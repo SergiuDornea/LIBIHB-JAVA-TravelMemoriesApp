@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_your_memory_text_View">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name_edit_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/description_edit_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,13 +74,13 @@
             android:layout_marginHorizontal="4dp"
             android:layout_marginTop="16dp"
             android:autoSizeTextType="uniform"
-            android:text="@string/pick_a_date"
+            android:text="@string/choose_another_date"
             app:icon="@drawable/ic_calendar"
             app:iconGravity="end"
             app:layout_constraintEnd_toStartOf="@id/date_text_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_edit_text_view"
-            app:layout_constraintWidth_percent="0.4" />
+            app:layout_constraintWidth_percent="0.5" />
 
         <TextView
             android:id="@+id/date_text_view"
@@ -90,12 +90,14 @@
             android:layout_marginTop="16dp"
             android:autoSizeTextType="uniform"
             android:text="@string/date"
-            android:textSize="16sp"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/choose_a_date_material_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/choose_a_date_material_button"
             app:layout_constraintTop_toBottomOf="@+id/description_edit_text_view"
-            app:layout_constraintWidth_percent="0.4" />
+            app:layout_constraintWidth_percent="0.3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

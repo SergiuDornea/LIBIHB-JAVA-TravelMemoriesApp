@@ -44,12 +44,16 @@ public class MemoriesRepository {
         this.dao = travelMemoryDao;
     }
 
-    public void setSubmitCallback(SubmitCallback submitCallback) {
-        this.submitCallback = submitCallback;
+    public void setFormState(MemoryFormState formState) {
+        this.formState.setValue(formState);
     }
 
     public LiveData<MemoryFormState> getFormState() {
         return formState;
+    }
+
+    public void setSubmitCallback(SubmitCallback submitCallback) {
+        this.submitCallback = submitCallback;
     }
 
     public void onEvent(MemoryFormEvent event) {

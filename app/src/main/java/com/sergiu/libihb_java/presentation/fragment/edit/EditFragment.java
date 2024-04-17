@@ -1,19 +1,16 @@
 package com.sergiu.libihb_java.presentation.fragment.edit;
 
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MAX_MEMORY_IMG;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_KEY;
+import static com.sergiu.libihb_java.presentation.utils.DateUtil.formDateToString;
 
 import android.annotation.SuppressLint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +44,7 @@ import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.adapters.EditAdapter;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 import com.sergiu.libihb_java.presentation.fragment.addMemory.DatePicker;
+import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryFormState;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,7 +67,11 @@ public class EditFragment extends Fragment {
     @SuppressLint("CheckResult")
     private final OnMapReadyCallback callback = googleMap -> {
         map = googleMap;
-        viewModel.getMemoryById(id).subscribe(this::setUi);
+        viewModel.getMemoryById(id).subscribe(travelMemory -> {
+            setFormInitialState(travelMemory);
+            setUi(viewModel.getFormState());
+            viewModel.setId(id);
+        });
     };
     private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
@@ -80,12 +82,13 @@ public class EditFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getLong(MEMORY_ID_KEY);
+            viewModel.setId(id);
         }
         initializeActivityResultLauncher();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEditBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -101,35 +104,53 @@ public class EditFragment extends Fragment {
         setObservers();
         setListeners();
         setUpRecyclerview();
+
     }
 
     private void setObservers() {
+        viewModel.observeFormState().observe(getViewLifecycleOwner(), this::setUi);
         viewModel.getSaveEditedMemoryClickedEvent().observe(getViewLifecycleOwner(), saveEditedMemoryClickedEvent -> {
             if (saveEditedMemoryClickedEvent != null) {
-                String cause = saveEditedMemoryClickedEvent.getCause();
-                switch (cause) {
-                    case CAUSE_NAME:
-                        displayInteractiveMessage(saveEditedMemoryClickedEvent.getMessage());
-                        break;
-                    case CAUSE_DESCRIPTION:
-                        displayInteractiveMessage(saveEditedMemoryClickedEvent.getMessage());
-                        break;
-                    case CAUSE_DATE:
-                        displayInteractiveMessage(saveEditedMemoryClickedEvent.getMessage());
-                        break;
-                    case CAUSE_IMG_LIST:
-                        displayInteractiveMessage(saveEditedMemoryClickedEvent.getMessage());
-                        break;
-                    case CAUSE_COORDINATES:
-                        displayInteractiveMessage(saveEditedMemoryClickedEvent.getMessage());
-                        break;
-                    case CAUSE_DEFAULT:
-                        Toast.makeText(requireContext(), getString(R.string.memory_saved), Toast.LENGTH_SHORT).show();
-                        navController.popBackStack();
+                String message = saveEditedMemoryClickedEvent.getMessage();
+                if (message == null) {
+                    Toast.makeText(requireContext(), getString(R.string.changes_saved), Toast.LENGTH_SHORT).show();
+                    navController.popBackStack();
+                } else {
+                    displayInteractiveMessage(saveEditedMemoryClickedEvent.getMessage());
                 }
             }
         });
+    }
 
+    private void setFormInitialState(TravelMemory travelMemory) {
+        viewModel.setMemoryFormState(new MemoryFormState(
+                travelMemory.getImageList(),
+                travelMemory.getMemoryName(),
+                travelMemory.getMemoryDescription(),
+                travelMemory.getPlaceLocationName(),
+                travelMemory.getPlaceCountryName(),
+                travelMemory.getPlaceAdminAreaName(),
+                travelMemory.getCoordinates(),
+                travelMemory.getDateOfTravel(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        ));
+    }
+
+    private void setUi(MemoryFormState form) {
+        binding.nameEditTextView.setHint(getString(R.string.type_new_name_if_needed));
+        binding.descriptionEditTextView.setHint(getString(R.string.type_new_description_if_needed));
+        binding.dateTextView.setText(form.getDateOfTravel() != null ? formDateToString(form.getDateOfTravel()) : "no date");
+        binding.locationNameEditTextView.setText(form.getPlaceLocationName());
+        binding.locationCountryEditTextView.setText(form.getPlaceCountryName());
+        editAdapter.updateImgUriList(form.getListOfImgUri());
+        setMarkerAtGivenLatLng(form.getCoordinates());
     }
 
     private void displayInteractiveMessage(String message) {
@@ -147,6 +168,37 @@ public class EditFragment extends Fragment {
         binding.choosePhotosEditMaterialButton.setOnClickListener(view -> choosePhotosFromGallery());
         setChooseADate();
         setSearchBar();
+        binding.saveEditMemoryMaterialButton.setOnClickListener(view -> viewModel.onEvent(MemoryFormEvent.SubmitClicked));
+        binding.nameEditTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                viewModel.onEvent(new MemoryFormEvent.MemoryNameChanged(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        binding.descriptionEditTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                viewModel.onEvent(new MemoryFormEvent.MemoryDescriptionChanged(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void setToolbar() {
@@ -161,16 +213,6 @@ public class EditFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.memoryEditRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
         dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.memoryEditRecycleView.getContext(), R.drawable.overview_img_item_divider)));
         binding.memoryEditRecycleView.setAdapter(editAdapter);
-    }
-
-    private void setUi(TravelMemory memory) {
-        binding.nameEditTextView.setText(memory.getMemoryName());
-        binding.descriptionEditTextView.setText(memory.getMemoryDescription());
-        binding.dateTextView.setText(memory.getFormattedDate());
-        binding.locationNameEditTextView.setText(memory.getPlaceLocationName());
-        binding.locationCountryEditTextView.setText(memory.getPlaceCountryName());
-        editAdapter.updateImgUriList(memory.getImageList());
-        setMarkerAtGivenLatLng(memory.getCoordinates());
     }
 
     private void setSearchBar() {

@@ -1,12 +1,5 @@
 package com.sergiu.libihb_java.presentation.fragment.edit;
 
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
-import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
-
 import android.annotation.SuppressLint;
 import android.util.Log;
 
@@ -43,6 +36,7 @@ public class EditViewModel extends ViewModel {
     private final ValidateMemoryDate validateMemoryDate;
     private final MutableLiveData<MemoryFormState> formState;
     private final MutableLiveData<SaveEditedMemoryClickedEvent> saveMemoryClickedEvent = new MutableLiveData<>();
+    private long id;
 
     @Inject
     public EditViewModel(
@@ -62,8 +56,20 @@ public class EditViewModel extends ViewModel {
         this.memoriesRepository.setSubmitCallback(this::onSubmit);
     }
 
-    public MutableLiveData<MemoryFormState> getFormState() {
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public MutableLiveData<MemoryFormState> observeFormState() {
         return formState;
+    }
+
+    public MemoryFormState getFormState() {
+        return formState.getValue();
+    }
+
+    public void setMemoryFormState(MemoryFormState memoryFormState) {
+        memoriesRepository.setFormState(memoryFormState);
     }
 
     public LiveData<SaveEditedMemoryClickedEvent> getSaveEditedMemoryClickedEvent() {
@@ -82,6 +88,7 @@ public class EditViewModel extends ViewModel {
 
     private void onSubmit() {
         Log.d(TAG, "onSubmit: Submit button clicked");
+        Log.d(TAG, "onSubmit: form state " + formState.getValue().getMemoryName());
         ValidateResult listValid = validateMemoryImgList.validate(formState.getValue().getListOfImgUri());
         ValidateResult memoryNameValid = validateMemoryName.validate(formState.getValue().getMemoryName());
         ValidateResult memoryDescriptionValid = validateMemoryDescription.validate(formState.getValue().getMemoryDescription());
@@ -113,34 +120,35 @@ public class EditViewModel extends ViewModel {
                             memoryDateValid.getMessageIfNotValid())
             );
             if (!memoryCoordinatesValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(CAUSE_COORDINATES, formState.getValue().getCoordinatesError()));
+                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getCoordinatesError()));
             if (!listValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(CAUSE_IMG_LIST, formState.getValue().getListOfImgUriError()));
+                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getListOfImgUriError()));
             if (!memoryDateValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(CAUSE_DATE, formState.getValue().getDateOfTravelError()));
+                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getDateOfTravelError()));
             if (!memoryDescriptionValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(CAUSE_DESCRIPTION, formState.getValue().getMemoryDescriptionError()));
+                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getMemoryDescriptionError()));
             if (!memoryNameValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(CAUSE_NAME, formState.getValue().getMemoryNameError()));
+                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getMemoryNameError()));
         } else {
             saveEditedMemory();
-            saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(CAUSE_DEFAULT, null));
+            saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(null));
         }
     }
 
     @SuppressLint("CheckResult")
     private void saveEditedMemory() {
-        memoriesRepository.updateTravelMemory(
-                        new TravelMemory(
-                                formState.getValue().getListOfImgUri(),
-                                formState.getValue().getMemoryName(),
-                                formState.getValue().getMemoryDescription(),
-                                formState.getValue().getCoordinates(),
-                                formState.getValue().getDateOfTravel(),
-                                formState.getValue().getPlaceLocationName(),
-                                formState.getValue().getPlaceCountryName(),
-                                formState.getValue().getPlaceAdminName()
-                        ))
+        TravelMemory memory = new TravelMemory(
+                formState.getValue().getListOfImgUri(),
+                formState.getValue().getMemoryName(),
+                formState.getValue().getMemoryDescription(),
+                formState.getValue().getCoordinates(),
+                formState.getValue().getDateOfTravel(),
+                formState.getValue().getPlaceLocationName(),
+                formState.getValue().getPlaceCountryName(),
+                formState.getValue().getPlaceAdminName());
+        memory.setId(id);
+
+        memoriesRepository.updateTravelMemory(memory)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> Log.d(TAG, "saveEditedMemory: edited memory saved "),
@@ -148,16 +156,10 @@ public class EditViewModel extends ViewModel {
     }
 
     public static class SaveEditedMemoryClickedEvent {
-        private final String cause;
         private final String message;
 
-        private SaveEditedMemoryClickedEvent(String cause, String message) {
-            this.cause = cause;
+        private SaveEditedMemoryClickedEvent(String message) {
             this.message = message;
-        }
-
-        public String getCause() {
-            return cause;
         }
 
         public String getMessage() {

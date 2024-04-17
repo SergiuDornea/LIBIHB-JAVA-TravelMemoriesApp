@@ -16,4 +16,5 @@ public final class Constants {
     public static final String CAUSE_COORDINATES = "cause_coordinates";
     public static final String CAUSE_DATE = "cause_date";
     public static final String CAUSE_DEFAULT = "cause_default";
+    public static final String DATE_FORMAT_PATTERN = "dd MMM yyyy";
 }

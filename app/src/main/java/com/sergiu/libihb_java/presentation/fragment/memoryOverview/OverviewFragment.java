@@ -6,6 +6,7 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
+import static com.sergiu.libihb_java.presentation.utils.DateUtil.formDateToString;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -123,7 +124,7 @@ public class OverviewFragment extends Fragment {
         binding.nameTextView.setText(form.getMemoryName());
         binding.descriptionTextView.setText(form.getMemoryDescription());
         binding.locationNameTextView.setText(form.getPlaceLocationName());
-        binding.dateTextView.setText(form.getDateOfTravel() != null ? form.getDateOfTravel().toString() : DEFAULT_DATE.toString());
+        binding.dateTextView.setText(form.getDateOfTravel() != null ? formDateToString(form.getDateOfTravel()) : formDateToString(DEFAULT_DATE));
 
         if (mapFragment != null) {
             mapFragment.getMapAsync(googleMap -> {

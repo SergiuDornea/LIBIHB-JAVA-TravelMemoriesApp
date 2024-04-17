@@ -71,6 +71,7 @@
     <string name="remove_image_from_list_button">Remove image from list button</string>
     <string name="title">Title</string>
     <string name="memory_saved">Memory saved</string>
+    <string name="changes_saved">Changes saved</string>
     <string name="description">Description:</string>
     <string name="location_country">Location country</string>
     <string name="location_admin_area">Location admin area</string>
@@ -117,5 +118,8 @@
     <string name="location">Location</string>
     <string name="country">Country</string>
     <string name="location_not_found">Location not found</string>
+    <string name="type_new_name_if_needed">Edit name ?</string>
+    <string name="type_new_description_if_needed">Edit description ?</string>
+    <string name="choose_another_date">Choose another date ?</string>
     <string name="a_empty_image_holder_with_a_add_sign_in_the_center">A empty image holder with a add sign in the center</string>
 </resources>
