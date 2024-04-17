@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.sergiu.libihb_java.data.repository.MemoriesRoomRepository;
+import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.data.repository.WeatherRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
@@ -21,17 +21,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
-    private final MemoriesRoomRepository memoriesRoomRepository;
+    private final MemoriesRepository memoriesRepository;
     private final WeatherRepository weatherRepository;
 
     @Inject
-    public DetailsViewModel(MemoriesRoomRepository memoriesRoomRepository, WeatherRepository weatherRepository) {
-        this.memoriesRoomRepository = memoriesRoomRepository;
+    public DetailsViewModel(MemoriesRepository memoriesRepository, WeatherRepository weatherRepository) {
+        this.memoriesRepository = memoriesRepository;
         this.weatherRepository = weatherRepository;
     }
 
     public Flowable<TravelMemory> getMemoryById(long memoryId) {
-        return memoriesRoomRepository.getMemoryById(memoryId)
+        return memoriesRepository.getMemoryById(memoryId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -51,7 +51,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public void deleteMemory(TravelMemory travelMemory) {
-        memoriesRoomRepository.deleteTravelMemory(travelMemory)
+        memoriesRepository.deleteTravelMemory(travelMemory)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();

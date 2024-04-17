@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 int currentDestinationId = Objects.requireNonNull(navController.getCurrentDestination()).getId();
                 if (getBackHomeDestinations.contains(currentDestinationId)) {
                     navController.navigate(R.id.mainFragment);
+                } else if (currentDestinationId == R.id.editFragment) {
+                    navController.popBackStack();
                 } else {
                     finish();
                 }

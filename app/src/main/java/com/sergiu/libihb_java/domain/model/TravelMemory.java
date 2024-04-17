@@ -1,6 +1,8 @@
 package com.sergiu.libihb_java.domain.model;
 
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.DATE_FORMAT_PATTERN;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,7 +21,6 @@ import java.util.Locale;
 @Entity(tableName = "memories")
 @TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
 public class TravelMemory {
-    private static final String DATE_FORMAT_PATTERN = "dd MMM yyyy";
     @PrimaryKey(autoGenerate = true)
     private Long id;
     @ColumnInfo(name = "image_list")

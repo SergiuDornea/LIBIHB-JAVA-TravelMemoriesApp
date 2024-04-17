@@ -1,6 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.home;
 
-import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITION_KEY;
+import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
 
     private void navigateWithId(Long id) {
         Bundle bundle = new Bundle();
-        bundle.putLong(MEMORY_POSITION_KEY, id);
+        bundle.putLong(MEMORY_ID_BY_POSITION_KEY, id);
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);
 

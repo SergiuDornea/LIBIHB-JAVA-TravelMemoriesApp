@@ -36,7 +36,7 @@
             android:layout_marginEnd="8dp"
             android:background="@null"
             android:contentDescription="@string/remove_image_from_list_button"
-            android:src="@drawable/ic_cancel_2"
+            android:src="@drawable/ic_cancel"
             app:layout_constraintEnd_toEndOf="@id/photo_image_overview"
             app:layout_constraintTop_toTopOf="@id/photo_image_overview" />
     </androidx.constraintlayout.widget.ConstraintLayout>

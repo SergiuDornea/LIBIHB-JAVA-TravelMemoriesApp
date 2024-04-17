@@ -14,7 +14,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sergiu.libihb_java.data.repository.MemoriesRoomRepository;
+import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.use_case_validate.ValidateResult;
 import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryCoordinates;
@@ -33,7 +33,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 @HiltViewModel
 public class OverviewViewModel extends ViewModel {
     private static final String TAG = OverviewViewModel.class.getSimpleName();
-    private final MemoriesRoomRepository memoriesRoomRepository;
+    private final MemoriesRepository memoriesRepository;
     private final MutableLiveData<MemoryFormState> formState;
     private final ValidateMemoryImgList validateMemoryImgList;
     private final ValidateMemoryName validateMemoryName;
@@ -44,24 +44,20 @@ public class OverviewViewModel extends ViewModel {
 
     @Inject
     public OverviewViewModel(
-            MemoriesRoomRepository memoriesRoomRepository,
+            MemoriesRepository memoriesRepository,
             ValidateMemoryImgList validateMemoryImgList,
             ValidateMemoryName validateMemoryName,
             ValidateMemoryDescription validateMemoryDescription,
             ValidateMemoryCoordinates validateMemoryCoordinates,
             ValidateMemoryDate validateMemoryDate) {
-        this.memoriesRoomRepository = memoriesRoomRepository;
-        this.formState = (MutableLiveData<MemoryFormState>) memoriesRoomRepository.getFormState();
+        this.memoriesRepository = memoriesRepository;
+        this.formState = (MutableLiveData<MemoryFormState>) memoriesRepository.getFormState();
         this.validateMemoryImgList = validateMemoryImgList;
         this.validateMemoryName = validateMemoryName;
         this.validateMemoryDescription = validateMemoryDescription;
         this.validateMemoryCoordinates = validateMemoryCoordinates;
         this.validateMemoryDate = validateMemoryDate;
-        this.memoriesRoomRepository.setSubmitCallback(this::onSubmit);
-    }
-
-    public void onEvent(MemoryFormEvent memoryFormEvent) {
-        memoriesRoomRepository.onEvent(memoryFormEvent);
+        this.memoriesRepository.setSubmitCallback(this::onSubmit);
     }
 
     public MutableLiveData<SaveMemoryClickedEvent> getSaveMemoryClickedEvent() {
@@ -69,7 +65,11 @@ public class OverviewViewModel extends ViewModel {
     }
 
     public LiveData<MemoryFormState> observeMemoryFormState() {
-        return memoriesRoomRepository.getFormState();
+        return memoriesRepository.getFormState();
+    }
+
+    public void onEvent(MemoryFormEvent memoryFormEvent) {
+        memoriesRepository.onEvent(memoryFormEvent);
     }
 
     private void onSubmit() {
@@ -85,7 +85,7 @@ public class OverviewViewModel extends ViewModel {
                 || !memoryDescriptionValid.isValid()
                 || !memoryCoordinatesValid.isValid()
                 || !memoryDateValid.isValid()) {
-            memoriesRoomRepository.updateFormState(
+            memoriesRepository.updateFormState(
                     new MemoryFormState(
                             formState.getValue().getListOfImgUri(),
                             formState.getValue().getMemoryName(),
@@ -122,7 +122,7 @@ public class OverviewViewModel extends ViewModel {
 
     @SuppressLint("CheckResult")
     private void saveMemory() {
-        memoriesRoomRepository.insertTravelMemory(
+        memoriesRepository.insertTravelMemory(
                         new TravelMemory(
                                 formState.getValue().getListOfImgUri(),
                                 formState.getValue().getMemoryName(),

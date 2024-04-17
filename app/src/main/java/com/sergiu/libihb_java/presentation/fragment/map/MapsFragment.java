@@ -66,7 +66,7 @@ public class MapsFragment extends Fragment {
         }
     }
 
-    public void setMarkerAtGivenLatLng(LatLng latLng) {
+    private void setMarkerAtGivenLatLng(LatLng latLng) {
         if (map != null) {
             map.clear();
             map.addMarker(new MarkerOptions().position(latLng));
@@ -90,7 +90,7 @@ public class MapsFragment extends Fragment {
 
                 if (addressList != null && !addressList.isEmpty()) {
                     Address address = addressList.get(0);
-                    Log.d(TAG, "onQueryTextSubmit: adress " + address.toString());
+                    Log.d(TAG, "onQueryTextSubmit: address " + address.toString());
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     setMarkerAtGivenLatLng(latLng);
                     binding.searchBar.clearFocus();
@@ -100,7 +100,7 @@ public class MapsFragment extends Fragment {
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceLocationNameChanged(address.getFeatureName()));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceAdminNameChanged(address.getAdminArea()));
                 } else {
-                    Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.location_not_found, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
