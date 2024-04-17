@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sergiu.libihb_java.data.repository.MemoriesRoomRepository;
+import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 
 import java.util.List;
@@ -19,18 +19,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class HomeViewModel extends ViewModel {
-    private final MemoriesRoomRepository memoriesRoomRepository;
+    private final MemoriesRepository memoriesRepository;
     private final MutableLiveData<List<TravelMemory>> memoriesLiveData = new MutableLiveData<>();
 
     @Inject
-    public HomeViewModel(MemoriesRoomRepository memoriesRoomRepository) {
-        this.memoriesRoomRepository = memoriesRoomRepository;
+    public HomeViewModel(MemoriesRepository memoriesRepository) {
+        this.memoriesRepository = memoriesRepository;
         observeMemories();
     }
 
     @SuppressLint("CheckResult")
     public void observeMemories() {
-        memoriesRoomRepository.getMemories()
+        memoriesRepository.getMemories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(memoriesLiveData::setValue);

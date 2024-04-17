@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
-public class MemoriesRoomRepository {
+public class MemoriesRepository {
     private final TravelMemoryDao dao;
     private SubmitCallback submitCallback;
     private final MutableLiveData<MemoryFormState> formState = new MutableLiveData<>(
@@ -40,7 +40,7 @@ public class MemoriesRoomRepository {
             ));
 
     @Inject
-    public MemoriesRoomRepository(TravelMemoryDao travelMemoryDao) {
+    public MemoriesRepository(TravelMemoryDao travelMemoryDao) {
         this.dao = travelMemoryDao;
     }
 
@@ -238,6 +238,10 @@ public class MemoriesRoomRepository {
 
     public Completable deleteTravelMemory(TravelMemory travelMemory) {
         return dao.deleteTravelMemory(travelMemory);
+    }
+
+    public Completable updateTravelMemory(TravelMemory travelMemory) {
+        return dao.updateTravelMemory(travelMemory);
     }
 
     public interface SubmitCallback {

@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.addMemory;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.MAX_MEMORY_IMG;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,7 +34,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class AddFragment extends Fragment {
     private static final String TAG = AddFragment.class.getName();
-    private static final Integer MAX_MEMORY_IMG = 5;
     private FragmentAddBinding binding;
     private AddViewModel viewModel;
     private Date date;
@@ -112,7 +113,7 @@ public class AddFragment extends Fragment {
     private void initializeActivityResultLauncher() {
         pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(MAX_MEMORY_IMG), uris -> {
             if (uris.isEmpty()) {
-                Log.d(TAG, "No media selected"); //todo change language maybe
+                Log.d(TAG, "No media selected");
             } else {
                 Log.d(TAG, "Number of items selected: " + uris.size());
                 List<String> uriStrings = new ArrayList<>();

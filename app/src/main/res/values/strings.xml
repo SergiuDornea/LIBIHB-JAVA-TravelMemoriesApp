@@ -116,5 +116,6 @@
     <string name="location_admin">Location admin</string>
     <string name="location">Location</string>
     <string name="country">Country</string>
+    <string name="location_not_found">Location not found</string>
     <string name="a_empty_image_holder_with_a_add_sign_in_the_center">A empty image holder with a add sign in the center</string>
 </resources>

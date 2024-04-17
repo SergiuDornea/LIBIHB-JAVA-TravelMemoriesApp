@@ -1,6 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.details;
 
-import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_POSITION_KEY;
+import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
+import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_KEY;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -36,6 +37,7 @@ import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.DetailsAdapter;
+import com.sergiu.libihb_java.presentation.fragment.edit.EditFragment;
 
 import java.util.Objects;
 
@@ -57,7 +59,7 @@ public class DetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            id = bundle.getLong(MEMORY_POSITION_KEY);
+            id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
         }
     }
 
@@ -127,6 +129,10 @@ public class DetailsFragment extends Fragment {
                     showDeleteAlertDialog();
                     return true;
                 }
+
+                if (menuItem.getItemId() == R.id.edit_memory) {
+                    navigateWithId(id);
+                }
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
@@ -186,5 +192,14 @@ public class DetailsFragment extends Fragment {
                 .setIcon(R.drawable.ic_delete)
                 .create()
                 .show();
+    }
+
+    private void navigateWithId(Long id) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(MEMORY_ID_KEY, id);
+        EditFragment editFragment = new EditFragment();
+        editFragment.setArguments(bundle);
+
+        navController.navigate(R.id.action_detailsFragment_to_editFragment, bundle);
     }
 }
