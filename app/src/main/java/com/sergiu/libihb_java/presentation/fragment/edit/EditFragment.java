@@ -43,8 +43,8 @@ import com.sergiu.libihb_java.databinding.FragmentEditBinding;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.adapters.EditAdapter;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
-import com.sergiu.libihb_java.presentation.fragment.addMemory.DatePicker;
-import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryFormState;
+import com.sergiu.libihb_java.presentation.fragment.addmemory.DatePicker;
+import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
 
 import java.util.ArrayList;
 import java.util.Calendar;

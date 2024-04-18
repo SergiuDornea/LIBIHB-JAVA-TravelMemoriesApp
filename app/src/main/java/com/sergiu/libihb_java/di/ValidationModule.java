@@ -2,18 +2,18 @@ package com.sergiu.libihb_java.di;
 
 import android.content.Context;
 
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryCoordinates;
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryDate;
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryDescription;
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryImgList;
-import com.sergiu.libihb_java.domain.use_case_validate.addMemory.ValidateMemoryName;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateEmailLogin;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateEmailRegister;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateName;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidatePasswordLogin;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidatePasswordRegister;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidatePhone;
-import com.sergiu.libihb_java.domain.use_case_validate.auth.ValidateRepeatPasswordRegister;
+import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryCoordinates;
+import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryDate;
+import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryDescription;
+import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryImgList;
+import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryName;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateEmailLogin;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateEmailRegister;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateName;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidatePasswordLogin;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidatePasswordRegister;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidatePhone;
+import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateRepeatPasswordRegister;
 
 import dagger.Module;
 import dagger.Provides;

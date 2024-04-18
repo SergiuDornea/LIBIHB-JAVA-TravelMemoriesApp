@@ -10,6 +10,11 @@ public final class Constants {
     // https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=091592242ee53d481c498231905b90ca
     public static final String OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org/";
     public static final String OPEN_WEATHER_API_KEY = "091592242ee53d481c498231905b90ca";
+    public static final String MOUNTAIN_API_BASE_URL = "https://mountain-api1.p.rapidapi.com/api/mountains/";
+    public static final String MOUNTAIN_API_KEY = "4d31834ad5mshf0a67c06a49ace5p1079f5jsn35d569730ff0";
+    public static final String MOUNTAIN_RAPID_API = "X-RapidAPI-Key";
+    public static final String MOUNTAIN_API_HOST = "mountain-api1.p.rapidapi.com";
+    public static final String MOUNTAIN_API_HOST_NAME = "X-RapidAPI-Host";
     public static final String CAUSE_NAME = "cause_name";
     public static final String CAUSE_DESCRIPTION = "cause_description";
     public static final String CAUSE_IMG_LIST = "cause_img_list";

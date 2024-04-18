@@ -1,4 +1,11 @@
-package com.sergiu.libihb_java.presentation.fragment.edit;
+package com.sergiu.libihb_java.presentation.fragment.memoryoverview;
+
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_COORDINATES;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DATE;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DEFAULT;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPTION;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
+import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -16,30 +23,27 @@ import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryDes
 import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryImgList;
 import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryName;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
-import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
-public class EditViewModel extends ViewModel {
-    private static final String TAG = EditViewModel.class.getSimpleName();
+public class OverviewViewModel extends ViewModel {
+    private static final String TAG = OverviewViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
+    private final MutableLiveData<MemoryFormState> formState;
     private final ValidateMemoryImgList validateMemoryImgList;
     private final ValidateMemoryName validateMemoryName;
     private final ValidateMemoryDescription validateMemoryDescription;
     private final ValidateMemoryCoordinates validateMemoryCoordinates;
     private final ValidateMemoryDate validateMemoryDate;
-    private final MutableLiveData<MemoryFormState> formState;
-    private final MutableLiveData<SaveEditedMemoryClickedEvent> saveMemoryClickedEvent = new MutableLiveData<>();
-    private long id;
+    private final MutableLiveData<SaveMemoryClickedEvent> saveMemoryClickedEvent = new MutableLiveData<>();
 
     @Inject
-    public EditViewModel(
+    public OverviewViewModel(
             MemoriesRepository memoriesRepository,
             ValidateMemoryImgList validateMemoryImgList,
             ValidateMemoryName validateMemoryName,
@@ -56,39 +60,20 @@ public class EditViewModel extends ViewModel {
         this.memoriesRepository.setSubmitCallback(this::onSubmit);
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public MutableLiveData<MemoryFormState> observeFormState() {
-        return formState;
-    }
-
-    public MemoryFormState getFormState() {
-        return formState.getValue();
-    }
-
-    public void setMemoryFormState(MemoryFormState memoryFormState) {
-        memoriesRepository.setFormState(memoryFormState);
-    }
-
-    public LiveData<SaveEditedMemoryClickedEvent> getSaveEditedMemoryClickedEvent() {
+    public MutableLiveData<SaveMemoryClickedEvent> getSaveMemoryClickedEvent() {
         return saveMemoryClickedEvent;
+    }
+
+    public LiveData<MemoryFormState> observeMemoryFormState() {
+        return memoriesRepository.getFormState();
     }
 
     public void onEvent(MemoryFormEvent memoryFormEvent) {
         memoriesRepository.onEvent(memoryFormEvent);
     }
 
-    public Flowable<TravelMemory> getMemoryById(long memoryId) {
-        return memoriesRepository.getMemoryById(memoryId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
     private void onSubmit() {
         Log.d(TAG, "onSubmit: Submit button clicked");
-        Log.d(TAG, "onSubmit: form state " + formState.getValue().getMemoryName());
         ValidateResult listValid = validateMemoryImgList.validate(formState.getValue().getListOfImgUri());
         ValidateResult memoryNameValid = validateMemoryName.validate(formState.getValue().getMemoryName());
         ValidateResult memoryDescriptionValid = validateMemoryDescription.validate(formState.getValue().getMemoryDescription());
@@ -120,46 +105,51 @@ public class EditViewModel extends ViewModel {
                             memoryDateValid.getMessageIfNotValid())
             );
             if (!memoryCoordinatesValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getCoordinatesError()));
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_COORDINATES, formState.getValue().getCoordinatesError()));
             if (!listValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getListOfImgUriError()));
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_IMG_LIST, formState.getValue().getListOfImgUriError()));
             if (!memoryDateValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getDateOfTravelError()));
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DATE, formState.getValue().getDateOfTravelError()));
             if (!memoryDescriptionValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getMemoryDescriptionError()));
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DESCRIPTION, formState.getValue().getMemoryDescriptionError()));
             if (!memoryNameValid.isValid())
-                saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(formState.getValue().getMemoryNameError()));
+                saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_NAME, formState.getValue().getMemoryNameError()));
         } else {
-            saveEditedMemory();
-            saveMemoryClickedEvent.postValue(new SaveEditedMemoryClickedEvent(null));
+            saveMemory();
+            saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DEFAULT, null));
         }
     }
 
     @SuppressLint("CheckResult")
-    private void saveEditedMemory() {
-        TravelMemory memory = new TravelMemory(
-                formState.getValue().getListOfImgUri(),
-                formState.getValue().getMemoryName(),
-                formState.getValue().getMemoryDescription(),
-                formState.getValue().getCoordinates(),
-                formState.getValue().getDateOfTravel(),
-                formState.getValue().getPlaceLocationName(),
-                formState.getValue().getPlaceCountryName(),
-                formState.getValue().getPlaceAdminName());
-        memory.setId(id);
-
-        memoriesRepository.updateTravelMemory(memory)
+    private void saveMemory() {
+        memoriesRepository.insertTravelMemory(
+                        new TravelMemory(
+                                formState.getValue().getListOfImgUri(),
+                                formState.getValue().getMemoryName(),
+                                formState.getValue().getMemoryDescription(),
+                                formState.getValue().getCoordinates(),
+                                formState.getValue().getDateOfTravel(),
+                                formState.getValue().getPlaceLocationName(),
+                                formState.getValue().getPlaceCountryName(),
+                                formState.getValue().getPlaceAdminName()
+                        ))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> Log.d(TAG, "saveEditedMemory: edited memory saved "),
-                        throwable -> Log.e(TAG, "Error saving edited memory", throwable));
+                .subscribe(() -> Log.d(TAG, "saveMemory: memory saved "),
+                        throwable -> Log.e(TAG, "Error saving memory", throwable));
     }
 
-    public static class SaveEditedMemoryClickedEvent {
+    public static class SaveMemoryClickedEvent {
+        private final String cause;
         private final String message;
 
-        private SaveEditedMemoryClickedEvent(String message) {
+        private SaveMemoryClickedEvent(String cause, String message) {
+            this.cause = cause;
             this.message = message;
+        }
+
+        public String getCause() {
+            return cause;
         }
 
         public String getMessage() {
