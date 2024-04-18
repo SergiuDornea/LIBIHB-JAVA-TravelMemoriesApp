@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/addMemorySliderFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.addMemorySlider.SliderFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.addmemoryslider.SliderFragment"
         android:label="fragment_add_memory_slider"
         tools:layout="@layout/fragment_slider">
         <action

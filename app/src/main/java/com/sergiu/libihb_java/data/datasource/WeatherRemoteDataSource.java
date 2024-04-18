@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.network.WeatherApi;
-import com.sergiu.libihb_java.presentation.utils.CurrentWeatherMapper;
+import com.sergiu.libihb_java.presentation.utils.MapperUtil;
 
 import javax.inject.Inject;
 
@@ -24,7 +24,7 @@ public class WeatherRemoteDataSource {
 
     public Flowable<CurrentWeather> getCurrentWeatherByLatAndLng(String latitude, String longitude, String units) {
         return weatherApi.getWeatherByLatAndLng(latitude, longitude, units, OPEN_WEATHER_API_KEY)
-                .map(CurrentWeatherMapper::mapRemoteResponseToCurrentWeather)
+                .map(MapperUtil::mapRemoteResponseToCurrentWeather)
                 .onErrorReturnItem(CURRENT_EMPTY_WEATHER)
                 .doOnError(throwable -> Log.e(TAG, "Error: " + throwable));
     }

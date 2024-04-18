@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.presentation.fragment.home;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setObservers() {
+        viewModel.getAllMountains().observe(getViewLifecycleOwner(), mountain -> Log.d(TAG, "setObservers: mount " + mountain.getMountainList().get(0).getName()));
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
     }
 

@@ -1,6 +1,8 @@
 package com.sergiu.libihb_java.di;
 
+import com.sergiu.libihb_java.data.datasource.MountainRemoteDataSource;
 import com.sergiu.libihb_java.data.datasource.WeatherRemoteDataSource;
+import com.sergiu.libihb_java.network.MountainApi;
 import com.sergiu.libihb_java.network.WeatherApi;
 
 import javax.inject.Singleton;
@@ -18,5 +20,11 @@ public class DataSourceModule {
     @Provides
     public WeatherRemoteDataSource provideWeatherRemoteDataSource(WeatherApi weatherApi) {
         return new WeatherRemoteDataSource(weatherApi);
+    }
+
+    @Singleton
+    @Provides
+    public MountainRemoteDataSource MountainRemoteDataSource(MountainApi mountainApi) {
+        return new MountainRemoteDataSource(mountainApi);
     }
 }

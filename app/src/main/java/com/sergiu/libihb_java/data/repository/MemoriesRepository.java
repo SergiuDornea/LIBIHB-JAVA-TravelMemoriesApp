@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
-import com.sergiu.libihb_java.presentation.fragment.memoryOverview.MemoryFormState;
+import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
 
 import java.util.ArrayList;
 import java.util.List;
