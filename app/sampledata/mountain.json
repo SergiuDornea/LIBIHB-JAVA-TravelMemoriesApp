@@ -1,0 +1,12 @@
+{
+  "_id": "65ee88571538ae73b345b5ee",
+  "name": "Mount Everest",
+  "description": "Mount Everest, standing majestically as the Earth's highest peak at an awe-inspiring elevation of 29,032 feet (8,848 meters) above sea level, resides in the heart of the Himalayas, straddling the border between Nepal and Tibet. Its imposing summit is crowned with snow and ice, a testament to the formidable challenges posed by the harsh alpine conditions. Revered as the pinnacle of mountaineering ambition, Everest attracts adventurers from across the globe, each yearning to conquer its formidable slopes and reach the \"roof of the world.\" The journey to its summit is a grueling test of physical and mental endurance, navigating treacherous icefalls, crevasses, and unpredictable weather. Everest, known locally as Sagarmatha in Nepal and Chomolungma in Tibet, carries a mystique that transcends its physical grandeur, embodying the human spirit's relentless pursuit of heights both literal and metaphorical.",
+  "altitude": "8,848.86 m (29,031.7 ft)",
+  "has_death_zone": false,
+  "location": "China/Nepal",
+  "first_climber": "Edmund Hillary and Tenzing Norgay",
+  "first_climbed_date": "29 May 1953",
+  "mountain_img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/288px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+  "country_flag_img": "https://c8.alamy.com/comp/E15JW0/flags-of-china-and-federal-democratic-republic-of-nepal-blowing-in-E15JW0.jpg"
+}

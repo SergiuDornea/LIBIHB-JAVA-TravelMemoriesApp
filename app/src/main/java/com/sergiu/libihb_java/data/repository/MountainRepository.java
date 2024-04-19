@@ -1,10 +1,7 @@
 package com.sergiu.libihb_java.data.repository;
 
-import com.sergiu.libihb_java.LIBIHBApp;
 import com.sergiu.libihb_java.data.datasource.MountainRemoteDataSource;
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
-import com.sergiu.libihb_java.domain.model.mountain.Mountain;
-import com.sergiu.libihb_java.domain.model.mountain.MountainResult;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class MountainRepository {
         this.mountainRemoteDataSource = mountainRemoteDataSource;
     }
 
-    public Flowable<MountainResult> getAllMountains() {
+    public Flowable<List<CurrentMountain>> getAllMountains() {
         return mountainRemoteDataSource.getAllMountains();
     }
 }

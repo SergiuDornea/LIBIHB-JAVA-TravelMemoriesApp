@@ -1,7 +1,5 @@
 package com.sergiu.libihb_java.domain.model.mountain;
 
-import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
-
 public class CurrentMountain {
     public static final CurrentMountain CURRENT_MOUNTAIN = new CurrentMountain("", "", "", "", false, "", "", "", "", "");
 
@@ -72,7 +70,7 @@ public class CurrentMountain {
         this.altitude = altitude;
     }
 
-    public boolean isHasDeathZone() {
+    public boolean getHasDeathZone() {
         return hasDeathZone;
     }
 

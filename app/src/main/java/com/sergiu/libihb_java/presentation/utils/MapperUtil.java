@@ -1,18 +1,14 @@
 package com.sergiu.libihb_java.presentation.utils;
 
-import static com.sergiu.libihb_java.domain.model.mountain.CurrentMountain.CURRENT_MOUNTAIN;
 import static com.sergiu.libihb_java.domain.model.weather.CurrentWeather.CURRENT_EMPTY_WEATHER;
 
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
 import com.sergiu.libihb_java.domain.model.mountain.Mountain;
-import com.sergiu.libihb_java.domain.model.mountain.MountainResult;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.domain.model.weather.RootWeather;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public final class MapperUtil {
@@ -43,25 +39,17 @@ public final class MapperUtil {
         return sdf.format(unformattedDate);
     }
 
-    public static List<CurrentMountain> mapMountainToCurrentMountain(MountainResult mountainResult) {
-        List<CurrentMountain> currentMountains = new ArrayList<>();
-        List<Mountain> responseMountains = mountainResult.getMountainList();
-
-        for (int i = 0; i < responseMountains.size(); i++) {
-            Mountain mountain = responseMountains.get(i);
-            currentMountains.add(new CurrentMountain(
-                    mountain.getId(),
-                    mountain.getName(),
-                    mountain.getDescription(),
-                    mountain.getAltitude(),
-                    mountain.isHasDeathZone(),
-                    mountain.getLocation(),
-                    mountain.getFirstClimber(),
-                    mountain.getFirstClimbedDate(),
-                    mountain.getMountainImg(),
-                    mountain.getCountryFlagImg()
-            ));
-        }
-        return currentMountains;
+    public static CurrentMountain mapMountainToCurrentMountain(Mountain mountain) {
+        return new CurrentMountain(
+                mountain.getId(),
+                mountain.getName(),
+                mountain.getDescription(),
+                mountain.getAltitude(),
+                mountain.isHasDeathZone(),
+                mountain.getLocation(),
+                mountain.getFirstClimber(),
+                mountain.getFirstClimbedDate(),
+                mountain.getMountainImg(),
+                mountain.getCountryFlagImg());
     }
 }
