@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setObservers() {
-        viewModel.getAllMountains().observe(getViewLifecycleOwner(), mountain -> Log.d(TAG, "setObservers: mount " + mountain.getMountainList().get(0).getName()));
+        viewModel.getAllMountains().observe(getViewLifecycleOwner(), mountain -> Log.d(TAG, "setObservers: mount size" + mountain.size()));
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
     }
 
