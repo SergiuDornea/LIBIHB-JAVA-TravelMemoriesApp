@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.core.Flowable;
 
 @Dao
 public interface TravelMemoryDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertTravelMemory(TravelMemory travelMemory);
 
     @Update

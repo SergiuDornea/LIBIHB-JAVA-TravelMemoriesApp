@@ -1,17 +1,33 @@
 package com.sergiu.libihb_java.domain.model.mountain;
 
-public class CurrentMountain {
-    public static final CurrentMountain CURRENT_MOUNTAIN = new CurrentMountain("", "", "", "", false, "", "", "", "", "");
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
+@Entity(tableName = "mountains")
+public class CurrentMountain {
+    @PrimaryKey
+    @NotNull
     private String id;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "altitude")
     private String altitude;
+    @ColumnInfo(name = "has_death_zone")
     private boolean hasDeathZone;
+    @ColumnInfo(name = "location")
     private String location;
+    @ColumnInfo(name = "first_climber")
     private String firstClimber;
+    @ColumnInfo(name = "first_climber_date")
     private String firstClimbedDate;
+    @ColumnInfo(name = "mountain_img")
     private String mountainImg;
+    @ColumnInfo(name = "country_flag_img")
     private String countryFlagImg;
 
     public CurrentMountain(
@@ -54,67 +70,35 @@ public class CurrentMountain {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getAltitude() {
         return altitude;
-    }
-
-    public void setAltitude(String altitude) {
-        this.altitude = altitude;
     }
 
     public boolean getHasDeathZone() {
         return hasDeathZone;
     }
 
-    public void setHasDeathZone(boolean hasDeathZone) {
-        this.hasDeathZone = hasDeathZone;
-    }
-
     public String getLocation() {
         return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getFirstClimber() {
-        return firstClimber;
-    }
-
-    public void setFirstClimber(String firstClimber) {
-        this.firstClimber = firstClimber;
-    }
-
-    public String getFirstClimbedDate() {
-        return firstClimbedDate;
-    }
-
-    public void setFirstClimbedDate(String firstClimbedDate) {
-        this.firstClimbedDate = firstClimbedDate;
     }
 
     public String getMountainImg() {
         return mountainImg;
     }
 
-    public void setMountainImg(String mountainImg) {
-        this.mountainImg = mountainImg;
+    public String getDescription() {
+        return description;
+    }
+
+    public String getFirstClimber() {
+        return firstClimber;
+    }
+
+    public String getFirstClimbedDate() {
+        return firstClimbedDate;
     }
 
     public String getCountryFlagImg() {
         return countryFlagImg;
-    }
-
-    public void setCountryFlagImg(String countryFlagImg) {
-        this.countryFlagImg = countryFlagImg;
     }
 }

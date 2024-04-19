@@ -39,6 +39,7 @@
                 android:layout_marginHorizontal="4dp"
                 android:autoSizeTextType="uniform"
                 android:textSize="30sp"
+                app:layout_constraintEnd_toStartOf="@+id/mountain_altitude_text_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@sample/mountain.json/name" />
@@ -50,6 +51,7 @@
                 android:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/mountain_name_text_view"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mountain_name_text_view"
                 tools:text="@sample/mountain.json/location" />
 
