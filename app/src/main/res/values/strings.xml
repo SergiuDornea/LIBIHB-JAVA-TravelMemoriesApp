@@ -122,4 +122,8 @@
     <string name="type_new_description_if_needed">Edit description ?</string>
     <string name="choose_another_date">Choose another date ?</string>
     <string name="a_empty_image_holder_with_a_add_sign_in_the_center">A empty image holder with a add sign in the center</string>
+    <string name="your_memories">Your memories:</string>
+    <string name="discover_new_places">Discover new places:</string>
+    <string name="death_zone">DEATH ZONE</string>
+    <string name="an_image_of_the_presented_location">An image of the presented location</string>
 </resources>

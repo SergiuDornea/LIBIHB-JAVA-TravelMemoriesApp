@@ -20,6 +20,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
+import com.sergiu.libihb_java.presentation.adapters.DiscoverAdapter;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
 
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment {
     private NavController navController;
     private HomeViewModel viewModel;
     private TravelMemoryAdapter travelMemoryAdapter;
+    private DiscoverAdapter discoverAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +60,15 @@ public class HomeFragment extends Fragment {
 
     private void setListeners() {
         travelMemoryAdapter = new TravelMemoryAdapter(this::navigateWithId);
+        discoverAdapter = new DiscoverAdapter(currentMountainId -> Log.d(TAG, "setListeners: click on discover"));
         binding.fab.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
     }
 
     private void setObservers() {
-        viewModel.getAllMountains().observe(getViewLifecycleOwner(), mountain -> Log.d(TAG, "setObservers: mount size" + mountain.size()));
+        viewModel.getAllMountains().observe(getViewLifecycleOwner(), currentMountains -> {
+            int numberOfDiscoverItems = 10;
+            discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems);
+        });
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
     }
 
@@ -77,6 +83,7 @@ public class HomeFragment extends Fragment {
 
     private void setUpRecyclerview() {
         binding.memoryRecyclerView.setAdapter(travelMemoryAdapter);
+        binding.discoverRecyclerView.setAdapter(discoverAdapter);
     }
 
     private void setAppBarVisibility() {

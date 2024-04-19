@@ -6,6 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.home.HomeFragment">
 
+    <TextView
+        android:id="@+id/discover_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/discover_new_places"
+        android:textColor="@color/md_theme_light_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/discover_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/your_memories_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_discover"
+        app:layout_constraintTop_toBottomOf="@id/discover_text_view" />
+
+    <TextView
+        android:id="@+id/your_memories_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/your_memories"
+        android:textColor="@color/md_theme_light_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/memory_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/discover_recycler_view" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memory_recycler_view"
         android:layout_width="match_parent"
@@ -16,7 +53,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/your_memories_text_view"
+        tools:listitem="@layout/item_travel_memory" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
