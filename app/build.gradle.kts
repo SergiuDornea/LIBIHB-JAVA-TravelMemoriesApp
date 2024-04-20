@@ -86,4 +86,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:version")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+    implementation("androidx.datastore:datastore-rxjava3:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
 }

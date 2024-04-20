@@ -3,7 +3,6 @@ package com.sergiu.libihb_java.presentation.fragment.home;
 import android.annotation.SuppressLint;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -25,12 +24,14 @@ public class HomeViewModel extends ViewModel {
     private final MemoriesRepository memoriesRepository;
     private final MountainRepository mountainRepository;
     private final MutableLiveData<List<TravelMemory>> memoriesLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<CurrentMountain>> mountainsLiveData = new MutableLiveData<>();
 
     @Inject
     public HomeViewModel(MemoriesRepository memoriesRepository, MountainRepository mountainRepository) {
         this.memoriesRepository = memoriesRepository;
         this.mountainRepository = mountainRepository;
         observeMemories();
+        observeDiscoverableMountains();
     }
 
     @SuppressLint("CheckResult")
@@ -41,11 +42,19 @@ public class HomeViewModel extends ViewModel {
                 .subscribe(memoriesLiveData::setValue);
     }
 
+    @SuppressLint("CheckResult")
+    public void observeDiscoverableMountains() {
+        mountainRepository.getAllMountains()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mountainsLiveData::setValue);
+    }
+
     public LiveData<List<TravelMemory>> getMemoriesLiveData() {
         return memoriesLiveData;
     }
 
-    public LiveData<List<CurrentMountain>> getAllMountains() {
-        return LiveDataReactiveStreams.fromPublisher(mountainRepository.getAllMountains());
+    public LiveData<List<CurrentMountain>> getMountainLiveData() {
+        return mountainsLiveData;
     }
 }

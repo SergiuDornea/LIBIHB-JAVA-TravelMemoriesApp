@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -74,15 +75,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
         }
 
         public void bind(CurrentMountain currentMountain) {
+            Context context = itemView.getContext();
             name.setText(currentMountain.getName());
             location.setText(currentMountain.getLocation());
             altitude.setText(currentMountain.getAltitude());
             if (currentMountain.getHasDeathZone()) {
                 deathZone.setText(R.string.death_zone);
+                deathZone.setTextColor(ContextCompat.getColor(context, R.color.md_theme_light_error));
             } else {
                 deathZone.setVisibility(View.GONE);
             }
-            Context context = itemView.getContext();
             Glide.with(context)
                     .load(currentMountain.getMountainImg())
                     .placeholder(R.drawable.rimetea)

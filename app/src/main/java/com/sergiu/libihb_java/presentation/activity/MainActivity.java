@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             add(R.id.contactFragment);
             add(R.id.settingsFragment);
             add(R.id.shareFragment);
+            add(R.id.discoverFragment);
         }};
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override

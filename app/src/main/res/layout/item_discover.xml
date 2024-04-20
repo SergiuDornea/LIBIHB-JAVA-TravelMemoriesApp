@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="220dp">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/discover_item_constraint_layout"
@@ -37,19 +37,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:autoSizeTextType="uniform"
-                android:textSize="30sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/mountain_altitude_text_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@sample/mountain.json/name" />
 
             <TextView
                 android:id="@+id/mountain_location_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:autoSizeTextType="uniform"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/mountain_name_text_view"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mountain_name_text_view"
                 tools:text="@sample/mountain.json/location" />
 
@@ -57,6 +61,7 @@
                 android:id="@+id/has_death_zone_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,9 +70,11 @@
                 android:id="@+id/mountain_altitude_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mountain_location_name"
                 tools:text="@sample/mountain.json/altitude" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,5 +27,4 @@ public class AppModule {
     public Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
     }
-
 }

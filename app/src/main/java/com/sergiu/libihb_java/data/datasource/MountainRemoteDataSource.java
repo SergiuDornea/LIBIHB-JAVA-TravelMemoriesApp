@@ -1,14 +1,11 @@
 package com.sergiu.libihb_java.data.datasource;
 
-import android.util.Log;
-
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
 import com.sergiu.libihb_java.domain.model.mountain.Mountain;
 import com.sergiu.libihb_java.network.MountainApi;
 import com.sergiu.libihb_java.presentation.utils.MapperUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,7 +16,6 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MountainRemoteDataSource {
-    private static final String TAG = MountainRemoteDataSource.class.getSimpleName();
     private final MountainApi mountainApi;
 
     @Inject
@@ -27,7 +23,7 @@ public class MountainRemoteDataSource {
         this.mountainApi = mountainApi;
     }
 
-    public @NonNull Flowable<List<CurrentMountain>> getAllMountains() {
+    public @NonNull Flowable<List<CurrentMountain>> getAllCurrentMountains() {
         return mountainApi.getAllMountains()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -38,5 +34,12 @@ public class MountainRemoteDataSource {
                     }
                     return currentMountains;
                 });
+    }
+
+    public Flowable<CurrentMountain> getCurrentMountainById(String id) {
+        return mountainApi.getMountainById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(MapperUtil::mapMountainToCurrentMountain);
     }
 }

@@ -4,8 +4,9 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.sergiu.libihb_java.data.dao.CurrentMountainDao;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
-import com.sergiu.libihb_java.data.database.MemoriesDatabase;
+import com.sergiu.libihb_java.data.database.DiskDatabase;
 
 import javax.inject.Singleton;
 
@@ -20,12 +21,17 @@ import dagger.hilt.components.SingletonComponent;
 public class RoomModule {
     @Provides
     @Singleton
-    public MemoriesDatabase provideMemoriesDatabase(@ApplicationContext Context context) {
-        return Room.databaseBuilder(context, MemoriesDatabase.class, "memories_database").build();
+    public DiskDatabase provideMemoriesDatabase(@ApplicationContext Context context) {
+        return Room.databaseBuilder(context, DiskDatabase.class, "disk_database").build();
     }
 
     @Provides
-    public TravelMemoryDao provideTravelMemoryDao(MemoriesDatabase memoriesDatabase) {
-        return memoriesDatabase.travelMemoryDao();
+    public TravelMemoryDao provideTravelMemoryDao(DiskDatabase diskDatabase) {
+        return diskDatabase.travelMemoryDao();
+    }
+
+    @Provides
+    public CurrentMountainDao provideCurrentMountainDao(DiskDatabase diskDatabase) {
+        return diskDatabase.currentMountainDao();
     }
 }

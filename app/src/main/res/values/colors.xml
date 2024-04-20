@@ -13,7 +13,7 @@
     <color name="Grey">#FF212124</color>
     <color name="DarkGrey">#FF161618</color>
     <color name="Smoke">#FF818181</color>
-    <color name="LightSmoke">#FFEFF0F0</color>
+    <color name="light_smoke">#F5F5F5</color>
     <color name="link_blue">#0044CC</color>
 
     <!-- Custom Material Design 3 Colors (Light Theme) -->
