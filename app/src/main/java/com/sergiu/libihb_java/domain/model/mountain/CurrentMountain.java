@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "mountains")
 public class CurrentMountain {
+    public static CurrentMountain CURRENT_EMPTY_MOUNTAIN = new CurrentMountain("", "", "", "", false, "", "", "", "", "");
     @PrimaryKey()
     @NotNull
     private String id;

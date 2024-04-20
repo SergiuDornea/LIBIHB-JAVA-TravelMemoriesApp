@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.MarginPageTransformer;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -23,6 +25,7 @@ import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.DiscoverAdapter;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
+import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -54,7 +57,7 @@ public class HomeFragment extends Fragment {
         navController = Navigation.findNavController(view);
         setObservers();
         setListeners();
-        setUpRecyclerview();
+        setUpHorizontalScrollableLists();
         setAppBarVisibility();
     }
 
@@ -82,9 +85,14 @@ public class HomeFragment extends Fragment {
         navController.navigate(R.id.action_mainFragment_to_memoryDetailsFragment, bundle);
     }
 
-    private void setUpRecyclerview() {
+    private void setUpHorizontalScrollableLists() {
         binding.memoryRecyclerView.setAdapter(travelMemoryAdapter);
-        binding.discoverRecyclerView.setAdapter(discoverAdapter);
+        binding.discoverViewPager.setAdapter(discoverAdapter);
+        MarginPageTransformer marginPageTransformer = new MarginPageTransformer(getMarginAccordingToScreenDensity());
+        binding.discoverViewPager.setPageTransformer(marginPageTransformer);
+        binding.discoverViewPager.setOffscreenPageLimit(3);
+        binding.discoverViewPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        binding.discoverViewPager.setPageTransformer(new ZoomOutFragmentAnimation());
     }
 
     private void setAppBarVisibility() {
@@ -100,5 +108,10 @@ public class HomeFragment extends Fragment {
             toolbar.getMenu().clear();
             toolbar.setTitle(R.string.home_title);
         }
+    }
+
+    private int getMarginAccordingToScreenDensity() {
+        float density = getResources().getDisplayMetrics().density;
+        return (int) (10 * density);
     }
 }

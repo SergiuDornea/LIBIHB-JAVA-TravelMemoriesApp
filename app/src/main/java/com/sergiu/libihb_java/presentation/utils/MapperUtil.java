@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.presentation.utils;
 
+import static com.sergiu.libihb_java.domain.model.mountain.CurrentMountain.CURRENT_EMPTY_MOUNTAIN;
 import static com.sergiu.libihb_java.domain.model.weather.CurrentWeather.CURRENT_EMPTY_WEATHER;
 
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
@@ -40,16 +41,20 @@ public final class MapperUtil {
     }
 
     public static CurrentMountain mapMountainToCurrentMountain(Mountain mountain) {
-        return new CurrentMountain(
-                mountain.getId(),
-                mountain.getName(),
-                mountain.getDescription(),
-                mountain.getAltitude(),
-                mountain.isHasDeathZone(),
-                mountain.getLocation(),
-                mountain.getFirstClimber(),
-                mountain.getFirstClimbedDate(),
-                mountain.getMountainImg(),
-                mountain.getCountryFlagImg());
+        if (mountain.getId() == null) {
+            return CURRENT_EMPTY_MOUNTAIN;
+        } else {
+            return new CurrentMountain(
+                    mountain.getId(),
+                    mountain.getName(),
+                    mountain.getDescription(),
+                    mountain.getAltitude(),
+                    mountain.isHasDeathZone(),
+                    mountain.getLocation(),
+                    mountain.getFirstClimber(),
+                    mountain.getFirstClimbedDate(),
+                    mountain.getMountainImg(),
+                    mountain.getCountryFlagImg());
+        }
     }
 }

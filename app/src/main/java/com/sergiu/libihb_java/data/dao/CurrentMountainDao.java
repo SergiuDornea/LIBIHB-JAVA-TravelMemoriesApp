@@ -19,4 +19,7 @@ public interface CurrentMountainDao {
 
     @Query("SELECT * from mountains")
     Flowable<List<CurrentMountain>> getCurrentMountainList();
+
+    @Query("SELECT * FROM mountains WHERE id = :mountainId")
+    Flowable<CurrentMountain> getCurrentMountainById(String mountainId);
 }

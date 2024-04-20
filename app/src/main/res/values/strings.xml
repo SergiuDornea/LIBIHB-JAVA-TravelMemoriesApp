@@ -126,4 +126,8 @@
     <string name="discover_new_places">Discover new places:</string>
     <string name="death_zone">DEATH ZONE</string>
     <string name="an_image_of_the_presented_location">An image of the presented location</string>
+    <string name="a_scrollable_horizontal_list_displaing_discoverable_mountains">A scrollable horizontal list displaing discoverable mountains</string>
+    <string name="location_flag_image">Location flag image</string>
+    <string name="first_climber">First climber:</string>
+    <string name="first_climbed_in">First climbed in:</string>
 </resources>

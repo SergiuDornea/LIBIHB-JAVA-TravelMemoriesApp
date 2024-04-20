@@ -23,7 +23,7 @@ public class MountainRemoteDataSource {
         this.mountainApi = mountainApi;
     }
 
-    public @NonNull Flowable<List<CurrentMountain>> getAllMountains() {
+    public @NonNull Flowable<List<CurrentMountain>> getAllCurrentMountains() {
         return mountainApi.getAllMountains()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,5 +34,12 @@ public class MountainRemoteDataSource {
                     }
                     return currentMountains;
                 });
+    }
+
+    public Flowable<CurrentMountain> getCurrentMountainById(String id) {
+        return mountainApi.getMountainById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(MapperUtil::mapMountainToCurrentMountain);
     }
 }

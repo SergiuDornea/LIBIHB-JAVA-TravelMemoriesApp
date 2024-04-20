@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.data.repository;
 
+import android.util.Log;
+
 import com.sergiu.libihb_java.data.dao.CurrentMountainDao;
 import com.sergiu.libihb_java.data.datasource.MountainRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
@@ -15,6 +17,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MountainRepository {
+    private static final String TAG = MountainRepository.class.getSimpleName();
     private final MountainRemoteDataSource mountainRemoteDataSource;
     private final CurrentMountainDao currentMountainDao;
     private final DiskDataStore diskDataStore;
@@ -33,7 +36,7 @@ public class MountainRepository {
     public Flowable<List<CurrentMountain>> getAllMountains() {
         if (dataIsExpired(diskDataStore.getDiscoverExpireDate())) {
             diskDataStore.writeDiscoverExpireDate();
-            return mountainRemoteDataSource.getAllMountains()
+            return mountainRemoteDataSource.getAllCurrentMountains()
                     .observeOn(Schedulers.io())
                     .flatMap(data -> Completable.fromAction(() -> {
                         for (CurrentMountain mountain : data) {
@@ -42,6 +45,18 @@ public class MountainRepository {
                     }).andThen(currentMountainDao.getCurrentMountainList()));
         } else {
             return currentMountainDao.getCurrentMountainList();
+        }
+    }
+
+    public Flowable<CurrentMountain> getCurrentMountainById(String id) {
+        if (dataIsExpired(diskDataStore.getDiscoverExpireDate())) {
+            diskDataStore.writeDiscoverExpireDate();
+            Log.d(TAG, "getCurrentMountainById: REMOTE");
+            return mountainRemoteDataSource.getCurrentMountainById(id)
+                    .doOnNext(currentMountainDao::insertCurrentMountain);
+        } else {
+            Log.d(TAG, "getCurrentMountainById: LOCAL");
+            return currentMountainDao.getCurrentMountainById(id);
         }
     }
 

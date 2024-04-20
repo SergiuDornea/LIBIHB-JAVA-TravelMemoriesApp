@@ -17,17 +17,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/discover_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/discover_view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:contentDescription="@string/a_scrollable_horizontal_list_displaing_discoverable_mountains"
+        android:overScrollMode="never"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/your_memories_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintHeight_percent="0.28"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_discover"
         app:layout_constraintTop_toBottomOf="@id/discover_text_view" />
 
     <TextView
@@ -41,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@id/memory_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/discover_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@id/discover_view_pager" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memory_recycler_view"
