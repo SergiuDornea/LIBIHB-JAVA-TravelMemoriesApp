@@ -22,7 +22,7 @@ public class RoomModule {
     @Provides
     @Singleton
     public DiskDatabase provideMemoriesDatabase(@ApplicationContext Context context) {
-        return Room.databaseBuilder(context, DiskDatabase.class, "memories_database").build();
+        return Room.databaseBuilder(context, DiskDatabase.class, "disk_database").build();
     }
 
     @Provides

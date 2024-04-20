@@ -65,7 +65,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setObservers() {
-        viewModel.getAllMountains().observe(getViewLifecycleOwner(), currentMountains -> {
+        viewModel.observeDiscoverableMountains();
+        viewModel.getMountainLiveData().observe(getViewLifecycleOwner(), currentMountains -> {
             int numberOfDiscoverItems = 10;
             discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems);
         });

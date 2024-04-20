@@ -8,7 +8,7 @@ import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
 
-@Database(entities = {TravelMemory.class, CurrentMountain.class}, version = 3)
+@Database(entities = {TravelMemory.class, CurrentMountain.class}, version = 5)
 public abstract class DiskDatabase extends RoomDatabase {
     public abstract TravelMemoryDao travelMemoryDao();
 

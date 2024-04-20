@@ -1,14 +1,11 @@
 package com.sergiu.libihb_java.data.datasource;
 
-import android.util.Log;
-
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
 import com.sergiu.libihb_java.domain.model.mountain.Mountain;
 import com.sergiu.libihb_java.network.MountainApi;
 import com.sergiu.libihb_java.presentation.utils.MapperUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,7 +16,6 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MountainRemoteDataSource {
-    private static final String TAG = MountainRemoteDataSource.class.getSimpleName();
     private final MountainApi mountainApi;
 
     @Inject

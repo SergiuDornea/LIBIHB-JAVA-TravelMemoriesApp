@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.domain.model.mountain;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "mountains")
 public class CurrentMountain {
-    @PrimaryKey
+    @PrimaryKey()
     @NotNull
     private String id;
     @ColumnInfo(name = "name")
@@ -31,7 +32,7 @@ public class CurrentMountain {
     private String countryFlagImg;
 
     public CurrentMountain(
-            String id,
+            @NonNull String id,
             String name,
             String description,
             String altitude,
