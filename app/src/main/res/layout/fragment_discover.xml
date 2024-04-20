@@ -32,8 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:autoSizeTextType="uniform"
+            android:ellipsize="end"
             android:gravity="center"
-            android:maxLines="1"
+            android:maxLines="2"
             android:paddingHorizontal="16dp"
             android:text="@string/title"
             android:textSize="36sp"
@@ -47,7 +48,7 @@
             android:id="@+id/discover_altitude_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/location_flag_image_view"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/location_flag_image_view"
             tools:text="@sample/mountain.json/altitude" />
@@ -65,8 +66,11 @@
 
         <TextView
             android:id="@+id/discover_first_climber_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             app:layout_constraintEnd_toStartOf="@+id/location_flag_image_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/first_climber_label_input_text"
@@ -87,7 +91,7 @@
             android:id="@+id/discover_first_climbed_date_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/location_flag_image_view"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/first_climbed_date_input_text"
             tools:text="@sample/mountain.json/first_climbed_date" />
@@ -104,10 +108,11 @@
 
         <TextView
             android:id="@+id/discover_location_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="@id/location_flag_image_view"
-            app:layout_constraintStart_toStartOf="@id/location_flag_image_view"
+            app:layout_constraintStart_toEndOf="@+id/discover_first_climber_text_view"
             app:layout_constraintTop_toBottomOf="@id/location_flag_image_view"
             tools:text="@sample/mountain.json/location" />
 

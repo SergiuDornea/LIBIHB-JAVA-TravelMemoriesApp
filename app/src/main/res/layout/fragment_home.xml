@@ -10,6 +10,7 @@
         android:id="@+id/discover_text_view"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="8dp"
         android:text="@string/discover_new_places"
         android:textColor="@color/md_theme_light_primary"
         android:textSize="20sp"
@@ -33,10 +34,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/discover_text_view" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/memories_group"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="your_memories_text_view, memory_recycler_view" />
+
     <TextView
         android:id="@+id/your_memories_text_view"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="8dp"
         android:text="@string/your_memories"
         android:textColor="@color/md_theme_light_primary"
         android:textSize="20sp"

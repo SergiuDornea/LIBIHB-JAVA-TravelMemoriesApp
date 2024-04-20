@@ -112,6 +112,8 @@ public class DetailsFragment extends Fragment {
         if (toolbar != null) {
             toolbar.getMenu().clear();
             toolbar.setTitle(R.string.details_title);
+            toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+            toolbar.setNavigationOnClickListener(v -> navController.popBackStack());
         }
     }
 

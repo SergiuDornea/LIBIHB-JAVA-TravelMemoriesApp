@@ -1,15 +1,17 @@
 package com.sergiu.libihb_java.presentation.fragment.home;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.DISCOVER_ID_KEY;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -24,6 +26,7 @@ import com.sergiu.libihb_java.databinding.FragmentHomeBinding;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.DiscoverAdapter;
 import com.sergiu.libihb_java.presentation.adapters.TravelMemoryAdapter;
+import com.sergiu.libihb_java.presentation.discover.DiscoverFragment;
 import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
@@ -31,12 +34,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
-    private static final String TAG = HomeFragment.class.getSimpleName();
     private FragmentHomeBinding binding;
     private NavController navController;
     private HomeViewModel viewModel;
     private TravelMemoryAdapter travelMemoryAdapter;
     private DiscoverAdapter discoverAdapter;
+    private final Bundle bundle = new Bundle();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setListeners() {
-        travelMemoryAdapter = new TravelMemoryAdapter(this::navigateWithId);
-        discoverAdapter = new DiscoverAdapter(currentMountainId -> Log.d(TAG, "setListeners: click on discover"));
+        travelMemoryAdapter = new TravelMemoryAdapter(this::navigateToDetailsWithId);
+        discoverAdapter = new DiscoverAdapter(this::navigateToDiscoverWithId);
         binding.fab.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
     }
 
@@ -76,13 +79,20 @@ public class HomeFragment extends Fragment {
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
     }
 
-    private void navigateWithId(Long id) {
-        Bundle bundle = new Bundle();
+    private void navigateToDetailsWithId(Long id) {
         bundle.putLong(MEMORY_ID_BY_POSITION_KEY, id);
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);
 
         navController.navigate(R.id.action_mainFragment_to_memoryDetailsFragment, bundle);
+    }
+
+    private void navigateToDiscoverWithId(String id) {
+        bundle.putString(DISCOVER_ID_KEY, id);
+        DiscoverFragment discoverFragment = new DiscoverFragment();
+        discoverFragment.setArguments(bundle);
+
+        navController.navigate(R.id.action_mainFragment_to_discoverFragment, bundle);
     }
 
     private void setUpHorizontalScrollableLists() {
@@ -96,17 +106,31 @@ public class HomeFragment extends Fragment {
     }
 
     private void setAppBarVisibility() {
+        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.getMenu().clear();
+            toolbar.setTitle(R.string.home_title);
+            toolbar.setNavigationIcon(R.drawable.ic_hamburger);
+            toolbar.setNavigationOnClickListener(v -> {
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    DrawerLayout drawerLayout = mainActivity.findViewById(R.id.fragment_container_view_main);
+                    if (drawerLayout != null) {
+                        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        } else {
+                            drawerLayout.openDrawer(GravityCompat.START);
+                        }
+                    }
+                }
+            });
+        }
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).setDrawerLocked(false);
         }
         AppBarLayout appBarLayout = requireActivity().findViewById(R.id.main_app_bar_layout);
         if (appBarLayout != null) {
             appBarLayout.setVisibility(View.VISIBLE);
-        }
-        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.getMenu().clear();
-            toolbar.setTitle(R.string.home_title);
         }
     }
 

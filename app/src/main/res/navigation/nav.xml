@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/splashScreen">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/splashScreen"
@@ -40,6 +40,12 @@
         <action
             android:id="@+id/action_mainFragment_to_memoryDetailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -134,4 +140,21 @@
         android:id="@+id/editFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.edit.EditFragment"
         android:label="EditFragment" />
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.sergiu.libihb_java.presentation.discover.DiscoverFragment"
+        android:label="DiscoverFragment" >
+        <action
+            android:id="@+id/action_discoverFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.explore.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
+    </fragment>
 </navigation>

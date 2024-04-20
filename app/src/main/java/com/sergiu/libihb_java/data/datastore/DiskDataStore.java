@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DiskDataStore {
-    private static final int DAYS_UNTIL_CACHED_DATA_EXPIRES = 5;
+    private static final int DAYS_UNTIL_CACHED_DATA_EXPIRES = 10;
     private static final Preferences.Key<Long> DISCOVER_EXPIRE_DATE = PreferencesKeys.longKey("cached_mountain_expire_date");
     private final RxDataStore<Preferences> dataStore;
 
