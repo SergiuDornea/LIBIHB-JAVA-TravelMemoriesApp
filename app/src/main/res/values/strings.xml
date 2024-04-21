@@ -131,4 +131,5 @@
     <string name="location_flag_image">Location flag image</string>
     <string name="first_climber">First climber:</string>
     <string name="first_climbed_in">First climbed in:</string>
+    <string name="explore">Explore</string>
 </resources>
