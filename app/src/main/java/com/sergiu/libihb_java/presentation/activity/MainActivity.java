@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navController.navigate(R.id.mainFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
+        if (id == R.id.exploreFragment) {
+            navController.navigate(R.id.exploreFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
         if (id == R.id.aboutFragment) {
             navController.navigate(R.id.aboutFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -65,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navController.navigate(R.id.shareFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-
         return false;
     }
 
@@ -94,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         onBackPressedDispatcher.addCallback(this, drawerCallback);
-
     }
 
     private void initUI() {

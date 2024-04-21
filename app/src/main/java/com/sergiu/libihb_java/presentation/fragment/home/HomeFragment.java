@@ -76,7 +76,14 @@ public class HomeFragment extends Fragment {
             int numberOfDiscoverItems = 10;
             discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems);
         });
-        viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> travelMemoryAdapter.updateMemoryList(memoryList));
+        viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> {
+            if (memoryList.size() == 0) {
+                binding.memoriesGroup.setVisibility(View.GONE);
+            } else {
+                binding.memoriesGroup.setVisibility(View.VISIBLE);
+                travelMemoryAdapter.updateMemoryList(memoryList);
+            }
+        });
     }
 
     private void navigateToDetailsWithId(Long id) {
