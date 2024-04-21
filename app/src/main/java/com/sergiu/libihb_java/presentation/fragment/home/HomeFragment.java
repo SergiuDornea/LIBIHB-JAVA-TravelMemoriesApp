@@ -68,6 +68,9 @@ public class HomeFragment extends Fragment {
         travelMemoryAdapter = new TravelMemoryAdapter(this::navigateToDetailsWithId);
         discoverAdapter = new DiscoverAdapter(this::navigateToDiscoverWithId);
         binding.fab.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
+        binding.homeAddNewMemoryMaterialButton.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
+        binding.homeSosMaterialButton.setOnClickListener(v -> navController.navigate(R.id.sosFragment));
+        binding.homeExploreMaterialButton.setOnClickListener(v -> navController.navigate(R.id.exploreFragment));
     }
 
     private void setObservers() {
@@ -79,8 +82,10 @@ public class HomeFragment extends Fragment {
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> {
             if (memoryList.size() == 0) {
                 binding.memoriesGroup.setVisibility(View.GONE);
+                binding.initialDashboardConstraintLayout.setVisibility(View.VISIBLE);
             } else {
                 binding.memoriesGroup.setVisibility(View.VISIBLE);
+                binding.initialDashboardConstraintLayout.setVisibility(View.GONE);
                 travelMemoryAdapter.updateMemoryList(memoryList);
             }
         });

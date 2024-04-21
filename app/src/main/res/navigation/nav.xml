@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/splashScreen">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/splashScreen"
@@ -40,6 +40,12 @@
         <action
             android:id="@+id/action_mainFragment_to_exploreFragment"
             app:destination="@id/exploreFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_sosFragment2"
+            app:destination="@id/sosFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -141,4 +147,14 @@
             android:id="@+id/action_exploreFragment_to_discoverFragment"
             app:destination="@id/discoverFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/sosFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.sos.SosFragment"
+        android:label="fragment_sos"
+        tools:layout="@layout/fragment_sos" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.favorites.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>

@@ -53,20 +53,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navController.navigate(R.id.exploreFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-        if (id == R.id.aboutFragment) {
-            navController.navigate(R.id.aboutFragment);
+        if (id == R.id.favoritesFragment) {
+            navController.navigate(R.id.favoritesFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-        if (id == R.id.contactFragment) {
-            navController.navigate(R.id.contactFragment);
+        if (id == R.id.aboutFragment) {
+            navController.navigate(R.id.aboutFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         if (id == R.id.settingsFragment) {
             navController.navigate(R.id.settingsFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-        if (id == R.id.shareFragment) {
-            navController.navigate(R.id.shareFragment);
+        if (id == R.id.sosFragment) {
+            navController.navigate(R.id.sosFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         return false;
@@ -121,10 +121,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setOnBackPressedCallback() {
         ArrayList<Integer> getBackHomeDestinations = new ArrayList<Integer>() {{
             add(R.id.aboutFragment);
-            add(R.id.contactFragment);
+            add(R.id.favoritesFragment);
             add(R.id.settingsFragment);
-            add(R.id.shareFragment);
+            add(R.id.sosFragment);
             add(R.id.discoverFragment);
+            add(R.id.exploreFragment);
         }};
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
