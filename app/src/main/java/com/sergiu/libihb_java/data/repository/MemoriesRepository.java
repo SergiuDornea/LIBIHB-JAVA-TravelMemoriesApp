@@ -257,6 +257,9 @@ public class MemoriesRepository {
         return dao.updateIsFavorite(id, isFavorite);
     }
 
+    public Flowable<List<TravelMemory>> getAllFavoriteMemories(){
+        return dao.getAllFavoriteMemories();
+    }
     public interface SubmitCallback {
         void onSubmitClicked();
     }

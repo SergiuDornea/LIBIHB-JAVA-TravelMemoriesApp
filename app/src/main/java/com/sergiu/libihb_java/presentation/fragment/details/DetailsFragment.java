@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.details;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.FAVORITE_MEMORY_ID_KEY;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_KEY;
 
@@ -60,7 +61,11 @@ public class DetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
+            if (bundle.containsKey(MEMORY_ID_BY_POSITION_KEY)) {
+                id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
+            } else {
+                id = bundle.getLong(FAVORITE_MEMORY_ID_KEY);
+            }
         }
     }
 

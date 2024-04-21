@@ -13,7 +13,6 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface TravelMemoryDao {
@@ -30,7 +29,7 @@ public interface TravelMemoryDao {
     Flowable<TravelMemory> getMemoryById(long memoryId);
 
     @Query("SELECT * FROM memories WHERE is_favorite = 1")
-    List<TravelMemory> getAllFavoriteMemories();
+    Flowable<List<TravelMemory>> getAllFavoriteMemories();
 
     @Query("UPDATE memories SET is_favorite = :isFavorite WHERE id = :memoryId")
     Completable updateIsFavorite(long memoryId, boolean isFavorite);
