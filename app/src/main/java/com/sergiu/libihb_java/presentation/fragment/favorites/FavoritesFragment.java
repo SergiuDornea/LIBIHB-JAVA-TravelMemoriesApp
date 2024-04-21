@@ -11,12 +11,14 @@ import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -25,6 +27,8 @@ import com.sergiu.libihb_java.databinding.FragmentFavoritesBinding;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.FavoritesAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
+
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -69,6 +73,9 @@ public class FavoritesFragment extends Fragment {
         binding.favoritesRecycleView.setAdapter(favoritesAdapter);
         LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.recycle_view_layout_animation);
         binding.favoritesRecycleView.setLayoutAnimation(animationController);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.favoritesRecycleView.getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.favoritesRecycleView.getContext(), R.drawable.item_divider_vertical)));
+        binding.favoritesRecycleView.addItemDecoration(dividerItemDecoration);
     }
 
     private void setToolbar() {
