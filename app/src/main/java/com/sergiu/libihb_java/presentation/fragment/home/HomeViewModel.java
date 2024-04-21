@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.presentation.fragment.home;
 import android.annotation.SuppressLint;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
@@ -35,14 +37,6 @@ public class HomeViewModel extends ViewModel {
     }
 
     @SuppressLint("CheckResult")
-    public void observeMemories() {
-        memoriesRepository.getMemories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(memoriesLiveData::setValue);
-    }
-
-    @SuppressLint("CheckResult")
     public void observeDiscoverableMountains() {
         mountainRepository.getAllMountains()
                 .subscribeOn(Schedulers.io())
@@ -56,5 +50,21 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<List<CurrentMountain>> getMountainLiveData() {
         return mountainsLiveData;
+    }
+
+    public LiveData<Boolean> isMemoryInFavorites(long id) {
+        Flowable<Boolean> flowable = memoriesRepository.isMemoryInFavorites(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        flowable.subscribe();
+        return LiveDataReactiveStreams.fromPublisher(flowable);
+    }
+
+    @SuppressLint("CheckResult")
+    private void observeMemories() {
+        memoriesRepository.getMemories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(memoriesLiveData::setValue);
     }
 }

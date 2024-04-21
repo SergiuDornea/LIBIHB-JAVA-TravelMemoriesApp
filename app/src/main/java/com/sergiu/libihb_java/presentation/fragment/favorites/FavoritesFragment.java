@@ -115,5 +115,4 @@ public class FavoritesFragment extends Fragment {
 
         navController.navigate(R.id.action_favoritesFragment_to_detailsFragment, bundle);
     }
-
 }

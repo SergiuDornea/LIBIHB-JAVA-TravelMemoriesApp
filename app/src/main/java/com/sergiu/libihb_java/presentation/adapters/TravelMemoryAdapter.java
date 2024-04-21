@@ -82,8 +82,6 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
             location.setText(travelMemory.getPlaceLocationName());
             id = travelMemory.getId();
         }
-
-
     }
 
     public void updateMemoryList(List<TravelMemory> memoryList) {
