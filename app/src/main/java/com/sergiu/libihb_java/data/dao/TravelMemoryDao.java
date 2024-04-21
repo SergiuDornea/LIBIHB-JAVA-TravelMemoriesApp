@@ -36,7 +36,7 @@ public interface TravelMemoryDao {
     Completable updateIsFavorite(long memoryId, boolean isFavorite);
 
     @Query("SELECT is_favorite FROM memories WHERE id = :memoryId")
-    Single<Boolean> isMemoryInFavorites(long memoryId);
+    Flowable<Boolean> isMemoryInFavorites(long memoryId);
 
     @Delete
     Completable deleteTravelMemory(TravelMemory travelMemory);

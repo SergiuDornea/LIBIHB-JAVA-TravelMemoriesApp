@@ -61,7 +61,6 @@ public class DetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
-            viewModel.setCurrentId(id);
         }
     }
 
@@ -77,6 +76,7 @@ public class DetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(DetailsFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
+        viewModel.loadIsCurrentMemoryInFavorites(id);
         setToolbar();
         setObservers();
         setListeners();
@@ -140,7 +140,7 @@ public class DetailsFragment extends Fragment {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.favourite_memory) {
                     menuItem.setOnMenuItemClickListener(favItem -> {
-                        viewModel.toggleFavoriteIcon();
+                        viewModel.toggleFavoriteIcon(id);
                         return true;
                     });
                 }

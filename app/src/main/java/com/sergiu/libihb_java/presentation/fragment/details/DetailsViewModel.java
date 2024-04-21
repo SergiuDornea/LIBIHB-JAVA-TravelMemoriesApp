@@ -27,21 +27,15 @@ public class DetailsViewModel extends ViewModel {
     private final MemoriesRepository memoriesRepository;
     private final WeatherRepository weatherRepository;
     private final MutableLiveData<Boolean> isMemoryInFavorites = new MutableLiveData<>();
-    private long currentId;
 
     @Inject
     public DetailsViewModel(MemoriesRepository memoriesRepository, WeatherRepository weatherRepository) {
         this.memoriesRepository = memoriesRepository;
         this.weatherRepository = weatherRepository;
-        observeIsCurrentMemoryInFavorites(currentId);
     }
 
     public LiveData<Boolean> getIsMemoryInFavorites() {
         return isMemoryInFavorites;
-    }
-
-    public void setCurrentId(long currentId) {
-        this.currentId = currentId;
     }
 
     public Flowable<TravelMemory> getMemoryById(long memoryId) {
@@ -72,20 +66,21 @@ public class DetailsViewModel extends ViewModel {
     }
 
     @SuppressLint("CheckResult")
-    private void observeIsCurrentMemoryInFavorites(long id) {
+    public void loadIsCurrentMemoryInFavorites(long id) {
         memoriesRepository.isMemoryInFavorites(id)
+                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isMemoryInFavorites::setValue);
     }
 
-    public void toggleFavoriteIcon() {
-        updateIsFavorite(Boolean.FALSE.equals(isMemoryInFavorites.getValue()));
+    public void toggleFavoriteIcon(long id) {
+        updateIsFavorite(id, Boolean.FALSE.equals(isMemoryInFavorites.getValue()));
     }
 
     @SuppressLint("CheckResult")
-    private void updateIsFavorite(boolean isFavorite) {
-        memoriesRepository.updateIsFavorite(currentId, isFavorite)
+    private void updateIsFavorite(long id, boolean isFavorite) {
+        memoriesRepository.updateIsFavorite(id, isFavorite)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {

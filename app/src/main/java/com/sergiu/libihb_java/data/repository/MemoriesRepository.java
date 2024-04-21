@@ -249,7 +249,7 @@ public class MemoriesRepository {
         return dao.updateTravelMemory(travelMemory);
     }
 
-    public Single<Boolean> isMemoryInFavorites(long id) {
+    public Flowable<Boolean> isMemoryInFavorites(long id) {
         return dao.isMemoryInFavorites(id);
     }
 
