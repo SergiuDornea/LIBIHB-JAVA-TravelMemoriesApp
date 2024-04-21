@@ -134,16 +134,17 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.details_menu, menu);
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.favourite_memory) {
-                    menuItem.setOnMenuItemClickListener(favItem -> {
+                MenuItem favoritesMenuItem = toolbar.getMenu().findItem(R.id.favourite_memory);
+                if (favoritesMenuItem != null) {
+                    favoritesMenuItem.setOnMenuItemClickListener(menuItem -> {
                         viewModel.toggleFavoriteIcon(id);
                         return true;
                     });
                 }
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.delete_memory) {
                     showDeleteAlertDialog();
                     return true;

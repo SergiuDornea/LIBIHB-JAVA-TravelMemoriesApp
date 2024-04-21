@@ -1,7 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.details;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -26,7 +25,7 @@ public class DetailsViewModel extends ViewModel {
     private final static String TAG = DetailsViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
     private final WeatherRepository weatherRepository;
-    private final MutableLiveData<Boolean> isMemoryInFavorites = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isMemoryInFavorites = new MutableLiveData<>(false);
 
     @Inject
     public DetailsViewModel(MemoriesRepository memoriesRepository, WeatherRepository weatherRepository) {
@@ -78,15 +77,10 @@ public class DetailsViewModel extends ViewModel {
         updateIsFavorite(id, Boolean.FALSE.equals(isMemoryInFavorites.getValue()));
     }
 
-    @SuppressLint("CheckResult")
     private void updateIsFavorite(long id, boolean isFavorite) {
         memoriesRepository.updateIsFavorite(id, isFavorite)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    Log.d(TAG, "updateIsFavorite: " + isFavorite);
-                }, throwable -> {
-                    Log.d(TAG, "updateIsFavorite: FAIL ", throwable);
-                });
+                .subscribe();
     }
 }
