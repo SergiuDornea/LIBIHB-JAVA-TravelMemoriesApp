@@ -51,6 +51,7 @@ public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
     private DetailsAdapter detailsCarouselAdapter;
     private TravelMemory currentMemory;
+    private MaterialToolbar toolbar;
     private long id;
 
     @Override
@@ -60,6 +61,7 @@ public class DetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
+            viewModel.setCurrentId(id);
         }
     }
 
@@ -91,6 +93,15 @@ public class DetailsFragment extends Fragment {
                         .observe(getViewLifecycleOwner(), this::setCurrentWeatherUi);
             }
         });
+
+        viewModel.getIsMemoryInFavorites().observe(getViewLifecycleOwner(), this::updateFavoriteButtonState);
+    }
+
+    private void updateFavoriteButtonState(Boolean isFavorite) {
+        MenuItem favoriteIcon = toolbar.getMenu().findItem(R.id.favourite_memory);
+        if (favoriteIcon != null) {
+            favoriteIcon.setIcon(isFavorite ? R.drawable.ic_favorite_full : R.drawable.ic_favorite_blank);
+        }
     }
 
     private void setListeners() {
@@ -107,13 +118,13 @@ public class DetailsFragment extends Fragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).setDrawerLocked(true);
         }
-        setMenuHost();
-        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        toolbar = requireActivity().findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.getMenu().clear();
             toolbar.setTitle(R.string.details_title);
             toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
             toolbar.setNavigationOnClickListener(v -> navController.popBackStack());
+            setMenuHost();
         }
     }
 
@@ -127,6 +138,12 @@ public class DetailsFragment extends Fragment {
 
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.favourite_memory) {
+                    menuItem.setOnMenuItemClickListener(favItem -> {
+                        viewModel.toggleFavoriteIcon();
+                        return true;
+                    });
+                }
                 if (menuItem.getItemId() == R.id.delete_memory) {
                     showDeleteAlertDialog();
                     return true;

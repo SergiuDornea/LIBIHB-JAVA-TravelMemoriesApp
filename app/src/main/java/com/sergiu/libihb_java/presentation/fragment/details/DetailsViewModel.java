@@ -1,9 +1,11 @@
 package com.sergiu.libihb_java.presentation.fragment.details;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -21,13 +23,25 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
+    private final static String TAG = DetailsViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
     private final WeatherRepository weatherRepository;
+    private final MutableLiveData<Boolean> isMemoryInFavorites = new MutableLiveData<>();
+    private long currentId;
 
     @Inject
     public DetailsViewModel(MemoriesRepository memoriesRepository, WeatherRepository weatherRepository) {
         this.memoriesRepository = memoriesRepository;
         this.weatherRepository = weatherRepository;
+        observeIsCurrentMemoryInFavorites(currentId);
+    }
+
+    public LiveData<Boolean> getIsMemoryInFavorites() {
+        return isMemoryInFavorites;
+    }
+
+    public void setCurrentId(long currentId) {
+        this.currentId = currentId;
     }
 
     public Flowable<TravelMemory> getMemoryById(long memoryId) {
@@ -55,5 +69,29 @@ public class DetailsViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
+    }
+
+    @SuppressLint("CheckResult")
+    private void observeIsCurrentMemoryInFavorites(long id) {
+        memoriesRepository.isMemoryInFavorites(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isMemoryInFavorites::setValue);
+    }
+
+    public void toggleFavoriteIcon() {
+        updateIsFavorite(Boolean.FALSE.equals(isMemoryInFavorites.getValue()));
+    }
+
+    @SuppressLint("CheckResult")
+    private void updateIsFavorite(boolean isFavorite) {
+        memoriesRepository.updateIsFavorite(currentId, isFavorite)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    Log.d(TAG, "updateIsFavorite: " + isFavorite);
+                }, throwable -> {
+                    Log.d(TAG, "updateIsFavorite: FAIL ", throwable);
+                });
     }
 }
