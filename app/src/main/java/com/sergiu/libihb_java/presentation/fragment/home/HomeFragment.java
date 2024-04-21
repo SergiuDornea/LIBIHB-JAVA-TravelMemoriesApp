@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,6 +86,7 @@ public class HomeFragment extends Fragment {
                 binding.memoriesGroup.setVisibility(View.GONE);
                 binding.initialDashboardConstraintLayout.setVisibility(View.VISIBLE);
             } else {
+                binding.memoryRecyclerView.scheduleLayoutAnimation();
                 binding.memoriesGroup.setVisibility(View.VISIBLE);
                 binding.initialDashboardConstraintLayout.setVisibility(View.GONE);
                 travelMemoryAdapter.updateMemoryList(memoryList);
@@ -109,6 +112,9 @@ public class HomeFragment extends Fragment {
 
     private void setUpHorizontalScrollableLists() {
         binding.memoryRecyclerView.setAdapter(travelMemoryAdapter);
+        LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.recycle_view_layout_animation);
+        binding.memoryRecyclerView.setLayoutAnimation(animationController);
+
         binding.discoverViewPager.setAdapter(discoverAdapter);
         MarginPageTransformer marginPageTransformer = new MarginPageTransformer(getMarginAccordingToScreenDensity());
         binding.discoverViewPager.setPageTransformer(marginPageTransformer);

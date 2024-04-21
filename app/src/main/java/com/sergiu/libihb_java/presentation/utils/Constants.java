@@ -5,6 +5,7 @@ public final class Constants {
     public static final int DEFAULT_SCREEN_DESTINATION = 1;
     public static final Integer MAX_MEMORY_IMG = 5;
     public static final String MEMORY_ID_BY_POSITION_KEY = "travel_memory_key";
+    public static final String FAVORITE_MEMORY_ID_KEY = "favorite_memory_key";
     public static final String DISCOVER_ID_KEY = "discover_id_key";
     public static final String MEMORY_ID_KEY = "travel_id_key";
 

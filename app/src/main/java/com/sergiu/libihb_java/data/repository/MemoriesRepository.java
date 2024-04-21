@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MemoriesRepository {
     private final TravelMemoryDao dao;
@@ -248,6 +249,17 @@ public class MemoriesRepository {
         return dao.updateTravelMemory(travelMemory);
     }
 
+    public Flowable<Boolean> isMemoryInFavorites(long id) {
+        return dao.isMemoryInFavorites(id);
+    }
+
+    public Completable updateIsFavorite(long id, boolean isFavorite) {
+        return dao.updateIsFavorite(id, isFavorite);
+    }
+
+    public Flowable<List<TravelMemory>> getAllFavoriteMemories(){
+        return dao.getAllFavoriteMemories();
+    }
     public interface SubmitCallback {
         void onSubmitClicked();
     }

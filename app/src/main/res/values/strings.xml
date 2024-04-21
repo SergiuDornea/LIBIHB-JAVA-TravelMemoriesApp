@@ -99,6 +99,7 @@
     <string name="about_us_title">About us</string>
     <string name="details_title">Details</string>
     <string name="discover_title">Discover</string>
+    <string name="favorites_title">Your favorites</string>
     <string name="back_arrow_navigate_to_home_screen">a back arrow button to navigate to home screen</string>
     <string name="input_is_blank_title">The title can\'t be empty</string>
     <string name="input_is_blank_description">The description can\'t be empty</string>
@@ -137,4 +138,5 @@
     <string name="click_here_to_explore_new_places">Click here to explore new places</string>
     <string name="don_t_have_a_memory_saved_yet_start_here">Don\'t have a memory saved yet? Start here</string>
     <string name="favorites">Favorites</string>
+    <string name="a_red_hart_image">a red hart image</string>
 </resources>

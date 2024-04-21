@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.details;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.FAVORITE_MEMORY_ID_KEY;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_KEY;
 
@@ -51,6 +52,7 @@ public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
     private DetailsAdapter detailsCarouselAdapter;
     private TravelMemory currentMemory;
+    private MaterialToolbar toolbar;
     private long id;
 
     @Override
@@ -59,7 +61,11 @@ public class DetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
+            if (bundle.containsKey(MEMORY_ID_BY_POSITION_KEY)) {
+                id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
+            } else {
+                id = bundle.getLong(FAVORITE_MEMORY_ID_KEY);
+            }
         }
     }
 
@@ -75,6 +81,7 @@ public class DetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(DetailsFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
+        viewModel.loadIsCurrentMemoryInFavorites(id);
         setToolbar();
         setObservers();
         setListeners();
@@ -91,6 +98,15 @@ public class DetailsFragment extends Fragment {
                         .observe(getViewLifecycleOwner(), this::setCurrentWeatherUi);
             }
         });
+
+        viewModel.getIsMemoryInFavorites().observe(getViewLifecycleOwner(), this::updateFavoriteButtonState);
+    }
+
+    private void updateFavoriteButtonState(Boolean isFavorite) {
+        MenuItem favoriteIcon = toolbar.getMenu().findItem(R.id.favourite_memory);
+        if (favoriteIcon != null) {
+            favoriteIcon.setIcon(isFavorite ? R.drawable.ic_favorite_full : R.drawable.ic_favorite_blank);
+        }
     }
 
     private void setListeners() {
@@ -107,13 +123,13 @@ public class DetailsFragment extends Fragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).setDrawerLocked(true);
         }
-        setMenuHost();
-        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        toolbar = requireActivity().findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.getMenu().clear();
             toolbar.setTitle(R.string.details_title);
             toolbar.setNavigationIcon(R.drawable.ic_back_arrow);
             toolbar.setNavigationOnClickListener(v -> navController.popBackStack());
+            setMenuHost();
         }
     }
 
@@ -123,6 +139,13 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.details_menu, menu);
+                MenuItem favoritesMenuItem = toolbar.getMenu().findItem(R.id.favourite_memory);
+                if (favoritesMenuItem != null) {
+                    favoritesMenuItem.setOnMenuItemClickListener(menuItem -> {
+                        viewModel.toggleFavoriteIcon(id);
+                        return true;
+                    });
+                }
             }
 
             @Override

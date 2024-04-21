@@ -39,6 +39,8 @@ public class TravelMemory {
     private LatLng coordinates;
     @ColumnInfo(name = "date_of_travel")
     private Date dateOfTravel;
+    @ColumnInfo(name = "is_favorite")
+    private boolean isFavorite = false;
 
     public TravelMemory(
             List<String> imageList,
@@ -98,6 +100,14 @@ public class TravelMemory {
 
     public String getMemoryDescription() {
         return memoryDescription;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public void setId(Long id) {
