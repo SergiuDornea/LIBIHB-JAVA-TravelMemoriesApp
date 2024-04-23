@@ -7,12 +7,12 @@
     tools:context=".presentation.fragment.sos.SosFragment">
 
     <TextView
-        android:id="@+id/enter_emergency_contact_text_view"
+        android:id="@+id/sos_explained"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/to_enable_libihb_sos_mode_you_need_to_add_an_emergency_phone_number"
-        android:textSize="20sp"
+        android:text="@string/sos_system_explained"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,9 +25,9 @@
         app:errorEnabled="true"
         app:errorTextAppearance="@style/errorTextInputFieldAppearance"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.16"
+        app:layout_constraintHeight_percent="0.11"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_emergency_contact_text_view"
+        app:layout_constraintTop_toBottomOf="@id/sos_explained"
         app:layout_constraintWidth_percent="0.8">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -51,7 +51,7 @@
         app:errorEnabled="true"
         app:errorTextAppearance="@style/errorTextInputFieldAppearance"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.14"
+        app:layout_constraintHeight_percent="0.11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emergency_name_input_text_field_layout"
         app:layout_constraintWidth_percent="0.8">

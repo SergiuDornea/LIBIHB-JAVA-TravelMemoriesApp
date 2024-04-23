@@ -4,6 +4,7 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_C
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.Editable;
@@ -21,6 +22,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentSosBinding;
 import com.sergiu.libihb_java.presentation.events.SosFromEvent;
 
@@ -29,15 +33,17 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class SosFragment extends Fragment {
     private static final int SMS_PERMISSION_REQUEST_CODE = 101;
-    private static final String MESSAGE = "Ma arunc in cap cu asta pe fundal cate o data!";
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private SosViewModel viewModel;
     private FragmentSosBinding binding;
     private Pair<String, String> currentContact = new Pair<>(NO_EMERGENCY_CONTACT, NO_EMERGENCY_CONTACT);
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SosViewModel.class);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
     }
 
     @Override
@@ -54,10 +60,34 @@ public class SosFragment extends Fragment {
         setListeners();
     }
 
-    private void setListeners() {
-        binding.sosButton.setOnClickListener(click -> sendSMS());
-        binding.saveEmergencyContactMaterialButton.setOnClickListener(click -> viewModel.onEvent(SosFromEvent.SubmitClicked));
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                sendSOSMessage();
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.sms_permission_denied), Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                sendSOSMessage();
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.location_permission_denied), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
+    private void setListeners() {
+        binding.sosButton.setOnClickListener(click -> {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_REQUEST_CODE);
+            } else {
+                sendSOSMessage();
+            }
+        });
+
+        binding.saveEmergencyContactMaterialButton.setOnClickListener(click -> viewModel.onEvent(SosFromEvent.SubmitClicked));
         binding.emergencyNameInputTextField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -73,7 +103,6 @@ public class SosFragment extends Fragment {
 
             }
         });
-
         binding.emergencyPhoneInputTextField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -110,32 +139,37 @@ public class SosFragment extends Fragment {
 
         viewModel.getCallback().observe(getViewLifecycleOwner(), callback -> {
             if (callback.isSuccess()) {
-                Toast.makeText(requireContext(), "Emergency contact saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.emergency_contact_saved), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(requireContext(), "Failed to save the contact", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.emergency_contact_failed_to_save), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void sendSMS() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_REQUEST_CODE);
+    private void sendSOSMessage() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         } else {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(currentContact.second, null, MESSAGE, null, null);
-            Toast.makeText(requireContext(), "Message sent!", Toast.LENGTH_SHORT).show();
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(requireActivity(), location -> {
+                        if (location != null) {
+                            sendSMS(buildLocationMessage(location));
+                        } else {
+                            Toast.makeText(requireContext(), getString(R.string.retrieve_location_failed), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                sendSMS();
-            } else {
-                Toast.makeText(requireContext(), "SMS permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }
+    private void sendSMS(String message) {
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(currentContact.second, null, message, null, null);
+        Toast.makeText(requireContext(), getString(R.string.sos_sent) + currentContact.first, Toast.LENGTH_SHORT).show();
+    }
+
+    private String buildLocationMessage(Location location) {
+        return getString(R.string.sos_message_1) + " " + currentContact.first + ". " +
+                getString(R.string.sos_message_2) + getString(R.string.latitude) + " "
+                + location.getLatitude() + getString(R.string.longitude) + location.getLongitude();
     }
 }
