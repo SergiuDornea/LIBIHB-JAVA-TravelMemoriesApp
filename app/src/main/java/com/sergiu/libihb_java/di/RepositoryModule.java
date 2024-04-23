@@ -4,7 +4,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.data.datasource.WeatherRemoteDataSource;
+import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
+import com.sergiu.libihb_java.data.repository.EmergencyRepository;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.data.repository.WeatherRepository;
 
@@ -37,5 +39,11 @@ public class RepositoryModule {
     @Singleton
     public WeatherRepository provideWeatherRepository(WeatherRemoteDataSource weatherRemoteDataSource) {
         return new WeatherRepository(weatherRemoteDataSource);
+    }
+
+    @Provides
+    @Singleton
+    public EmergencyRepository provideEmergencyRepository(DiskDataStore diskDataStore) {
+        return new EmergencyRepository(diskDataStore);
     }
 }

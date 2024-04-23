@@ -3,6 +3,9 @@ package com.sergiu.libihb_java.di;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.sergiu.libihb_java.presentation.utils.JsonConversionUtil;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -26,5 +29,15 @@ public class AppModule {
     @Provides
     public Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
+    }
+
+    @Provides
+    public Gson provideGson() {
+        return new Gson();
+    }
+
+    @Provides
+    public JsonConversionUtil provideJsonUtil(Gson gson) {
+        return new JsonConversionUtil(gson);
     }
 }

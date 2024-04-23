@@ -139,4 +139,6 @@
     <string name="don_t_have_a_memory_saved_yet_start_here">Don\'t have a memory saved yet? Start here</string>
     <string name="favorites">Favorites</string>
     <string name="a_red_hart_image">a red hart image</string>
+    <string name="to_enable_libihb_sos_mode_you_need_to_add_an_emergency_phone_number">To enable LIBIHB-SOS-MODE you need to add an emergency contact phone number:</string>
+    <string name="save_emergency_contact">Save emergency contact</string>
 </resources>
