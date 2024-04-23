@@ -141,4 +141,18 @@
     <string name="a_red_hart_image">a red hart image</string>
     <string name="to_enable_libihb_sos_mode_you_need_to_add_an_emergency_phone_number">To enable LIBIHB-SOS-MODE you need to add an emergency contact phone number:</string>
     <string name="save_emergency_contact">Save emergency contact</string>
+    <string name="sos_message_1">This is an emergency message for </string>
+    <string name="sos_message_2">I am requesting help, those are my coordinates: </string>
+    <string name="latitude">Latitude: </string>
+    <string name="longitude">, Longitude: </string>
+    <string name="sos_sent">Emergency message sent with current location to </string>
+    <string name="retrieve_location_failed">Unable to retrieve current location</string>
+    <string name="sms_permission_denied">SMS permission denied</string>
+    <string name="location_permission_denied">Location permission denied</string>
+    <string name="emergency_contact_saved">Emergency contact saved</string>
+    <string name="emergency_contact_failed_to_save">Failed to save the contact</string>
+    <string name="sos_system_explained">The emergency LIBIHB system works as follows: When the user <b>presses</b> the <b>SOS button</b>  an emergency
+        <b>message</b>  containing the <b>current location</b>  (latitude and longitude) of the user will be <b>sent</b>  to the <b>emergency contact person</b>.
+        <b>The user  must save the emergency contact data before triggering the SOS button in order for the LIBIHB emergency system to work</b> </string>
+
 </resources>
