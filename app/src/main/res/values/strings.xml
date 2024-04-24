@@ -159,5 +159,14 @@
     <string name="emergency_contact_phone">Emergency contact phone</string>
     <string name="libihb_sos_system">LIBIHB-SOS-SYSTEM</string>
     <string name="no_memory_added_to_favorites_yet">No memory added to favorites yet</string>
+    <string name="lifeisbetterinhikingboosts_v_1_0">LifeIsBetterInHikingBoosts v.1.0</string>
+    <string name="mountain_api_by">Mountain API by:</string>
+    <string name="https_rapidapi_com_ryanfin_api_mountain_api1">https://rapidapi.com/RyanFin/api/mountain-api1/</string>
+    <string name="weather_api_by">Weather API by:</string>
+    <string name="https_openweathermap_org">https://openweathermap.org/</string>
+    <string name="maps_api_by">Maps API by:</string>
+    <string name="https_developers_google_com_maps">https://developers.google.com/maps/</string>
+    <string name="http_www_freepik_com">http://www.freepik.com</string>
+    <string name="some_artwork_designed_by_rawpixel_com">Some artwork: designed by rawpixel.com</string>
 
 </resources>
