@@ -14,21 +14,22 @@ public class ValidateMemoryImgList implements Validate<List<String>> {
     private final Context context;
 
     @Inject
-    public ValidateMemoryImgList(Context context){
+    public ValidateMemoryImgList(Context context) {
         this.context = context;
-    }
-    @Override
-    public boolean inputNotBlank(List<String> inputType) {
-        return inputType.size() > 1;
     }
 
     @Override
-    public boolean matchesRequiredType(List<String>  inputType) {
+    public boolean inputNotBlank(List<String> inputType) {
+        return inputType.size() > 0;
+    }
+
+    @Override
+    public boolean matchesRequiredType(List<String> inputType) {
         return false;
     }
 
     @Override
-    public ValidateResult validate(List<String>  inputType) {
+    public ValidateResult validate(List<String> inputType) {
         if (!inputNotBlank(inputType)) {
             return new ValidateResult(false, context.getString(R.string.input_is_blank_img_list));
         }
