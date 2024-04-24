@@ -24,6 +24,8 @@ import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryImg
 import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryName;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -117,6 +119,24 @@ public class OverviewViewModel extends ViewModel {
         } else {
             saveMemory();
             saveMemoryClickedEvent.postValue(new SaveMemoryClickedEvent(CAUSE_DEFAULT, null));
+            memoriesRepository.setFormState(new MemoryFormState(
+                    new ArrayList<>(),
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            ));
         }
     }
 

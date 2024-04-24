@@ -158,5 +158,6 @@
     <string name="emergency_contact_name">Emergency contact name</string>
     <string name="emergency_contact_phone">Emergency contact phone</string>
     <string name="libihb_sos_system">LIBIHB-SOS-SYSTEM</string>
+    <string name="no_memory_added_to_favorites_yet">No memory added to favorites yet</string>
 
 </resources>
