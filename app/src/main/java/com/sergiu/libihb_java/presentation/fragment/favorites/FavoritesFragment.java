@@ -28,6 +28,7 @@ import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.FavoritesAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
 
+import java.util.List;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -63,8 +64,13 @@ public class FavoritesFragment extends Fragment {
 
     private void setObserver() {
         viewModel.getFavoriteMemories().observe(getViewLifecycleOwner(), memoryList -> {
-            binding.favoritesRecycleView.scheduleLayoutAnimation();
-            favoritesAdapter.updateMemoryList(memoryList);
+            if (memoryList.size() == 0) {
+                binding.noMemoryTextView.setVisibility(View.VISIBLE);
+            } else {
+                binding.favoritesRecycleView.scheduleLayoutAnimation();
+                favoritesAdapter.updateMemoryList(memoryList);
+                binding.noMemoryTextView.setVisibility(View.GONE);
+            }
         });
     }
 

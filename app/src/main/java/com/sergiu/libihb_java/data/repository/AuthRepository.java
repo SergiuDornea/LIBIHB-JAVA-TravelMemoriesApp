@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.data.repository;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.LIBIHB_USER_PATH_KEY;
+
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +18,6 @@ import javax.inject.Inject;
 
 public class AuthRepository {
     private final static String TAG = AuthRepository.class.getName();
-    private final static String LIBIHB_USER_PATH_KEY = "user_profile";
     private final static String PHONE_KEY = "phone_key";
     private final static String NAME_KEY = "name_key";
     private final Executor executor;

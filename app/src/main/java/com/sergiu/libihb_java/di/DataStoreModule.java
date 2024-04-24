@@ -7,6 +7,7 @@ import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
 import androidx.datastore.rxjava3.RxDataStore;
 
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
+import com.sergiu.libihb_java.presentation.utils.JsonConversionUtil;
 
 import javax.inject.Singleton;
 
@@ -27,7 +28,7 @@ public class DataStoreModule {
     }
 
     @Provides
-    public DiskDataStore provideDiskDataStore(RxDataStore<Preferences> dataStore) {
-        return new DiskDataStore(dataStore);
+    public DiskDataStore provideDiskDataStore(RxDataStore<Preferences> dataStore, JsonConversionUtil jsonConversionUtil) {
+        return new DiskDataStore(dataStore, jsonConversionUtil);
     }
 }
