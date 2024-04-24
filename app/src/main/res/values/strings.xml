@@ -135,6 +135,7 @@
     <string name="explore">Explore</string>
     <string name="a_backpack_artwork">A backpack artwork</string>
     <string name="sos">SOS</string>
+    <string name="enable_sos_system">LIBIHB SOS system</string>
     <string name="click_here_to_explore_new_places">Click here to explore new places</string>
     <string name="don_t_have_a_memory_saved_yet_start_here">Don\'t have a memory saved yet? Start here</string>
     <string name="favorites">Favorites</string>
@@ -151,8 +152,11 @@
     <string name="location_permission_denied">Location permission denied</string>
     <string name="emergency_contact_saved">Emergency contact saved</string>
     <string name="emergency_contact_failed_to_save">Failed to save the contact</string>
-    <string name="sos_system_explained">The emergency LIBIHB system works as follows: When the user <b>presses</b> the <b>SOS button</b>  an emergency
-        <b>message</b>  containing the <b>current location</b>  (latitude and longitude) of the user will be <b>sent</b>  to the <b>emergency contact person</b>.
-        <b>The user  must save the emergency contact data before triggering the SOS button in order for the LIBIHB emergency system to work</b> </string>
+    <string name="sos_system_explained"><b>SOS BUTTON</b> once <b>pressed</b> immediately <b>sends</b> an emergency
+        <b>message</b>  containing your <b>current location</b> to the <b>emergency contact person</b></string>
+    <string name="set_up_emg_form"> <b>Setup the button by filling the following form:</b></string>
+    <string name="emergency_contact_name">Emergency contact name</string>
+    <string name="emergency_contact_phone">Emergency contact phone</string>
+    <string name="libihb_sos_system">LIBIHB-SOS-SYSTEM</string>
 
 </resources>

@@ -25,5 +25,5 @@ public final class Constants {
     public static final String CAUSE_DEFAULT = "cause_default";
     public static final String DATE_FORMAT_PATTERN = "dd MMM yyyy";
     public final static String LIBIHB_USER_PATH_KEY = "user_profile";
-    public final static String NO_EMERGENCY_CONTACT = "no_emergency_contact";
+    public final static String NO_EMERGENCY_CONTACT = "not set";
 }
