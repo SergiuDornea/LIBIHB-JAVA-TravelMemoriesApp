@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentSosBinding;
 import com.sergiu.libihb_java.presentation.events.SosFromEvent;
@@ -58,6 +59,7 @@ public class SosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setObservers();
         setListeners();
+        setToolbar();
     }
 
     @Override
@@ -122,13 +124,14 @@ public class SosFragment extends Fragment {
 
     private void setObservers() {
         viewModel.observeEmergencyContact().observe(getViewLifecycleOwner(), contact -> {
-            if (contact.equals(NO_EMERGENCY_CONTACT)) {
+            currentContact = contact;
+            if (currentContact.first.equals(NO_EMERGENCY_CONTACT) || currentContact.second.equals(NO_EMERGENCY_CONTACT)) {
                 binding.sosButton.setEnabled(false);
             } else {
-                binding.currentEmergencyContactPhone.setText(contact.second);
-                binding.currentEmergencyContactName.setText(contact.first);
-                currentContact = contact;
                 binding.sosButton.setEnabled(true);
+                binding.sosButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_light_error));
+                binding.emergencyFormGroup.setVisibility(View.GONE);
+                binding.sosExplained.setPadding(0, 0, 0, 300);
             }
         });
 
@@ -164,12 +167,19 @@ public class SosFragment extends Fragment {
     private void sendSMS(String message) {
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(currentContact.second, null, message, null, null);
-        Toast.makeText(requireContext(), getString(R.string.sos_sent) + currentContact.first, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), getString(R.string.sos_sent) + " " + currentContact.first, Toast.LENGTH_SHORT).show();
     }
 
     private String buildLocationMessage(Location location) {
         return getString(R.string.sos_message_1) + " " + currentContact.first + ". " +
                 getString(R.string.sos_message_2) + getString(R.string.latitude) + " "
                 + location.getLatitude() + getString(R.string.longitude) + location.getLongitude();
+    }
+
+    private void setToolbar() {
+        MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.sos);
+        }
     }
 }
