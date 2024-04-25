@@ -80,8 +80,7 @@ public class HomeFragment extends Fragment {
         viewModel.observeDiscoverableMountains();
         viewModel.getMountainLiveData().observe(getViewLifecycleOwner(), currentMountains -> {
             Integer numberOfDiscoverItems = viewModel.getNumberOfTilesLiveData().getValue();
-//            discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems != null ? numberOfDiscoverItems : BASE_DISCOVER_TILE_COUNT);
-            discoverAdapter.updateMountainsToDiscoverList(currentMountains, 4 );
+            discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems != null ? numberOfDiscoverItems : BASE_DISCOVER_TILE_COUNT);
         });
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> {
             if (memoryList.size() == 0) {
