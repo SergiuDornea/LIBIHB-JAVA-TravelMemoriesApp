@@ -22,7 +22,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
-    private final static String TAG = DetailsViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
     private final WeatherRepository weatherRepository;
     private final MutableLiveData<Boolean> isMemoryInFavorites = new MutableLiveData<>(false);

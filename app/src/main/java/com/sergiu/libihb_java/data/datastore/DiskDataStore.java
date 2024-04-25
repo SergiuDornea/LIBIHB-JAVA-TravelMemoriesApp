@@ -25,10 +25,15 @@ public class DiskDataStore {
     private static final int DAYS_UNTIL_CACHED_DATA_EXPIRES = 10;
     private static final Preferences.Key<Long> DISCOVER_EXPIRE_DATE = PreferencesKeys.longKey("cached_mountain_expire_date");
     private static final Preferences.Key<String> EMERGENCY_CONTACT = PreferencesKeys.stringKey("emergency_contact");
+    private static final Preferences.Key<Integer> NUMBER_OF_EXPLORE_TILES = PreferencesKeys.intKey("number_of_explore_tiles");
+    private static final Preferences.Key<String> UNIT_OF_MEASUREMENT = PreferencesKeys.stringKey("unit_of_measurement");
+    private final int baseExploreTileNum = 5;
+    private final String baseUnit = "metric";
     private final RxDataStore<Preferences> dataStore;
     private final JsonConversionUtil jsonConversionUtil;
 
     @Inject
+
     public DiskDataStore(RxDataStore<Preferences> preferencesDataStore, JsonConversionUtil jsonConversionUtil) {
         this.dataStore = preferencesDataStore;
         this.jsonConversionUtil = jsonConversionUtil;
@@ -49,6 +54,40 @@ public class DiskDataStore {
             String contactString = preferences.get(EMERGENCY_CONTACT);
             Pair<String, String> contact = jsonConversionUtil.fromStringToPairOfStrings(contactString);
             return contact != null ? contact : new Pair<>(NO_EMERGENCY_CONTACT, NO_EMERGENCY_CONTACT);
+        });
+    }
+
+    public Completable writeExploreTitleSetting(int numberOfTiles) {
+        Single<Preferences> updateSingle = dataStore.updateDataAsync(prefsIn -> {
+            MutablePreferences mutablePreferences = prefsIn.toMutablePreferences();
+            mutablePreferences.set(NUMBER_OF_EXPLORE_TILES, numberOfTiles);
+            return Single.just(mutablePreferences);
+        });
+
+        return Completable.fromSingle(updateSingle);
+    }
+
+    public Flowable<Integer> getExploreTitleSetting() {
+        return dataStore.data().map(preferences -> {
+            Integer numberOfTilesInteger = preferences.get(NUMBER_OF_EXPLORE_TILES);
+            return numberOfTilesInteger != null ? numberOfTilesInteger : baseExploreTileNum;
+        });
+    }
+
+    public Completable writeUnitOfMeasurementSetting(String unit) {
+        Single<Preferences> updateSingle = dataStore.updateDataAsync(prefsIn -> {
+            MutablePreferences mutablePreferences = prefsIn.toMutablePreferences();
+            mutablePreferences.set(UNIT_OF_MEASUREMENT, unit);
+            return Single.just(mutablePreferences);
+        });
+
+        return Completable.fromSingle(updateSingle);
+    }
+
+    public Flowable<String> getUnitOfMeasurementSetting() {
+        return dataStore.data().map(preferences -> {
+            String unitOfMeasurement = preferences.get(UNIT_OF_MEASUREMENT);
+            return unitOfMeasurement != null ? unitOfMeasurement : baseUnit;
         });
     }
 

@@ -152,8 +152,7 @@
     <string name="location_permission_denied">Location permission denied</string>
     <string name="emergency_contact_saved">Emergency contact saved</string>
     <string name="emergency_contact_failed_to_save">Failed to save the contact</string>
-    <string name="sos_system_explained"><b>SOS BUTTON</b> once <b>pressed</b> immediately <b>sends</b> an emergency
-        <b>message</b>  containing your <b>current location</b> to the <b>emergency contact person</b></string>
+    <string name="sos_system_explained"><b>SOS BUTTON</b> once <b>pressed</b> immediately <b>sends</b> an emergency <b>message</b>  containing your <b>current location</b> to the <b>emergency contact person</b></string>
     <string name="set_up_emg_form"> <b>Setup the button by filling the following form:</b></string>
     <string name="emergency_contact_name">Emergency contact name</string>
     <string name="emergency_contact_phone">Emergency contact phone</string>
@@ -168,9 +167,10 @@
     <string name="https_developers_google_com_maps">https://developers.google.com/maps/</string>
     <string name="http_www_freepik_com">http://www.freepik.com</string>
     <string name="some_artwork_designed_by_rawpixel_com">Some artwork: designed by rawpixel.com</string>
-
     <string name="select_the_number_of_recomended_places_to_discover">Select the number of recomended places to discover:</string>
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="choose_unit_of_measurement">Choose unit of measurement:</string>
+    <string name="change_emergency_contact">Change emergency contact:</string>
+    <string name="save_settings">Save settings</string>
 </resources>
