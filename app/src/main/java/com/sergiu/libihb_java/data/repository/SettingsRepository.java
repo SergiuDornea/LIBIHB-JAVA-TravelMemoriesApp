@@ -15,12 +15,12 @@ public class SettingsRepository {
         this.diskDataStore = diskDataStore;
     }
 
-    public Completable saveExploreNumberTilesSetting(int numberOfTiles) {
-        return diskDataStore.writeExploreTitleSetting(numberOfTiles);
+    public Completable saveDiscoverNumberTilesSetting(int numberOfTiles) {
+        return diskDataStore.writeDiscoverTitleSetting(numberOfTiles);
     }
 
-    public Flowable<Integer> getExploreTitleSetting() {
-        return diskDataStore.getExploreTitleSetting();
+    public Flowable<Integer> getDiscoverTitleSetting() {
+        return diskDataStore.getDiscoverTitleSetting();
     }
 
     public Completable saveUnitOfMeasurementSetting(String unit) {

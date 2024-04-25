@@ -1,6 +1,7 @@
 package com.sergiu.libihb_java.data.datastore;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_CONTACT;
+import static com.sergiu.libihb_java.presentation.utils.Constants.BASE_DISCOVER_TILE_COUNT;
 
 import android.util.Pair;
 
@@ -25,9 +26,8 @@ public class DiskDataStore {
     private static final int DAYS_UNTIL_CACHED_DATA_EXPIRES = 10;
     private static final Preferences.Key<Long> DISCOVER_EXPIRE_DATE = PreferencesKeys.longKey("cached_mountain_expire_date");
     private static final Preferences.Key<String> EMERGENCY_CONTACT = PreferencesKeys.stringKey("emergency_contact");
-    private static final Preferences.Key<Integer> NUMBER_OF_EXPLORE_TILES = PreferencesKeys.intKey("number_of_explore_tiles");
+    private static final Preferences.Key<Integer> NUMBER_OF_DISCOVER_TILES = PreferencesKeys.intKey("number_of_explore_tiles");
     private static final Preferences.Key<String> UNIT_OF_MEASUREMENT = PreferencesKeys.stringKey("unit_of_measurement");
-    private final int baseExploreTileNum = 5;
     private final String baseUnit = "metric";
     private final RxDataStore<Preferences> dataStore;
     private final JsonConversionUtil jsonConversionUtil;
@@ -57,20 +57,20 @@ public class DiskDataStore {
         });
     }
 
-    public Completable writeExploreTitleSetting(int numberOfTiles) {
+    public Completable writeDiscoverTitleSetting(int numberOfTiles) {
         Single<Preferences> updateSingle = dataStore.updateDataAsync(prefsIn -> {
             MutablePreferences mutablePreferences = prefsIn.toMutablePreferences();
-            mutablePreferences.set(NUMBER_OF_EXPLORE_TILES, numberOfTiles);
+            mutablePreferences.set(NUMBER_OF_DISCOVER_TILES, numberOfTiles);
             return Single.just(mutablePreferences);
         });
 
         return Completable.fromSingle(updateSingle);
     }
 
-    public Flowable<Integer> getExploreTitleSetting() {
+    public Flowable<Integer> getDiscoverTitleSetting() {
         return dataStore.data().map(preferences -> {
-            Integer numberOfTilesInteger = preferences.get(NUMBER_OF_EXPLORE_TILES);
-            return numberOfTilesInteger != null ? numberOfTilesInteger : baseExploreTileNum;
+            Integer numberOfTilesInteger = preferences.get(NUMBER_OF_DISCOVER_TILES);
+            return numberOfTilesInteger != null ? numberOfTilesInteger : BASE_DISCOVER_TILE_COUNT;
         });
     }
 

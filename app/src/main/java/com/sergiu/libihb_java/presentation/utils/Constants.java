@@ -26,4 +26,5 @@ public final class Constants {
     public static final String DATE_FORMAT_PATTERN = "dd MMM yyyy";
     public final static String LIBIHB_USER_PATH_KEY = "user_profile";
     public final static String NO_EMERGENCY_CONTACT = "not set";
+    public final static int BASE_DISCOVER_TILE_COUNT = 5;
 }

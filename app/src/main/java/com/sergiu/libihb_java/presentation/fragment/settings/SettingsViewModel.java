@@ -42,7 +42,7 @@ public class SettingsViewModel extends ViewModel {
         this.emergencyRepository = emergencyRepository;
         this.validatePhone = validatePhone;
         this.validateName = validateName;
-        getNumberOfTilesSetting();
+        getDiscoverNumberOfTilesSetting();
         getUnitOfMeasurementSetting();
     }
 
@@ -67,7 +67,7 @@ public class SettingsViewModel extends ViewModel {
     }
 
     public void onSettingsSave() {
-        saveNumberOfTilesSetting();
+        saveDiscoverNumberOfTilesSetting();
         saveUnitOfMeasurementSetting();
     }
 
@@ -107,16 +107,16 @@ public class SettingsViewModel extends ViewModel {
         }
     }
 
-    private void saveNumberOfTilesSetting() {
+    private void saveDiscoverNumberOfTilesSetting() {
         Integer numberOfTiles = exploreNumberTilesSetting.getValue();
         if (numberOfTiles != null) {
-            settingsRepository.saveExploreNumberTilesSetting(numberOfTiles);
+            settingsRepository.saveDiscoverNumberTilesSetting(numberOfTiles);
         }
     }
 
     @SuppressLint("CheckResult")
-    private void getNumberOfTilesSetting() {
-        settingsRepository.getExploreTitleSetting()
+    private void getDiscoverNumberOfTilesSetting() {
+        settingsRepository.getDiscoverTitleSetting()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(exploreNumberTilesSetting::setValue);
