@@ -77,18 +77,13 @@
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
     <fragment
-        android:id="@+id/logOutFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.log_out.LogOutFragment"
-        android:label="fragment_log_out"
-        tools:layout="@layout/fragment_log_out" />
-    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.addFragment.AddMemoryFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.addFragment.AddFragment"
         android:label="AddMemory">
         <action
             android:id="@+id/action_addMemory_to_mapsFragment2"
@@ -114,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.overviewFragment.MemoryOverviewFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.overviewFragment.OverviewFragment"
         android:label="fragment_memory_overview"
         tools:layout="@layout/fragment_overview" />
     <fragment

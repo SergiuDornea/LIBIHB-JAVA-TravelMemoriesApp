@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
+import com.sergiu.libihb_java.data.repository.SettingsRepository;
 import com.sergiu.libihb_java.data.repository.WeatherRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
@@ -22,15 +23,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
-    private final static String TAG = DetailsViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
     private final WeatherRepository weatherRepository;
+    private final SettingsRepository settingsRepository;
     private final MutableLiveData<Boolean> isMemoryInFavorites = new MutableLiveData<>(false);
+    private final MutableLiveData<String> unitOfMeasurement = new MutableLiveData<>();
 
     @Inject
-    public DetailsViewModel(MemoriesRepository memoriesRepository, WeatherRepository weatherRepository) {
+    public DetailsViewModel(
+            MemoriesRepository memoriesRepository,
+            WeatherRepository weatherRepository,
+            SettingsRepository settingsRepository) {
         this.memoriesRepository = memoriesRepository;
         this.weatherRepository = weatherRepository;
+        this.settingsRepository = settingsRepository;
+        getUnitOfMeasurementSetting();
     }
 
     public LiveData<Boolean> getIsMemoryInFavorites() {
@@ -49,7 +56,7 @@ public class DetailsViewModel extends ViewModel {
         String longitude = Double.toString(latLng.longitude);
 
         Flowable<CurrentWeather> weatherFlowable = weatherRepository
-                .getCurrentWeatherByLatAndLng(latitude, longitude, "metric") //todo create units settings
+                .getCurrentWeatherByLatAndLng(latitude, longitude, unitOfMeasurement.getValue())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -82,5 +89,13 @@ public class DetailsViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
+    }
+
+    @SuppressLint("CheckResult")
+    private void getUnitOfMeasurementSetting() {
+        settingsRepository.getUnitOfMeasurementSetting()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(unitOfMeasurement::setValue);
     }
 }

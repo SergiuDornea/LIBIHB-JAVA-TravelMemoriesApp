@@ -3,12 +3,12 @@ package com.sergiu.libihb_java.presentation.fragment.home;
 import android.annotation.SuppressLint;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.data.repository.MountainRepository;
+import com.sergiu.libihb_java.data.repository.SettingsRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
 
@@ -18,22 +18,28 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class HomeViewModel extends ViewModel {
     private final MemoriesRepository memoriesRepository;
     private final MountainRepository mountainRepository;
+    private final SettingsRepository settingsRepository;
+    private final MutableLiveData<Integer> numberOfTilesLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<TravelMemory>> memoriesLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<CurrentMountain>> mountainsLiveData = new MutableLiveData<>();
 
     @Inject
-    public HomeViewModel(MemoriesRepository memoriesRepository, MountainRepository mountainRepository) {
+    public HomeViewModel(
+            MemoriesRepository memoriesRepository,
+            MountainRepository mountainRepository,
+            SettingsRepository settingsRepository) {
         this.memoriesRepository = memoriesRepository;
         this.mountainRepository = mountainRepository;
+        this.settingsRepository = settingsRepository;
         observeMemories();
         observeDiscoverableMountains();
+        getDiscoverNumberOfTileSetting();
     }
 
     @SuppressLint("CheckResult")
@@ -52,12 +58,8 @@ public class HomeViewModel extends ViewModel {
         return mountainsLiveData;
     }
 
-    public LiveData<Boolean> isMemoryInFavorites(long id) {
-        Flowable<Boolean> flowable = memoriesRepository.isMemoryInFavorites(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        flowable.subscribe();
-        return LiveDataReactiveStreams.fromPublisher(flowable);
+    public LiveData<Integer> getNumberOfTilesLiveData() {
+        return numberOfTilesLiveData;
     }
 
     @SuppressLint("CheckResult")
@@ -66,5 +68,13 @@ public class HomeViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(memoriesLiveData::setValue);
+    }
+
+    @SuppressLint("CheckResult")
+    private void getDiscoverNumberOfTileSetting() {
+        settingsRepository.getDiscoverTitleSetting()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(numberOfTilesLiveData::setValue);
     }
 }

@@ -8,6 +8,7 @@ import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
 import com.sergiu.libihb_java.data.repository.EmergencyRepository;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
+import com.sergiu.libihb_java.data.repository.SettingsRepository;
 import com.sergiu.libihb_java.data.repository.WeatherRepository;
 
 import java.util.concurrent.Executor;
@@ -45,5 +46,11 @@ public class RepositoryModule {
     @Singleton
     public EmergencyRepository provideEmergencyRepository(DiskDataStore diskDataStore) {
         return new EmergencyRepository(diskDataStore);
+    }
+
+    @Provides
+    @Singleton
+    public SettingsRepository provideSettingsRepository(DiskDataStore diskDataStore) {
+        return new SettingsRepository(diskDataStore);
     }
 }

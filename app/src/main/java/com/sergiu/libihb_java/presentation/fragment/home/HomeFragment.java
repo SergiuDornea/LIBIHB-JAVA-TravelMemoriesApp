@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.presentation.fragment.home;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.BASE_DISCOVER_TILE_COUNT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.DISCOVER_ID_KEY;
 import static com.sergiu.libihb_java.presentation.utils.Constants.MEMORY_ID_BY_POSITION_KEY;
 
@@ -78,8 +79,8 @@ public class HomeFragment extends Fragment {
     private void setObservers() {
         viewModel.observeDiscoverableMountains();
         viewModel.getMountainLiveData().observe(getViewLifecycleOwner(), currentMountains -> {
-            int numberOfDiscoverItems = 10;
-            discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems);
+            Integer numberOfDiscoverItems = viewModel.getNumberOfTilesLiveData().getValue();
+            discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems != null ? numberOfDiscoverItems : BASE_DISCOVER_TILE_COUNT);
         });
         viewModel.getMemoriesLiveData().observe(getViewLifecycleOwner(), memoryList -> {
             if (memoryList.size() == 0) {

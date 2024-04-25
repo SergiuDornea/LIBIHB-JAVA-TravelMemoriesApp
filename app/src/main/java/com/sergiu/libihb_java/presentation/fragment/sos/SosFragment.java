@@ -1,6 +1,7 @@
 package com.sergiu.libihb_java.presentation.fragment.sos;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_CONTACT;
+import static com.sergiu.libihb_java.presentation.utils.ScreenSizeUtil.isScreenSmall;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -57,6 +58,7 @@ public class SosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setUpSosButtonAccordingToScreenSize();
         setObservers();
         setListeners();
         setToolbar();
@@ -139,7 +141,6 @@ public class SosFragment extends Fragment {
             binding.emergencyPhoneInputTextFieldLayout.setError(sosFormState.getPhoneError());
             binding.emergencyNameInputTextFieldLayout.setError(sosFormState.getNameError());
         });
-
         viewModel.getCallback().observe(getViewLifecycleOwner(), callback -> {
             if (callback.isSuccess()) {
                 Toast.makeText(requireContext(), getString(R.string.emergency_contact_saved), Toast.LENGTH_SHORT).show();
@@ -180,6 +181,12 @@ public class SosFragment extends Fragment {
         MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitle(R.string.sos);
+        }
+    }
+
+    private void setUpSosButtonAccordingToScreenSize() {
+        if (isScreenSmall(requireContext())) {
+            binding.sosSystemTextView.setVisibility(View.GONE);
         }
     }
 }
