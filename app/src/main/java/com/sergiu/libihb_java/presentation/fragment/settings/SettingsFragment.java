@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,8 +50,14 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setListeners() {
-        binding.settingsEmergencySaveButton.setOnClickListener(click -> viewModel.onEvent(SosFromEvent.SubmitClicked));
-        binding.settingsSaveButton.setOnClickListener(click -> viewModel.onSettingsSave());
+        binding.settingsEmergencySaveButton.setOnClickListener(click -> {
+            viewModel.onEvent(SosFromEvent.SubmitClicked);
+            Toast.makeText(requireContext(), getString(R.string.settings_emergency_contact_saved), Toast.LENGTH_SHORT).show();
+        });
+        binding.settingsSaveButton.setOnClickListener(click -> {
+            viewModel.onSettingsSave();
+            Toast.makeText(requireContext(), getString(R.string.settings_saved), Toast.LENGTH_SHORT).show();
+        });
         binding.settingsCelsiusRadioButton.setOnClickListener(click -> viewModel.setUnitOfMeasurement(METRIC));
         binding.settingsFahrenheitRadioButton.setOnClickListener(click -> viewModel.setUnitOfMeasurement(IMPERIAL));
         binding.settingsNumberOfDiscoverTilesSlider.addOnChangeListener((slider, value, fromUser) -> {

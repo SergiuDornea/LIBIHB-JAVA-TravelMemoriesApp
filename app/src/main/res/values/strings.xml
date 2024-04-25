@@ -173,4 +173,6 @@
     <string name="choose_unit_of_measurement">Choose unit of measurement:</string>
     <string name="change_emergency_contact">Change emergency contact:</string>
     <string name="save_settings">Save settings</string>
+    <string name="settings_saved">Settings saved</string>
+    <string name="settings_emergency_contact_saved">Emergency contact saved</string>
 </resources>
