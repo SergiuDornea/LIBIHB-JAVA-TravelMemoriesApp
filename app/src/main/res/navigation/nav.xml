@@ -128,11 +128,7 @@
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.sergiu.libihb_java.presentation.discover.DiscoverFragment"
-        android:label="DiscoverFragment">
-        <action
-            android:id="@+id/action_discoverFragment_to_exploreFragment"
-            app:destination="@id/exploreFragment" />
-    </fragment>
+        android:label="DiscoverFragment" />
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.explore.ExploreFragment"

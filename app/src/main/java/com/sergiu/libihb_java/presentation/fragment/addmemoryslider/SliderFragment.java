@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SliderFragment extends Fragment implements OverviewFragment.NavigateCallback {
-    private SliderViewModel viewModel;
     private FragmentSliderBinding binding;
     private NavController navController;
     private final AddFragment addFragment = new AddFragment();
@@ -39,7 +37,6 @@ public class SliderFragment extends Fragment implements OverviewFragment.Navigat
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SliderViewModel.class);
     }
 
     @Override
@@ -85,9 +82,7 @@ public class SliderFragment extends Fragment implements OverviewFragment.Navigat
             add(R.drawable.ic_preview);
         }};
 
-        new TabLayoutMediator(binding.tabLayout, binding.fragmentViewPager, (tab, position) -> {
-            tab.setIcon(tabIconList.get(position));
-        }).attach();
+        new TabLayoutMediator(binding.tabLayout, binding.fragmentViewPager, (tab, position) -> tab.setIcon(tabIconList.get(position))).attach();
     }
 
     private void setListeners() {

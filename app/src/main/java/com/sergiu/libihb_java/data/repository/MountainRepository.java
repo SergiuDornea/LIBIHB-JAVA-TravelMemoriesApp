@@ -51,11 +51,9 @@ public class MountainRepository {
     public Flowable<CurrentMountain> getCurrentMountainById(String id) {
         if (dataIsExpired(diskDataStore.getDiscoverExpireDate())) {
             diskDataStore.writeDiscoverExpireDate();
-            Log.d(TAG, "getCurrentMountainById: REMOTE");
             return mountainRemoteDataSource.getCurrentMountainById(id)
                     .doOnNext(currentMountainDao::insertCurrentMountain);
         } else {
-            Log.d(TAG, "getCurrentMountainById: LOCAL");
             return currentMountainDao.getCurrentMountainById(id);
         }
     }
