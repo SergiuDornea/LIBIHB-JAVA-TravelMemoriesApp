@@ -1,7 +1,5 @@
 package com.sergiu.libihb_java.data.repository;
 
-import android.util.Log;
-
 import com.sergiu.libihb_java.data.dao.CurrentMountainDao;
 import com.sergiu.libihb_java.data.datasource.MountainRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
@@ -17,7 +15,6 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MountainRepository {
-    private static final String TAG = MountainRepository.class.getSimpleName();
     private final MountainRemoteDataSource mountainRemoteDataSource;
     private final CurrentMountainDao currentMountainDao;
     private final DiskDataStore diskDataStore;
@@ -56,6 +53,13 @@ public class MountainRepository {
         } else {
             return currentMountainDao.getCurrentMountainById(id);
         }
+    }
+
+    public Flowable<List<CurrentMountain>> searchCurrentMountainByName(String name) {
+        if (dataIsExpired(diskDataStore.getDiscoverExpireDate())) {
+            getAllMountains();
+        }
+        return currentMountainDao.searchCurrentMountainsByName(name);
     }
 
     private boolean dataIsExpired(Date date) {
