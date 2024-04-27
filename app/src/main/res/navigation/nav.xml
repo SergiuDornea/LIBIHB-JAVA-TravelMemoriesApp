@@ -128,19 +128,15 @@
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.sergiu.libihb_java.presentation.discover.DiscoverFragment"
-        android:label="DiscoverFragment">
-        <action
-            android:id="@+id/action_discoverFragment_to_exploreFragment"
-            app:destination="@id/exploreFragment" />
-    </fragment>
+        android:label="DiscoverFragment" />
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.sergiu.libihb_java.presentation.fragment.explore.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore">
         <action
-            android:id="@+id/action_exploreFragment_to_discoverFragment"
-            app:destination="@id/discoverFragment" />
+            android:id="@+id/action_exploreFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/sosFragment"
@@ -155,5 +151,14 @@
         <action
             android:id="@+id/action_favoritesFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
     </fragment>
 </navigation>

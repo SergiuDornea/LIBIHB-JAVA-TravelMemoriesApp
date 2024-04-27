@@ -37,7 +37,8 @@
     <string name="pick_a_date">Pick a date</string>
     <string name="choose_the_location">Choose the location:</string>
     <string name="enter_map_full_screen">enter map full screen</string>
-    <string name="search">Click on the magnifying glass to search for a location</string>
+    <string name="search_location">Click on the magnifying glass to search for a location</string>
+    <string name="search">Search</string>
     <string name="choose_up_to_5_photos">Choose up to 5 photos</string>
     <string name="choose_photos_from_gallery">Choose photos from gallery</string>
     <string name="save">Save</string>
@@ -175,4 +176,5 @@
     <string name="save_settings">Save settings</string>
     <string name="settings_saved">Settings saved</string>
     <string name="settings_emergency_contact_saved">Emergency contact saved</string>
+    <string name="search_a_location">Search a location</string>
 </resources>

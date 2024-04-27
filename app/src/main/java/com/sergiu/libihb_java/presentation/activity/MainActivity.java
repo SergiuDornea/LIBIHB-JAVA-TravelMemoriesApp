@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navController.navigate(R.id.mainFragment);
                 } else if (currentDestinationId == R.id.editFragment) {
                     navController.popBackStack();
+                } else if (currentDestinationId == R.id.searchFragment) {
+                    navController.navigate(R.id.exploreFragment);
                 } else {
                     finish();
                 }

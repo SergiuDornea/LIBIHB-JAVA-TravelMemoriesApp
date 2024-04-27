@@ -22,4 +22,7 @@ public interface CurrentMountainDao {
 
     @Query("SELECT * FROM mountains WHERE id = :mountainId")
     Flowable<CurrentMountain> getCurrentMountainById(String mountainId);
+
+    @Query("SELECT * FROM mountains WHERE (LENGTH(:name) > 0 AND name LIKE '%' || :name || '%')")
+    Flowable<List<CurrentMountain>> searchCurrentMountainsByName(String name);
 }

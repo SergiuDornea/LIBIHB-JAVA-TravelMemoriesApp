@@ -7,6 +7,7 @@ public final class Constants {
     public static final String MEMORY_ID_BY_POSITION_KEY = "travel_memory_key";
     public static final String FAVORITE_MEMORY_ID_KEY = "favorite_memory_key";
     public static final String DISCOVER_ID_KEY = "discover_id_key";
+    public static final String EXPLORE_POSITION_KEY = "explore_position_key";
     public static final String MEMORY_ID_KEY = "travel_id_key";
 
     // https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=091592242ee53d481c498231905b90ca
@@ -27,4 +28,5 @@ public final class Constants {
     public final static String LIBIHB_USER_PATH_KEY = "user_profile";
     public final static String NO_EMERGENCY_CONTACT = "not set";
     public final static int BASE_DISCOVER_TILE_COUNT = 5;
+    public final static int INVALID_POSITION = -1;
 }

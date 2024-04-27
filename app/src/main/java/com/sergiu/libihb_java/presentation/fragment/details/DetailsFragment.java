@@ -196,7 +196,7 @@ public class DetailsFragment extends Fragment {
         detailsCarouselAdapter = new DetailsAdapter(this::zoomClickedPictureIn);
         binding.photoCarouselRecycleView.setAdapter(detailsCarouselAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.photoCarouselRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
-        dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.photoCarouselRecycleView.getContext(), R.drawable.item_divider)));
+        dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.photoCarouselRecycleView.getContext(), R.drawable.item_divider_horizontal)));
         binding.photoCarouselRecycleView.addItemDecoration(dividerItemDecoration);
     }
 
