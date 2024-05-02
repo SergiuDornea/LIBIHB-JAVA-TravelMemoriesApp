@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.data.repository;
 
+import android.util.Log;
+
 import com.sergiu.libihb_java.data.dao.CurrentMountainDao;
 import com.sergiu.libihb_java.data.datasource.MountainRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
@@ -32,6 +34,7 @@ public class MountainRepository {
 
     public Flowable<List<CurrentMountain>> getAllMountains() {
         if (dataIsExpired(diskDataStore.getDiscoverExpireDate())) {
+            Log.d("rem", "getAllMountains: REMOTE");
             diskDataStore.writeDiscoverExpireDate();
             return mountainRemoteDataSource.getAllCurrentMountains()
                     .observeOn(Schedulers.io())
@@ -41,6 +44,7 @@ public class MountainRepository {
                         }
                     }).andThen(currentMountainDao.getCurrentMountainList()));
         } else {
+            Log.d("rem", "getAllMountains: LOCAL");
             return currentMountainDao.getCurrentMountainList();
         }
     }
