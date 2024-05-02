@@ -122,7 +122,8 @@ Favorites screen:
 SOS Screen: - the user needs to set an emergency contact so that the SOS button becomes active. Once the SOS button is active, if pressed it sends an emergency
 message to the emergency contact - containig the phones current coordinates.
 
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/252ceb05-342c-4b8f-847d-feaa2e041d4a)                 ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/31ddc2ae-2edb-423b-804d-5b163b48caeb)
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/252ceb05-342c-4b8f-847d-feaa2e041d4a)                 ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/31ddc2ae-2edb-423b-804d-5b163b48caeb)   ![WhatsApp Image 2024-05-03 at 00 15 31_cd7564b9](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/84e5aed9-f1e9-4db2-b516-ed5e1066da10)
+
 
 Aboutus Screen:
 
