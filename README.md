@@ -35,46 +35,64 @@ Additionally, the details screen should display the following information: • W
 Authentication with Firebase 🔥 and data persistence with ROOM.
 
 Splash Screen:
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/e8b3d93b-8f98-4ca8-8693-2912b4f654c8)
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/eecb94ea-4d4b-4e61-8585-98752770f937)
+
 
 Log in Screen: 
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/b0cdc3ff-9877-4307-99b2-6f6966fea035)
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/aa61076d-4e37-4cc8-98ef-a67d4a807169)
+
 
 Log in fields validation: 
 - valid email required
 - valid password required
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/ce730204-65a7-453e-8b5a-e4a6a16d35ff)
 
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/3c900da1-5a75-40ff-a335-83e6aea0c351)
 
 Register Screen:
 
-https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp.git
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/a3f13f8f-6663-49f1-84b7-468c75fa9f87)
 
 Registration fields validation:
 - name must be at least 2 characters long
 - email must be valid
 - phone must be valid
 - password must be complex : min length of 6 characters: letters (uppercase and lowercase) and digits
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/690628a1-197e-4d84-86a7-0c727716bb60)
+  
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/4ffb11b5-7562-4420-a7d9-39ad71460f77)
+ 
+Once the user provides valid input it will be registered using FirebaseAuth and redirected to the HomeScreen: 
+(Initial home screen at first launch/ while user has no memories saved)
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/195e3c22-d46f-4d0b-b291-e20c3dbf2ca1)
+
+From top to bottom: 
+- Top toolbar containing the screen name and a hamburger button - at on click opens the navigation drawer
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/eedc74e6-bb64-4602-a6d8-3669c9d6152b)
+
+- "Discover new places" section (details bellow) - a scrollable horizontal list
+
+[discover_new_places_slide.webm](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/2250c614-eb8f-49d0-a117-9f23e2b11108)
+
+When an item is clicked the user is redirected to DiscoverScreen:
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/b3165fd4-1734-4d30-9ba0-e20e92ef6578)
+
+-"LIBIHB SOS system" button - redirects user the to SosScreen (details bellow)
+-"Click here to explore new places" button - redirects the user to ExploreScreen (details bellow)
+-"Don't have a memory yet? Start here" button - redirect the user to adding a new memory screens:
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/12e25cfe-c0d8-4339-9d50-d17a5599f0bb)
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/9c0de282-72c5-4b61-ac52-03d01a8ecddb)
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/1b52b8ba-e9e2-49a0-8eb2-a942a3fbf23f)
+
+If the user inserted all the necessary details pressing the "Save memory" button will redirect the user to the HomeScreen:
+
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/d252d519-570a-4c08-9117-2a5b58e23961)
+
 
  
-Once the user provides valid input it will be registered using FirebaseAuth and redirected to the HomeScreen: s
-- Work in progress - the home screen holds a scrollable vertical list with all the saved memories
-- on the HomeScreen's bottom right corner is a floating button that lets the users add a new memory by redirecting them into the following sequence of screens:
-  ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/b725e226-b5ec-4a57-a638-06a6f580c827)
-  ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/e46c52c5-005e-4119-9466-f097af8eeddc)
-  ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/01aab20c-c3e6-4f51-b510-fd562384edf7)
-
-PREVIEW of already completed hike memory data:
-
-[Screen_recording_20240404_002745.webm](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/ee43f217-cedb-4fc1-9497-01a87f707a4a)
-
-
-Memory Details Screen:
-![Screenshot 2024-04-11 210250](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/1413d654-8cad-4d65-abc9-314d4b9c30d2)
-
-
-Home Screen:
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/0a5b734e-6be6-4bdc-ad4d-016b38bdbe85)
-
-
