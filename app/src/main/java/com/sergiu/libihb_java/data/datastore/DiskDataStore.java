@@ -1,7 +1,7 @@
 package com.sergiu.libihb_java.data.datastore;
 
-import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_CONTACT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.BASE_DISCOVER_TILE_COUNT;
+import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_CONTACT;
 
 import android.util.Pair;
 
@@ -28,12 +28,12 @@ public class DiskDataStore {
     private static final Preferences.Key<String> EMERGENCY_CONTACT = PreferencesKeys.stringKey("emergency_contact");
     private static final Preferences.Key<Integer> NUMBER_OF_DISCOVER_TILES = PreferencesKeys.intKey("number_of_explore_tiles");
     private static final Preferences.Key<String> UNIT_OF_MEASUREMENT = PreferencesKeys.stringKey("unit_of_measurement");
+    private static final Preferences.Key<Boolean> LOGGED_IN = PreferencesKeys.booleanKey("logged_in");
     private final String baseUnit = "metric";
     private final RxDataStore<Preferences> dataStore;
     private final JsonConversionUtil jsonConversionUtil;
 
     @Inject
-
     public DiskDataStore(RxDataStore<Preferences> preferencesDataStore, JsonConversionUtil jsonConversionUtil) {
         this.dataStore = preferencesDataStore;
         this.jsonConversionUtil = jsonConversionUtil;
@@ -106,6 +106,22 @@ public class DiskDataStore {
                     return date == null ? new Date() : new Date(date);
                 }).subscribeOn(Schedulers.io())
                 .blockingFirst();
+    }
+
+    public Completable writeIsLoggedIn(boolean isLoggedIn) {
+        Single<Preferences> single = dataStore.updateDataAsync(preferences -> {
+            MutablePreferences mutablePreferences = preferences.toMutablePreferences();
+            mutablePreferences.set(LOGGED_IN, isLoggedIn);
+            return Single.just(mutablePreferences);
+        });
+        return Completable.fromSingle(single);
+    }
+
+    public Flowable<Boolean> getIsLoggedIn() {
+        return dataStore.data().map(preferences -> {
+            Boolean isLoggedIn = preferences.get(LOGGED_IN);
+            return isLoggedIn != null ? isLoggedIn : false;
+        });
     }
 
     private Long getNextDate() {

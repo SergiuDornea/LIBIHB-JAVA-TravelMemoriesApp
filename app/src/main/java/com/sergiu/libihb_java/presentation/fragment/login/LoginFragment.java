@@ -19,8 +19,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentLoginBinding;
+import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.events.LoginFormEvent;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -47,6 +49,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(LoginFragment.this);
+        setAppBar();
         setTextWatchers();
         setObservers();
         setListeners();
@@ -127,5 +130,15 @@ public class LoginFragment extends Fragment {
 
             }
         });
+    }
+
+    private void setAppBar() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setDrawerLocked(true);
+        }
+        AppBarLayout appBarLayout = requireActivity().findViewById(R.id.main_app_bar_layout);
+        if (appBarLayout != null) {
+            appBarLayout.setVisibility(View.GONE);
+        }
     }
 }

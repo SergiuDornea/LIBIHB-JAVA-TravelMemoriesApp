@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
+import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateEmailLogin;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidatePasswordLogin;
-import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.LoginFormEvent;
 
 import java.util.Objects;
@@ -78,11 +78,13 @@ public class LoginViewModel extends ViewModel {
                         @Override
                         public void onSuccess() {
                             navigationEvent.postValue(new NavigationEvent(R.id.mainFragment));
+                            authRepository.writeIsLoggedIn(true);
                         }
 
                         @Override
                         public void onFailure() {
                             navigationEvent.postValue(new NavigationEvent(R.id.loginFragment));
+                            authRepository.writeIsLoggedIn(false);
                         }
                     });
         }

@@ -1,7 +1,9 @@
 package com.sergiu.libihb_java.presentation.activity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
@@ -10,6 +12,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -26,16 +30,18 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding binding;
+    private MainViewModel viewModel;
     private DrawerLayout drawerLayout;
     private NavController navController;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private final MutableLiveData<Boolean> isLoggedIn = new MutableLiveData<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         initUI();
         setupNavigation();
         setDrawerCallback();
@@ -68,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.sosFragment) {
             navController.navigate(R.id.sosFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        if (id == R.id.logOut) {
+            showLogoutAlertDialog();
         }
         return false;
     }
@@ -143,5 +152,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    }
+
+    private void showLogoutAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.logout)
+                .setMessage(R.string.logout_alert_dialog)
+                .setPositiveButton(R.string.logout, (dialog, which) -> {
+                    viewModel.logOut();
+                    Toast.makeText(this, getString(R.string.logged_out), Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.loginFragment);
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                })
+                .setIcon(R.drawable.ic_logout2)
+                .create()
+                .show();
     }
 }

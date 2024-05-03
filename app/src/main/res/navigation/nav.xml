@@ -27,7 +27,7 @@
             app:destination="@id/settingsFragment" />
         <action
             android:id="@+id/action_mainFragment_to_logOutFragment"
-            app:destination="@id/logOutFragment" />
+            app:destination="@id/logOut" />
         <action
             android:id="@+id/action_mainFragment_to_addMemorySliderFragment"
             app:destination="@id/addMemorySliderFragment" />

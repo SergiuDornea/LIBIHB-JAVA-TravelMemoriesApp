@@ -11,18 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 @SuppressLint("CustomSplashScreen")
+@AndroidEntryPoint
 public class SplashScreen extends Fragment {
+    private SplashViewModel viewModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
     }
 
     @Override
@@ -32,13 +39,23 @@ public class SplashScreen extends Fragment {
         disableNavDrawerAnAppBar();
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (view != null && view.getContext() != null) {
-                navigateWithTransition(view);
+                navigateAccordingToUserSession(view);
             }
         }, 1500);
         return view;
     }
 
-    private void navigateWithTransition(View view) {
+    public void navigateAccordingToUserSession(View view) {
+        viewModel.getIsLoggedIn().observe(getViewLifecycleOwner(), isLoggedIn -> {
+            if (isLoggedIn) {
+                navigateWithTransition(view, R.id.mainFragment);
+            } else {
+                navigateWithTransition(view, R.id.loginFragment);
+            }
+        });
+    }
+
+    private void navigateWithTransition(View view, int destination) {
         NavOptions navOptions = new NavOptions.Builder()
                 .setEnterAnim(R.anim.slide_in_from_right)
                 .setExitAnim(R.anim.slide_out_to_left)
@@ -46,7 +63,7 @@ public class SplashScreen extends Fragment {
                 .setPopExitAnim(R.anim.slide_out_to_right)
                 .build();
 
-        findNavController(view).navigate(R.id.action_splashScreen_to_logInFragment, null, navOptions);
+        findNavController(view).navigate(destination, null, navOptions);
     }
 
     private void disableNavDrawerAnAppBar() {

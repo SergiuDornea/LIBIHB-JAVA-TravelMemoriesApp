@@ -9,12 +9,16 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 
 public class AuthRepository {
     private final static String TAG = AuthRepository.class.getName();
@@ -23,12 +27,18 @@ public class AuthRepository {
     private final Executor executor;
     private final FirebaseAuth firebaseAuth;
     private final FirebaseFirestore fStore;
+    private final DiskDataStore diskDataStore;
 
     @Inject
-    public AuthRepository(FirebaseAuth firebaseAuth, FirebaseFirestore fStore, Executor executor) {
+    public AuthRepository(
+            FirebaseAuth firebaseAuth,
+            FirebaseFirestore fStore,
+            Executor executor,
+            DiskDataStore diskDataStore) {
         this.firebaseAuth = firebaseAuth;
         this.fStore = fStore;
         this.executor = executor;
+        this.diskDataStore = diskDataStore;
     }
 
     public void loginUser(String email, String password, LoginCallback callback) {
@@ -71,6 +81,14 @@ public class AuthRepository {
                         }
                     }
                 });
+    }
+
+    public Flowable<Boolean> getIsLoggedIn() {
+        return diskDataStore.getIsLoggedIn();
+    }
+
+    public Completable writeIsLoggedIn(boolean isLoggedIn) {
+        return diskDataStore.writeIsLoggedIn(isLoggedIn);
     }
 
     private void saveUserToFirestore(String userID, String name, String phone, RegisterCallback callback) {

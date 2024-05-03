@@ -32,8 +32,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth, FirebaseFirestore fStore, Executor executor) {
-        return new AuthRepository(firebaseAuth, fStore, executor);
+    public AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth, FirebaseFirestore fStore, Executor executor, DiskDataStore diskDataStore) {
+        return new AuthRepository(firebaseAuth, fStore, executor, diskDataStore);
     }
 
     @Provides
