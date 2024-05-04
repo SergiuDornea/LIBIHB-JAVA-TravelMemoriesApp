@@ -74,6 +74,8 @@ public class RegisterFragment extends Fragment {
                     navigateWithMessage(navDestination, getString(R.string.registration_successful));
                 } else if (navDestination == R.id.loginFragment) {
                     navigateWithMessage(navDestination, getString(R.string.login_failed_after_register_successful));
+                } else if (navDestination == R.id.authFragment) {
+                    navigateWithMessage(navDestination, getString(R.string.registration_failed));
                 } else {
                     navigateWithMessage(DEFAULT_SCREEN_DESTINATION, getString(R.string.email_is_already_used));
                 }
