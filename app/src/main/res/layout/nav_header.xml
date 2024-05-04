@@ -30,16 +30,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/md_theme_light_onSecondaryContainer"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/email"
+                android:id="@+id/user_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="your_email@example.com"

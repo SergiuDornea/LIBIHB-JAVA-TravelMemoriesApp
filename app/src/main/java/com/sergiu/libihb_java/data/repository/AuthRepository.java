@@ -1,5 +1,6 @@
 package com.sergiu.libihb_java.data.repository;
 
+import static com.sergiu.libihb_java.domain.model.User.EMPTY_USER;
 import static com.sergiu.libihb_java.presentation.utils.Constants.LIBIHB_USER_PATH_KEY;
 
 import android.util.Log;
@@ -10,6 +11,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
+import com.sergiu.libihb_java.domain.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,7 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
@@ -81,6 +84,30 @@ public class AuthRepository {
                         }
                     }
                 });
+    }
+
+    public Flowable<User> getCurrentUserData() {
+        return Flowable.create(emitter -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                String uid = currentUser.getUid();
+                String email = currentUser.getEmail();
+                DocumentReference userRef = fStore.collection(LIBIHB_USER_PATH_KEY).document(uid);
+                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString(NAME_KEY);
+                        // Emit the user data
+                        emitter.onNext(new User(uid, name, email));
+                    } else {
+                        emitter.onNext(EMPTY_USER);
+                    }
+                    emitter.onComplete();
+                }).addOnFailureListener(emitter::onError);
+            } else {
+                emitter.onNext(EMPTY_USER);
+                emitter.onComplete();
+            }
+        }, BackpressureStrategy.BUFFER);
     }
 
     public Flowable<Boolean> getIsLoggedIn() {

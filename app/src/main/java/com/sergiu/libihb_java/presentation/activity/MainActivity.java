@@ -3,6 +3,8 @@ package com.sergiu.libihb_java.presentation.activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -111,6 +113,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initUI() {
         drawerLayout = binding.fragmentContainerViewMain;
         setSupportActionBar(binding.toolbar);
+    }
+
+    public void setDrawerHeaderText(String nameText, String emailText) {
+        View headerView = binding.navView.getHeaderView(0);
+        TextView name = headerView.findViewById(R.id.user_name);
+        TextView email = headerView.findViewById(R.id.user_email);
+        name.setText(nameText);
+        email.setText(emailText);
     }
 
     private void setupNavigation() {

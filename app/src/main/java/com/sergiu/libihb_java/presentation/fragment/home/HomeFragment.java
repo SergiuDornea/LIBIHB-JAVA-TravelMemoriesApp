@@ -93,6 +93,11 @@ public class HomeFragment extends Fragment {
                 travelMemoryAdapter.updateMemoryList(memoryList);
             }
         });
+        viewModel.getUserDetails().observe(getViewLifecycleOwner(), user -> {
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).setDrawerHeaderText(user.getName(), user.getEmail());
+            }
+        });
     }
 
     private void navigateToDetailsWithId(Long id) {
