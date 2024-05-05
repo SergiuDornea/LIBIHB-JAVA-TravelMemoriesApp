@@ -1,25 +1,33 @@
 package com.sergiu.libihb_java.presentation.activity;
 
+import static com.sergiu.libihb_java.presentation.utils.Constants.FAIL;
+import static com.sergiu.libihb_java.presentation.utils.Constants.SUCCESS;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.ActivityMainBinding;
@@ -31,12 +39,15 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
     private DrawerLayout drawerLayout;
     private NavController navController;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private final MutableLiveData<Boolean> isLoggedIn = new MutableLiveData<>();
+    private View headerView;
+    private TextView chooseProfileImgTextView;
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +55,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initUI();
+        initDrawer();
         setupNavigation();
         setDrawerCallback();
         setOnBackPressedCallback();
+        initializeActivityResultLauncher();
     }
 
     @Override
@@ -56,29 +68,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.mainFragment) {
             navController.navigate(R.id.mainFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+            chooseProfileImgTextView.setVisibility(View.VISIBLE);
         }
         if (id == R.id.exploreFragment) {
             navController.navigate(R.id.exploreFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+            chooseProfileImgTextView.setVisibility(View.GONE);
         }
         if (id == R.id.favoritesFragment) {
             navController.navigate(R.id.favoritesFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+            chooseProfileImgTextView.setVisibility(View.GONE);
         }
         if (id == R.id.aboutFragment) {
             navController.navigate(R.id.aboutFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+            chooseProfileImgTextView.setVisibility(View.GONE);
         }
         if (id == R.id.settingsFragment) {
             navController.navigate(R.id.settingsFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+            chooseProfileImgTextView.setVisibility(View.GONE);
         }
         if (id == R.id.sosFragment) {
             navController.navigate(R.id.sosFragment);
             drawerLayout.closeDrawer(GravityCompat.START);
+            chooseProfileImgTextView.setVisibility(View.GONE);
         }
         if (id == R.id.logOut) {
             showLogoutAlertDialog();
+            chooseProfileImgTextView.setVisibility(View.GONE);
         }
         return false;
     }
@@ -97,6 +116,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void setDrawerHeaderData(String nameText, String emailText, String imgUrl) {
+        TextView name = headerView.findViewById(R.id.user_name);
+        TextView email = headerView.findViewById(R.id.user_email);
+        ImageView profileImg = headerView.findViewById(R.id.profile_picture);
+        name.setText(nameText);
+        email.setText(emailText);
+        Glide.with(this)
+                .load(imgUrl)
+                .placeholder(R.drawable.ic_logo_transparent2)
+                .error(R.drawable.ic_logo_transparent2)
+                .into(profileImg);
+    }
+
     private void setDrawerCallback() {
         OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
         OnBackPressedCallback drawerCallback = new OnBackPressedCallback(true) {
@@ -110,17 +142,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         onBackPressedDispatcher.addCallback(this, drawerCallback);
     }
 
-    private void initUI() {
+    private void initDrawer() {
+        headerView = binding.navView.getHeaderView(0);
+        chooseProfileImgTextView = headerView.findViewById(R.id.change_profile_picture_text_view);
         drawerLayout = binding.fragmentContainerViewMain;
         setSupportActionBar(binding.toolbar);
+        viewModel.getUploadProfileImageEvent().observe(this, uploadProfileImageEvent -> {
+            if (uploadProfileImageEvent != null) {
+                if (uploadProfileImageEvent.getResponse().equals(SUCCESS)) {
+                    navigateHomeWithMessage(getString(R.string.profile_photo_changed));
+                } else if (uploadProfileImageEvent.getResponse().equals(FAIL)) {
+                    navigateHomeWithMessage(getString(R.string.profile_photo_changed_fail));
+                } else {
+                    navigateHomeWithMessage(getString(R.string.profile_photo_changed_error));
+                }
+            }
+        });
+        chooseProfileImgTextView.setOnClickListener(view -> choosePhotosFromGallery());
     }
 
-    public void setDrawerHeaderText(String nameText, String emailText) {
-        View headerView = binding.navView.getHeaderView(0);
-        TextView name = headerView.findViewById(R.id.user_name);
-        TextView email = headerView.findViewById(R.id.user_email);
-        name.setText(nameText);
-        email.setText(emailText);
+    private void navigateHomeWithMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        navController.navigate(R.id.mainFragment);
+    }
+
+    private void initializeActivityResultLauncher() {
+        pickMultipleMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+            if (uri == null) {
+                Log.d(TAG, "No media selected");
+            } else {
+                viewModel.uploadProfileImage(uri);
+            }
+        });
+    }
+
+    private void choosePhotosFromGallery() {
+        pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build());
     }
 
     private void setupNavigation() {

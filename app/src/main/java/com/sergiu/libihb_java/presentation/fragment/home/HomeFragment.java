@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
         });
         viewModel.getUserDetails().observe(getViewLifecycleOwner(), user -> {
             if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).setDrawerHeaderText(user.getName(), user.getEmail());
+                ((MainActivity) getActivity()).setDrawerHeaderData(user.getName(), user.getEmail(), user.getProfilePicture());
             }
         });
     }

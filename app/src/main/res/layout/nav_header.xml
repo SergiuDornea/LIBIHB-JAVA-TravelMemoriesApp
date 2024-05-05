@@ -9,18 +9,20 @@
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_picture"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/profile_image"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/change_profile_picture_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/user_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo_transparent2" />
+        app:shapeAppearanceOverlay="@style/ultraRoundedCorners"
+        tools:src="@drawable/negoiu" />
 
     <TextView
         android:id="@+id/change_profile_picture_text_view"
@@ -28,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/change_profile_picture"
         android:textColor="@color/link_blue"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/profile_picture"
         app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
@@ -37,11 +39,11 @@
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/md_theme_light_onSecondaryContainer"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_picture"
         app:layout_constraintTop_toTopOf="@+id/profile_picture"
         tools:text="Your name" />
