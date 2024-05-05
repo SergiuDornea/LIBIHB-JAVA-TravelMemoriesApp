@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.di;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.data.datasource.WeatherRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
@@ -32,8 +33,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth, FirebaseFirestore fStore, Executor executor, DiskDataStore diskDataStore) {
-        return new AuthRepository(firebaseAuth, fStore, executor, diskDataStore);
+    public AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth, FirebaseFirestore fStore, Executor executor, DiskDataStore diskDataStore, FirebaseStorage firebaseStorage) {
+        return new AuthRepository(firebaseAuth, fStore, executor, diskDataStore, firebaseStorage);
     }
 
     @Provides

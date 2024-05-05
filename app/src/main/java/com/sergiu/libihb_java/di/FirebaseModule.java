@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.di;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -26,5 +27,11 @@ public class FirebaseModule {
     @Singleton
     public FirebaseFirestore provideFirebaseFirestore() {
         return FirebaseFirestore.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    public FirebaseStorage provideFirebaseStorage() {
+        return FirebaseStorage.getInstance();
     }
 }

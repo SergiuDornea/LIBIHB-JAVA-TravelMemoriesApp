@@ -180,4 +180,5 @@
     <string name="settings_saved">Settings saved</string>
     <string name="settings_emergency_contact_saved">Emergency contact saved</string>
     <string name="search_a_location">Search a location</string>
+    <string name="change_profile_picture">Change profile picture</string>
 </resources>
