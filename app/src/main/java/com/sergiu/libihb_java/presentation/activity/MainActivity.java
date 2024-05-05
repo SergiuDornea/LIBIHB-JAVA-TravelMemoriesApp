@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView name = headerView.findViewById(R.id.user_name);
         TextView email = headerView.findViewById(R.id.user_email);
         ImageView profileImg = headerView.findViewById(R.id.profile_picture);
+        chooseProfileImgTextView.setVisibility(View.VISIBLE);
         name.setText(nameText);
         email.setText(emailText);
         Glide.with(this)
