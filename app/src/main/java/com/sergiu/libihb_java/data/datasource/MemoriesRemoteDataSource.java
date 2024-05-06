@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.data.database;
+package com.sergiu.libihb_java.data.datasource;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.LIBIHB_USER_PATH_KEY;
 
@@ -15,16 +15,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
-public class RemoteDatabase {
+public class MemoriesRemoteDataSource {
     private static final String TRAVEL_MEMORIES_KEY = "travel_memories";
     private static final String TRAVEL_MEMORY_IMG_KEY = "travel_memory_img";
     private final FirebaseFirestore fStore;
@@ -32,7 +28,7 @@ public class RemoteDatabase {
     private final FirebaseAuth firebaseAuth;
 
     @Inject
-    public RemoteDatabase(
+    public MemoriesRemoteDataSource(
             FirebaseFirestore fStore,
             FirebaseStorage firebaseStorage,
             FirebaseAuth firebaseAuth) {
@@ -50,19 +46,9 @@ public class RemoteDatabase {
                 userRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
-                        List<String> imageUrls = new ArrayList<>();
-
-                        Observable.fromIterable(travelMemory.getImageList())
-                                .flatMapSingle(imageUri -> uploadImg(Uri.parse(imageUri)))
-                                .toList()
-                                .subscribe(urls -> {
-                                    imageUrls.addAll(urls);
-                                    travelMemory.setImageList(imageUrls);
-
-                                    memoriesRef.add(travelMemory)
-                                            .addOnSuccessListener(documentReference -> emitter.onComplete())
-                                            .addOnFailureListener(emitter::onError);
-                                }, emitter::onError);
+                        memoriesRef.add(travelMemory)
+                                .addOnSuccessListener(documentReference -> emitter.onComplete())
+                                .addOnFailureListener(emitter::onError);
                     } else {
                         emitter.onError(new IllegalStateException("User document does not exist"));
                     }
@@ -71,7 +57,7 @@ public class RemoteDatabase {
         });
     }
 
-    private Single<String> uploadImg(Uri imageUri) {
+    public Single<String> uploadImg(Uri imageUri) {
         return Single.create(emitter -> {
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             if (currentUser != null) {

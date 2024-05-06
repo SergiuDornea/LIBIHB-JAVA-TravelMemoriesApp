@@ -1,9 +1,13 @@
 package com.sergiu.libihb_java.data.repository;
 
+import android.net.Uri;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
+import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
@@ -13,12 +17,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MemoriesRepository {
+    private static final String TAG = MemoriesRepository.class.getSimpleName();
     private final TravelMemoryDao dao;
+    private final MemoriesRemoteDataSource memoriesRemoteDataSource;
     private SubmitCallback submitCallback;
     private final MutableLiveData<MemoryFormState> formState = new MutableLiveData<>(
             new MemoryFormState(
@@ -41,8 +50,9 @@ public class MemoriesRepository {
             ));
 
     @Inject
-    public MemoriesRepository(TravelMemoryDao travelMemoryDao) {
+    public MemoriesRepository(TravelMemoryDao travelMemoryDao, MemoriesRemoteDataSource memoriesRemoteDataSource) {
         this.dao = travelMemoryDao;
+        this.memoriesRemoteDataSource = memoriesRemoteDataSource;
     }
 
     public void setFormState(MemoryFormState formState) {
@@ -230,7 +240,25 @@ public class MemoriesRepository {
     }
 
     public Completable insertTravelMemory(TravelMemory travelMemory) {
-        return dao.insertTravelMemory(travelMemory);
+        return uploadImages(travelMemory.getImageList())
+                .flatMapCompletable(imageUrls -> {
+                    travelMemory.setImageList(imageUrls);
+                    return Completable.defer(() -> {
+                        Completable roomCompletable = dao.insertTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "insertTravelMemory: room ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        Completable firestoreCompletable = memoriesRemoteDataSource.saveTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "insertTravelMemory: firestore ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        return Completable.mergeArray(firestoreCompletable, roomCompletable)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread());
+                    });
+                });
     }
 
     public Flowable<List<TravelMemory>> getMemories() {
@@ -257,9 +285,16 @@ public class MemoriesRepository {
         return dao.updateIsFavorite(id, isFavorite);
     }
 
-    public Flowable<List<TravelMemory>> getAllFavoriteMemories(){
+    public Flowable<List<TravelMemory>> getAllFavoriteMemories() {
         return dao.getAllFavoriteMemories();
     }
+
+    private Single<List<String>> uploadImages(List<String> imageUris) {
+        return Observable.fromIterable(imageUris)
+                .flatMap(uriString -> memoriesRemoteDataSource.uploadImg(Uri.parse(uriString)).toObservable())
+                .toList();
+    }
+
     public interface SubmitCallback {
         void onSubmitClicked();
     }

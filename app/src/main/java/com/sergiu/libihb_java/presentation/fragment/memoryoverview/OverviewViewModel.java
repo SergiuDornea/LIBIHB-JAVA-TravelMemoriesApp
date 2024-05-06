@@ -14,7 +14,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sergiu.libihb_java.data.database.RemoteDatabase;
+import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
@@ -37,7 +37,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class OverviewViewModel extends ViewModel {
     private static final String TAG = OverviewViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
-    private final RemoteDatabase remoteDatabase;
     private final MutableLiveData<MemoryFormState> formState;
     private final ValidateMemoryImgList validateMemoryImgList;
     private final ValidateMemoryName validateMemoryName;
@@ -54,7 +53,7 @@ public class OverviewViewModel extends ViewModel {
             ValidateMemoryDescription validateMemoryDescription,
             ValidateMemoryCoordinates validateMemoryCoordinates,
             ValidateMemoryDate validateMemoryDate,
-            RemoteDatabase remoteDatabase) {
+            MemoriesRemoteDataSource memoriesRemoteDataSource) {
         this.memoriesRepository = memoriesRepository;
         this.formState = (MutableLiveData<MemoryFormState>) memoriesRepository.getFormState();
         this.validateMemoryImgList = validateMemoryImgList;
@@ -63,7 +62,6 @@ public class OverviewViewModel extends ViewModel {
         this.validateMemoryCoordinates = validateMemoryCoordinates;
         this.validateMemoryDate = validateMemoryDate;
         this.memoriesRepository.setSubmitCallback(this::onSubmit);
-        this.remoteDatabase = remoteDatabase;
     }
 
     public MutableLiveData<SaveMemoryClickedEvent> getSaveMemoryClickedEvent() {
@@ -146,7 +144,7 @@ public class OverviewViewModel extends ViewModel {
 
     @SuppressLint("CheckResult")
     private void saveMemory() {
-        remoteDatabase.saveTravelMemory(
+        memoriesRepository.insertTravelMemory(
                         new TravelMemory(
                                 formState.getValue().getListOfImgUri(),
                                 formState.getValue().getMemoryName(),
