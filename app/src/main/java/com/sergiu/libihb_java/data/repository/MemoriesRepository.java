@@ -280,6 +280,7 @@ public class MemoriesRepository {
     }
 
     public Completable updateTravelMemory(TravelMemory travelMemory) {
+        Log.d(TAG, "updateTravelMemory: list size " + travelMemory.getImageList().size());
         return uploadImages(travelMemory.getImageList())
                 .flatMapCompletable(imageUrls -> {
                     travelMemory.setImageList(imageUrls);
@@ -289,7 +290,7 @@ public class MemoriesRepository {
                                     Log.e(TAG, "updateTravelMemory: room ERROR ", error);
                                     return Completable.complete();
                                 });
-                        Completable firestoreCompletable = memoriesRemoteDataSource.saveTravelMemory(travelMemory)
+                        Completable firestoreCompletable = memoriesRemoteDataSource.updateTravelMemory(travelMemory)
                                 .onErrorResumeNext(error -> {
                                     Log.e(TAG, "updateTravelMemory: firestore ERROR ", error);
                                     return Completable.complete();
@@ -332,9 +333,35 @@ public class MemoriesRepository {
     }
 
     private Single<List<String>> uploadImages(List<String> imageUris) {
-        return Observable.fromIterable(imageUris)
-                .flatMap(uriString -> memoriesRemoteDataSource.uploadImg(Uri.parse(uriString)).toObservable())
-                .toList();
+        List<String> localUris = new ArrayList<>();
+        List<String> firestoreUrls = new ArrayList<>();
+
+        for (String uriString : imageUris) {
+            if (isLocalUri(uriString)) {
+                localUris.add(uriString);
+            } else {
+                firestoreUrls.add(uriString);
+            }
+        }
+
+        Single<List<String>> uploadLocalImagesSingle = localUris.isEmpty() ?
+                Single.just(new ArrayList<>()) :
+                Observable.fromIterable(localUris)
+                        .flatMap(uriString -> memoriesRemoteDataSource.uploadImg(Uri.parse(uriString)).toObservable())
+                        .toList();
+
+        return uploadLocalImagesSingle
+                .flatMap(localUrls -> Single.just(listConcat(localUrls, firestoreUrls)));
+    }
+
+    private boolean isLocalUri(String uriString) {
+        return !uriString.startsWith("https://firebasestorage") || !uriString.startsWith("http");
+    }
+
+    private List<String> listConcat(List<String> list1, List<String> list2) {
+        List<String> listConcat = new ArrayList<>(list1);
+        listConcat.addAll(list2);
+        return listConcat;
     }
 
     private boolean dataIsExpired(Date date) {

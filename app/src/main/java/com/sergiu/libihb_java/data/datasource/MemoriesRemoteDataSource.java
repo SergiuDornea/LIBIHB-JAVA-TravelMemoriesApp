@@ -26,6 +26,7 @@ public class MemoriesRemoteDataSource {
     private static final String TAG = MemoriesRemoteDataSource.class.getSimpleName();
     private static final String TRAVEL_MEMORIES_KEY = "travel_memories";
     private static final String TRAVEL_MEMORY_IMG_KEY = "travel_memory_img";
+    private static final String ID_KEY = "id";
     private final FirebaseFirestore fStore;
     private final FirebaseStorage firebaseStorage;
     private final FirebaseAuth firebaseAuth;
@@ -68,14 +69,13 @@ public class MemoriesRemoteDataSource {
                 userRef.get().addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
                                 CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
-                                memoriesRef.whereEqualTo("id", travelMemory.getId())
+                                memoriesRef.whereEqualTo(ID_KEY, travelMemory.getId())
                                         .get()
                                         .addOnSuccessListener(queryDocumentSnapshots -> {
-                                            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                                snapshot.getReference().delete()
-                                                        .addOnSuccessListener(aVoid -> emitter.onComplete())
-                                                        .addOnFailureListener(emitter::onError);
-                                            }
+                                            DocumentSnapshot snapshot = queryDocumentSnapshots.getDocuments().get(0);
+                                            snapshot.getReference().delete()
+                                                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                                                    .addOnFailureListener(emitter::onError);
                                         })
                                         .addOnFailureListener(emitter::onError);
                             } else {
@@ -83,6 +83,31 @@ public class MemoriesRemoteDataSource {
                             }
                         })
                         .addOnFailureListener(emitter::onError);
+            }
+        });
+    }
+
+    public Completable updateTravelMemory(TravelMemory travelMemory) {
+        return Completable.create(emitter -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                DocumentReference userRef = fStore.collection(LIBIHB_USER_PATH_KEY).document(currentUser.getUid());
+                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
+                        memoriesRef.whereEqualTo(ID_KEY, travelMemory.getId())
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    DocumentSnapshot snapshot = queryDocumentSnapshots.getDocuments().get(0);
+                                    snapshot.getReference().set(travelMemory)
+                                            .addOnSuccessListener(aVoid -> emitter.onComplete())
+                                            .addOnFailureListener(emitter::onError);
+                                })
+                                .addOnFailureListener(emitter::onError);
+                    } else {
+                        Log.e(TAG, "updateTravelMemory: User document not found");
+                    }
+                }).addOnFailureListener(emitter::onError);
             }
         });
     }
