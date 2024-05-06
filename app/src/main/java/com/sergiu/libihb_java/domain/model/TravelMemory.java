@@ -110,6 +110,10 @@ public class TravelMemory {
         isFavorite = favorite;
     }
 
+    public void setImageList(List<String> imageList) {
+        this.imageList = imageList;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
