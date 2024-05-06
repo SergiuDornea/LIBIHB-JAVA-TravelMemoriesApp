@@ -24,7 +24,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DiskDataStore {
     private static final int DAYS_UNTIL_CACHED_DATA_EXPIRES = 10;
+    private static final int DAYS_UNTIL_MEMORY_CACHED_DATA_EXPIRES = 1;
     private static final Preferences.Key<Long> DISCOVER_EXPIRE_DATE = PreferencesKeys.longKey("cached_mountain_expire_date");
+    private static final Preferences.Key<Long> MEMORIES_EXPIRE_DATE = PreferencesKeys.longKey("cached_memories_expire_date");
     private static final Preferences.Key<String> EMERGENCY_CONTACT = PreferencesKeys.stringKey("emergency_contact");
     private static final Preferences.Key<Integer> NUMBER_OF_DISCOVER_TILES = PreferencesKeys.intKey("number_of_explore_tiles");
     private static final Preferences.Key<String> UNIT_OF_MEASUREMENT = PreferencesKeys.stringKey("unit_of_measurement");
@@ -94,7 +96,7 @@ public class DiskDataStore {
     public Completable writeDiscoverExpireDate() {
         Single<Preferences> single = dataStore.updateDataAsync(preferences -> {
             MutablePreferences mutablePreferences = preferences.toMutablePreferences();
-            mutablePreferences.set(DISCOVER_EXPIRE_DATE, getNextDate());
+            mutablePreferences.set(DISCOVER_EXPIRE_DATE, getNextDate(DAYS_UNTIL_CACHED_DATA_EXPIRES));
             return Single.just(mutablePreferences);
         });
         return Completable.fromSingle(single);
@@ -103,6 +105,23 @@ public class DiskDataStore {
     public Date getDiscoverExpireDate() {
         return dataStore.data().map(preferences -> {
                     Long date = preferences.get(DISCOVER_EXPIRE_DATE);
+                    return date == null ? new Date() : new Date(date);
+                }).subscribeOn(Schedulers.io())
+                .blockingFirst();
+    }
+
+    public Completable writeMemoriesExpireDate() {
+        Single<Preferences> single = dataStore.updateDataAsync(preferences -> {
+            MutablePreferences mutablePreferences = preferences.toMutablePreferences();
+            mutablePreferences.set(MEMORIES_EXPIRE_DATE, getNextDate(DAYS_UNTIL_MEMORY_CACHED_DATA_EXPIRES));
+            return Single.just(mutablePreferences);
+        });
+        return Completable.fromSingle(single);
+    }
+
+    public Date getMemoriesExpireDate() {
+        return dataStore.data().map(preferences -> {
+                    Long date = preferences.get(MEMORIES_EXPIRE_DATE);
                     return date == null ? new Date() : new Date(date);
                 }).subscribeOn(Schedulers.io())
                 .blockingFirst();
@@ -124,10 +143,10 @@ public class DiskDataStore {
         });
     }
 
-    private Long getNextDate() {
+    private Long getNextDate(int daysUntilDataExpires) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_MONTH, DAYS_UNTIL_CACHED_DATA_EXPIRES);
+        calendar.add(Calendar.DAY_OF_MONTH, daysUntilDataExpires);
         return calendar.getTime().getTime();
     }
 }

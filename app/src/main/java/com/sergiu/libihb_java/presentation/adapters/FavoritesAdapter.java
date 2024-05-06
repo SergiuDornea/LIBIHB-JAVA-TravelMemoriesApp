@@ -53,7 +53,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         private final TextView location;
         private final TextView country;
         private final TextView admin;
-        private Long id;
+        private String id;
 
         public FavoritesViewHolder(@NonNull View itemView, OnItemClickListener itemClickListener) {
             super(itemView);
@@ -97,6 +97,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Long id);
+        void onItemClick(String id);
     }
 }

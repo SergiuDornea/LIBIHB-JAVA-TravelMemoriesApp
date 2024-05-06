@@ -1,24 +1,37 @@
 package com.sergiu.libihb_java.data.repository;
 
+import android.net.Uri;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
+import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
+import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MemoriesRepository {
+    private static final String TAG = MemoriesRepository.class.getSimpleName();
     private final TravelMemoryDao dao;
+    private final MemoriesRemoteDataSource memoriesRemoteDataSource;
+    private final DiskDataStore diskDataStore;
     private SubmitCallback submitCallback;
     private final MutableLiveData<MemoryFormState> formState = new MutableLiveData<>(
             new MemoryFormState(
@@ -41,8 +54,13 @@ public class MemoriesRepository {
             ));
 
     @Inject
-    public MemoriesRepository(TravelMemoryDao travelMemoryDao) {
+    public MemoriesRepository(
+            TravelMemoryDao travelMemoryDao,
+            MemoriesRemoteDataSource memoriesRemoteDataSource,
+            DiskDataStore diskDataStore) {
         this.dao = travelMemoryDao;
+        this.memoriesRemoteDataSource = memoriesRemoteDataSource;
+        this.diskDataStore = diskDataStore;
     }
 
     public void setFormState(MemoryFormState formState) {
@@ -230,36 +248,126 @@ public class MemoriesRepository {
     }
 
     public Completable insertTravelMemory(TravelMemory travelMemory) {
-        return dao.insertTravelMemory(travelMemory);
+        String id = UUID.randomUUID().toString();
+        travelMemory.setId(id);
+        return uploadImages(travelMemory.getImageList())
+                .flatMapCompletable(imageUrls -> {
+                    travelMemory.setImageList(imageUrls);
+                    return Completable.defer(() -> {
+                        Completable roomCompletable = dao.insertTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "insertTravelMemory: room ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        Completable firestoreCompletable = memoriesRemoteDataSource.saveTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "insertTravelMemory: firestore ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        return Completable.mergeArray(firestoreCompletable, roomCompletable)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread());
+                    });
+                });
     }
 
     public Flowable<List<TravelMemory>> getMemories() {
         return dao.getMemories();
     }
 
-    public Flowable<TravelMemory> getMemoryById(Long memoryId) {
+    public Flowable<TravelMemory> getMemoryById(String memoryId) {
         return dao.getMemoryById(memoryId);
     }
 
-    public Completable deleteTravelMemory(TravelMemory travelMemory) {
-        return dao.deleteTravelMemory(travelMemory);
-    }
-
     public Completable updateTravelMemory(TravelMemory travelMemory) {
-        return dao.updateTravelMemory(travelMemory);
+        Log.d(TAG, "updateTravelMemory: list size " + travelMemory.getImageList().size());
+        return uploadImages(travelMemory.getImageList())
+                .flatMapCompletable(imageUrls -> {
+                    travelMemory.setImageList(imageUrls);
+                    return Completable.defer(() -> {
+                        Completable roomCompletable = dao.updateTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "updateTravelMemory: room ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        Completable firestoreCompletable = memoriesRemoteDataSource.updateTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "updateTravelMemory: firestore ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        return Completable.mergeArray(firestoreCompletable, roomCompletable)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread());
+                    });
+                });
     }
 
-    public Flowable<Boolean> isMemoryInFavorites(long id) {
+    public Completable deleteTravelMemory(TravelMemory travelMemory) {
+        return Completable.defer(() -> {
+            Completable roomCompletable = dao.deleteTravelMemory(travelMemory)
+                    .onErrorResumeNext(error -> {
+                        Log.e(TAG, "deleteTravelMemory: room ERROR ", error);
+                        return Completable.complete();
+                    });
+            Completable firestoreCompletable = memoriesRemoteDataSource.deleteTravelMemory(travelMemory)
+                    .onErrorResumeNext(error -> {
+                        Log.e(TAG, "deleteTravelMemory: firestore ERROR ", error);
+                        return Completable.complete();
+                    });
+            return Completable.mergeArray(firestoreCompletable, roomCompletable)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+        });
+    }
+
+    public Flowable<Boolean> isMemoryInFavorites(String id) {
         return dao.isMemoryInFavorites(id);
     }
 
-    public Completable updateIsFavorite(long id, boolean isFavorite) {
+    public Completable updateIsFavorite(String id, boolean isFavorite) {
         return dao.updateIsFavorite(id, isFavorite);
     }
 
-    public Flowable<List<TravelMemory>> getAllFavoriteMemories(){
+    public Flowable<List<TravelMemory>> getAllFavoriteMemories() {
         return dao.getAllFavoriteMemories();
     }
+
+    private Single<List<String>> uploadImages(List<String> imageUris) {
+        List<String> localUris = new ArrayList<>();
+        List<String> firestoreUrls = new ArrayList<>();
+
+        for (String uriString : imageUris) {
+            if (isLocalUri(uriString)) {
+                localUris.add(uriString);
+            } else {
+                firestoreUrls.add(uriString);
+            }
+        }
+
+        Single<List<String>> uploadLocalImagesSingle = localUris.isEmpty() ?
+                Single.just(new ArrayList<>()) :
+                Observable.fromIterable(localUris)
+                        .flatMap(uriString -> memoriesRemoteDataSource.uploadImg(Uri.parse(uriString)).toObservable())
+                        .toList();
+
+        return uploadLocalImagesSingle
+                .flatMap(localUrls -> Single.just(listConcat(localUrls, firestoreUrls)));
+    }
+
+    private boolean isLocalUri(String uriString) {
+        return !uriString.startsWith("https://firebasestorage") || !uriString.startsWith("http");
+    }
+
+    private List<String> listConcat(List<String> list1, List<String> list2) {
+        List<String> listConcat = new ArrayList<>(list1);
+        listConcat.addAll(list2);
+        return listConcat;
+    }
+
+    private boolean dataIsExpired(Date date) {
+        return new Date().after(date);
+    }
+
     public interface SubmitCallback {
         void onSubmitClicked();
     }

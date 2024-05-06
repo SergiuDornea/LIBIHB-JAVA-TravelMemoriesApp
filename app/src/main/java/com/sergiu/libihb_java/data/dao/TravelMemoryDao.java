@@ -26,16 +26,16 @@ public interface TravelMemoryDao {
     Flowable<List<TravelMemory>> getMemories();
 
     @Query("SELECT * FROM memories WHERE id = :memoryId")
-    Flowable<TravelMemory> getMemoryById(long memoryId);
+    Flowable<TravelMemory> getMemoryById(String memoryId);
 
     @Query("SELECT * FROM memories WHERE is_favorite = 1")
     Flowable<List<TravelMemory>> getAllFavoriteMemories();
 
     @Query("UPDATE memories SET is_favorite = :isFavorite WHERE id = :memoryId")
-    Completable updateIsFavorite(long memoryId, boolean isFavorite);
+    Completable updateIsFavorite(String memoryId, boolean isFavorite);
 
     @Query("SELECT is_favorite FROM memories WHERE id = :memoryId")
-    Flowable<Boolean> isMemoryInFavorites(long memoryId);
+    Flowable<Boolean> isMemoryInFavorites(String memoryId);
 
     @Delete
     Completable deleteTravelMemory(TravelMemory travelMemory);

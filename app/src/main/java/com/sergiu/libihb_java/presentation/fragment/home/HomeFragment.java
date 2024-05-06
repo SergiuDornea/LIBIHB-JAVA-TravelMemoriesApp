@@ -100,8 +100,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void navigateToDetailsWithId(Long id) {
-        bundle.putLong(MEMORY_ID_BY_POSITION_KEY, id);
+    private void navigateToDetailsWithId(String id) {
+        bundle.putString(MEMORY_ID_BY_POSITION_KEY, id);
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);
 

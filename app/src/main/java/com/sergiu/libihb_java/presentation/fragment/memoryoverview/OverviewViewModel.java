@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
@@ -51,7 +52,8 @@ public class OverviewViewModel extends ViewModel {
             ValidateMemoryName validateMemoryName,
             ValidateMemoryDescription validateMemoryDescription,
             ValidateMemoryCoordinates validateMemoryCoordinates,
-            ValidateMemoryDate validateMemoryDate) {
+            ValidateMemoryDate validateMemoryDate,
+            MemoriesRemoteDataSource memoriesRemoteDataSource) {
         this.memoriesRepository = memoriesRepository;
         this.formState = (MutableLiveData<MemoryFormState>) memoriesRepository.getFormState();
         this.validateMemoryImgList = validateMemoryImgList;

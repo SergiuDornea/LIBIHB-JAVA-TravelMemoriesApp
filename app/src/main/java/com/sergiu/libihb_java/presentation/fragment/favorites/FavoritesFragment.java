@@ -28,7 +28,6 @@ import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.FavoritesAdapter;
 import com.sergiu.libihb_java.presentation.fragment.details.DetailsFragment;
 
-import java.util.List;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -113,9 +112,9 @@ public class FavoritesFragment extends Fragment {
         }
     }
 
-    private void navigateToDetailsWithId(Long id) {
+    private void navigateToDetailsWithId(String id) {
         Bundle bundle = new Bundle();
-        bundle.putLong(FAVORITE_MEMORY_ID_KEY, id);
+        bundle.putString(FAVORITE_MEMORY_ID_KEY, id);
         DetailsFragment detailsFragment = new DetailsFragment();
         detailsFragment.setArguments(bundle);
 

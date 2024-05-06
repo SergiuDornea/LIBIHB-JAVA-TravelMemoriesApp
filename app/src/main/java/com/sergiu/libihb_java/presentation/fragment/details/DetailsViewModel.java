@@ -44,7 +44,7 @@ public class DetailsViewModel extends ViewModel {
         return isMemoryInFavorites;
     }
 
-    public Flowable<TravelMemory> getMemoryById(long memoryId) {
+    public Flowable<TravelMemory> getMemoryById(String memoryId) {
         return memoriesRepository.getMemoryById(memoryId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -72,7 +72,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     @SuppressLint("CheckResult")
-    public void loadIsCurrentMemoryInFavorites(long id) {
+    public void loadIsCurrentMemoryInFavorites(String id) {
         memoriesRepository.isMemoryInFavorites(id)
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
@@ -80,11 +80,11 @@ public class DetailsViewModel extends ViewModel {
                 .subscribe(isMemoryInFavorites::setValue);
     }
 
-    public void toggleFavoriteIcon(long id) {
+    public void toggleFavoriteIcon(String id) {
         updateIsFavorite(id, Boolean.FALSE.equals(isMemoryInFavorites.getValue()));
     }
 
-    private void updateIsFavorite(long id, boolean isFavorite) {
+    private void updateIsFavorite(String id, boolean isFavorite) {
         memoriesRepository.updateIsFavorite(id, isFavorite)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

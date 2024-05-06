@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.domain.model;
 
 import static com.sergiu.libihb_java.presentation.utils.Constants.DATE_FORMAT_PATTERN;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -13,6 +14,8 @@ import com.sergiu.libihb_java.presentation.utils.converters.DateConverter;
 import com.sergiu.libihb_java.presentation.utils.converters.LatLngConverter;
 import com.sergiu.libihb_java.presentation.utils.converters.ListStringConverter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +24,9 @@ import java.util.Locale;
 @Entity(tableName = "memories")
 @TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
 public class TravelMemory {
-    @PrimaryKey(autoGenerate = true)
-    private Long id;
+    @PrimaryKey()
+    @NotNull
+    private String id;
     @ColumnInfo(name = "image_list")
     private List<String> imageList;
     @ColumnInfo(name = "memroy_name")
@@ -59,6 +63,7 @@ public class TravelMemory {
         this.placeLocationName = placeLocationName;
         this.placeCountryName = placeCountryName;
         this.placeAdminAreaName = placeAdminAreaName;
+        id = "";
     }
 
     public List<String> getImageList() {
@@ -94,7 +99,8 @@ public class TravelMemory {
         return placeAdminAreaName;
     }
 
-    public Long getId() {
+    @NonNull
+    public String getId() {
         return id;
     }
 
@@ -110,7 +116,11 @@ public class TravelMemory {
         isFavorite = favorite;
     }
 
-    public void setId(Long id) {
+    public void setImageList(List<String> imageList) {
+        this.imageList = imageList;
+    }
+
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 }

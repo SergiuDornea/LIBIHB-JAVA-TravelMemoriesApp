@@ -51,7 +51,7 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
         private final TextView placeName;
         private final TextView dateOfTravel;
         private final TextView location;
-        private Long id;
+        private String id;
 
         public TravelMemoriesViewHolder(@NonNull View itemView, OnItemClickListener itemClickListener) {
             super(itemView);
@@ -91,6 +91,6 @@ public class TravelMemoryAdapter extends RecyclerView.Adapter<TravelMemoryAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Long id);
+        void onItemClick(String id);
     }
 }

@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
+import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.data.datasource.WeatherRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
@@ -27,8 +28,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public MemoriesRepository provideMemoriesRoomRepository(TravelMemoryDao travelMemoryDao) {
-        return new MemoriesRepository(travelMemoryDao);
+    public MemoriesRepository provideMemoriesRoomRepository(TravelMemoryDao travelMemoryDao, MemoriesRemoteDataSource memoriesRemoteDataSource, DiskDataStore diskDataStore) {
+        return new MemoriesRepository(travelMemoryDao, memoriesRemoteDataSource, diskDataStore);
     }
 
     @Provides

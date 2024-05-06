@@ -36,7 +36,7 @@ public class EditViewModel extends ViewModel {
     private final ValidateMemoryDate validateMemoryDate;
     private final MutableLiveData<MemoryFormState> formState;
     private final MutableLiveData<SaveEditedMemoryClickedEvent> saveMemoryClickedEvent = new MutableLiveData<>();
-    private long id;
+    private String id;
 
     @Inject
     public EditViewModel(
@@ -56,7 +56,7 @@ public class EditViewModel extends ViewModel {
         this.memoriesRepository.setSubmitCallback(this::onSubmit);
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -80,15 +80,13 @@ public class EditViewModel extends ViewModel {
         memoriesRepository.onEvent(memoryFormEvent);
     }
 
-    public Flowable<TravelMemory> getMemoryById(long memoryId) {
+    public Flowable<TravelMemory> getMemoryById(String memoryId) {
         return memoriesRepository.getMemoryById(memoryId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     private void onSubmit() {
-        Log.d(TAG, "onSubmit: Submit button clicked");
-        Log.d(TAG, "onSubmit: form state " + formState.getValue().getMemoryName());
         ValidateResult listValid = validateMemoryImgList.validate(formState.getValue().getListOfImgUri());
         ValidateResult memoryNameValid = validateMemoryName.validate(formState.getValue().getMemoryName());
         ValidateResult memoryDescriptionValid = validateMemoryDescription.validate(formState.getValue().getMemoryDescription());
