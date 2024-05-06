@@ -279,12 +279,44 @@ public class MemoriesRepository {
         return dao.getMemoryById(memoryId);
     }
 
-    public Completable deleteTravelMemory(TravelMemory travelMemory) {
-        return dao.deleteTravelMemory(travelMemory);
+    public Completable updateTravelMemory(TravelMemory travelMemory) {
+        return uploadImages(travelMemory.getImageList())
+                .flatMapCompletable(imageUrls -> {
+                    travelMemory.setImageList(imageUrls);
+                    return Completable.defer(() -> {
+                        Completable roomCompletable = dao.updateTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "updateTravelMemory: room ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        Completable firestoreCompletable = memoriesRemoteDataSource.saveTravelMemory(travelMemory)
+                                .onErrorResumeNext(error -> {
+                                    Log.e(TAG, "updateTravelMemory: firestore ERROR ", error);
+                                    return Completable.complete();
+                                });
+                        return Completable.mergeArray(firestoreCompletable, roomCompletable)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread());
+                    });
+                });
     }
 
-    public Completable updateTravelMemory(TravelMemory travelMemory) {
-        return dao.updateTravelMemory(travelMemory);
+    public Completable deleteTravelMemory(TravelMemory travelMemory) {
+        return Completable.defer(() -> {
+            Completable roomCompletable = dao.deleteTravelMemory(travelMemory)
+                    .onErrorResumeNext(error -> {
+                        Log.e(TAG, "deleteTravelMemory: room ERROR ", error);
+                        return Completable.complete();
+                    });
+            Completable firestoreCompletable = memoriesRemoteDataSource.deleteTravelMemory(travelMemory)
+                    .onErrorResumeNext(error -> {
+                        Log.e(TAG, "deleteTravelMemory: firestore ERROR ", error);
+                        return Completable.complete();
+                    });
+            return Completable.mergeArray(firestoreCompletable, roomCompletable)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+        });
     }
 
     public Flowable<Boolean> isMemoryInFavorites(String id) {
