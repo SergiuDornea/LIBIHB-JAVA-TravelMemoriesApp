@@ -63,7 +63,7 @@ public class EditFragment extends Fragment {
     private NavController navController;
     private Date date;
     private GoogleMap map;
-    private long id;
+    private String id;
     @SuppressLint("CheckResult")
     private final OnMapReadyCallback callback = googleMap -> {
         map = googleMap;
@@ -81,7 +81,7 @@ public class EditFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(EditViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            id = bundle.getLong(MEMORY_ID_KEY);
+            id = bundle.getString(MEMORY_ID_KEY);
             viewModel.setId(id);
         }
         initializeActivityResultLauncher();

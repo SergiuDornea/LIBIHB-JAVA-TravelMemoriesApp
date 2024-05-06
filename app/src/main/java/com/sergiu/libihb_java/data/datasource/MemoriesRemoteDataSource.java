@@ -4,11 +4,13 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.LIBIHB_USER_PA
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -21,6 +23,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class MemoriesRemoteDataSource {
+    private static final String TAG = MemoriesRemoteDataSource.class.getSimpleName();
     private static final String TRAVEL_MEMORIES_KEY = "travel_memories";
     private static final String TRAVEL_MEMORY_IMG_KEY = "travel_memory_img";
     private final FirebaseFirestore fStore;
@@ -50,9 +53,36 @@ public class MemoriesRemoteDataSource {
                                 .addOnSuccessListener(documentReference -> emitter.onComplete())
                                 .addOnFailureListener(emitter::onError);
                     } else {
-                        emitter.onError(new IllegalStateException("User document does not exist"));
+                        Log.e(TAG, "saveTravelMemory: User document not found");
                     }
                 }).addOnFailureListener(emitter::onError);
+            }
+        });
+    }
+
+    public Completable deleteTravelMemory(TravelMemory travelMemory) {
+        return Completable.create(emitter -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                DocumentReference userRef = fStore.collection(LIBIHB_USER_PATH_KEY).document(currentUser.getUid());
+                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
+                                memoriesRef.whereEqualTo("id", travelMemory.getId())
+                                        .get()
+                                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                                            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                snapshot.getReference().delete()
+                                                        .addOnSuccessListener(aVoid -> emitter.onComplete())
+                                                        .addOnFailureListener(emitter::onError);
+                                            }
+                                        })
+                                        .addOnFailureListener(emitter::onError);
+                            } else {
+                                Log.e(TAG, "saveTravelMemory: User document not found");
+                            }
+                        })
+                        .addOnFailureListener(emitter::onError);
             }
         });
     }

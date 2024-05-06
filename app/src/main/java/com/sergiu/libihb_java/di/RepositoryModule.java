@@ -28,8 +28,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public MemoriesRepository provideMemoriesRoomRepository(TravelMemoryDao travelMemoryDao, MemoriesRemoteDataSource memoriesRemoteDataSource) {
-        return new MemoriesRepository(travelMemoryDao, memoriesRemoteDataSource);
+    public MemoriesRepository provideMemoriesRoomRepository(TravelMemoryDao travelMemoryDao, MemoriesRemoteDataSource memoriesRemoteDataSource, DiskDataStore diskDataStore) {
+        return new MemoriesRepository(travelMemoryDao, memoriesRemoteDataSource, diskDataStore);
     }
 
     @Provides

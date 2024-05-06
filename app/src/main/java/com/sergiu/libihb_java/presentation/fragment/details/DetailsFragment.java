@@ -53,7 +53,7 @@ public class DetailsFragment extends Fragment {
     private DetailsAdapter detailsCarouselAdapter;
     private TravelMemory currentMemory;
     private MaterialToolbar toolbar;
-    private long id;
+    private String id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +62,9 @@ public class DetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             if (bundle.containsKey(MEMORY_ID_BY_POSITION_KEY)) {
-                id = bundle.getLong(MEMORY_ID_BY_POSITION_KEY);
+                id = bundle.getString(MEMORY_ID_BY_POSITION_KEY);
             } else {
-                id = bundle.getLong(FAVORITE_MEMORY_ID_KEY);
+                id = bundle.getString(FAVORITE_MEMORY_ID_KEY);
             }
         }
     }
@@ -219,9 +219,9 @@ public class DetailsFragment extends Fragment {
                 .show();
     }
 
-    private void navigateWithId(Long id) {
+    private void navigateWithId(String id) {
         Bundle bundle = new Bundle();
-        bundle.putLong(MEMORY_ID_KEY, id);
+        bundle.putString(MEMORY_ID_KEY, id);
         EditFragment editFragment = new EditFragment();
         editFragment.setArguments(bundle);
 

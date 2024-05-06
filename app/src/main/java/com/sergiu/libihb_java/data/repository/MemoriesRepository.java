@@ -8,12 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
+import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -28,6 +31,7 @@ public class MemoriesRepository {
     private static final String TAG = MemoriesRepository.class.getSimpleName();
     private final TravelMemoryDao dao;
     private final MemoriesRemoteDataSource memoriesRemoteDataSource;
+    private final DiskDataStore diskDataStore;
     private SubmitCallback submitCallback;
     private final MutableLiveData<MemoryFormState> formState = new MutableLiveData<>(
             new MemoryFormState(
@@ -50,9 +54,13 @@ public class MemoriesRepository {
             ));
 
     @Inject
-    public MemoriesRepository(TravelMemoryDao travelMemoryDao, MemoriesRemoteDataSource memoriesRemoteDataSource) {
+    public MemoriesRepository(
+            TravelMemoryDao travelMemoryDao,
+            MemoriesRemoteDataSource memoriesRemoteDataSource,
+            DiskDataStore diskDataStore) {
         this.dao = travelMemoryDao;
         this.memoriesRemoteDataSource = memoriesRemoteDataSource;
+        this.diskDataStore = diskDataStore;
     }
 
     public void setFormState(MemoryFormState formState) {
@@ -240,6 +248,8 @@ public class MemoriesRepository {
     }
 
     public Completable insertTravelMemory(TravelMemory travelMemory) {
+        String id = UUID.randomUUID().toString();
+        travelMemory.setId(id);
         return uploadImages(travelMemory.getImageList())
                 .flatMapCompletable(imageUrls -> {
                     travelMemory.setImageList(imageUrls);
@@ -265,7 +275,7 @@ public class MemoriesRepository {
         return dao.getMemories();
     }
 
-    public Flowable<TravelMemory> getMemoryById(Long memoryId) {
+    public Flowable<TravelMemory> getMemoryById(String memoryId) {
         return dao.getMemoryById(memoryId);
     }
 
@@ -277,11 +287,11 @@ public class MemoriesRepository {
         return dao.updateTravelMemory(travelMemory);
     }
 
-    public Flowable<Boolean> isMemoryInFavorites(long id) {
+    public Flowable<Boolean> isMemoryInFavorites(String id) {
         return dao.isMemoryInFavorites(id);
     }
 
-    public Completable updateIsFavorite(long id, boolean isFavorite) {
+    public Completable updateIsFavorite(String id, boolean isFavorite) {
         return dao.updateIsFavorite(id, isFavorite);
     }
 
@@ -293,6 +303,10 @@ public class MemoriesRepository {
         return Observable.fromIterable(imageUris)
                 .flatMap(uriString -> memoriesRemoteDataSource.uploadImg(Uri.parse(uriString)).toObservable())
                 .toList();
+    }
+
+    private boolean dataIsExpired(Date date) {
+        return new Date().after(date);
     }
 
     public interface SubmitCallback {
