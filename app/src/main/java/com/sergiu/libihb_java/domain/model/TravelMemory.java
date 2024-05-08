@@ -66,6 +66,10 @@ public class TravelMemory {
         id = "";
     }
 
+    public TravelMemory() {
+
+    }
+
     public List<String> getImageList() {
         return imageList;
     }
@@ -122,5 +126,33 @@ public class TravelMemory {
 
     public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    public void setMemoryName(String memoryName) {
+        this.memoryName = memoryName;
+    }
+
+    public void setMemoryDescription(String memoryDescription) {
+        this.memoryDescription = memoryDescription;
+    }
+
+    public void setPlaceLocationName(String placeLocationName) {
+        this.placeLocationName = placeLocationName;
+    }
+
+    public void setPlaceCountryName(String placeCountryName) {
+        this.placeCountryName = placeCountryName;
+    }
+
+    public void setPlaceAdminAreaName(String placeAdminAreaName) {
+        this.placeAdminAreaName = placeAdminAreaName;
+    }
+
+    public void setCoordinates(LatLng coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setDateOfTravel(Date dateOfTravel) {
+        this.dateOfTravel = dateOfTravel;
     }
 }

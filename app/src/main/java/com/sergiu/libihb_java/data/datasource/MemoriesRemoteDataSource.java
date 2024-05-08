@@ -17,6 +17,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -42,7 +45,7 @@ public class MemoriesRemoteDataSource {
     }
 
     @SuppressLint("CheckResult")
-    public Completable saveTravelMemory(TravelMemory travelMemory) {
+    public Completable insertTravelMemory(TravelMemory travelMemory) {
         return Completable.create(emitter -> {
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             if (currentUser != null) {
@@ -106,6 +109,32 @@ public class MemoriesRemoteDataSource {
                                 .addOnFailureListener(emitter::onError);
                     } else {
                         Log.e(TAG, "updateTravelMemory: User document not found");
+                    }
+                }).addOnFailureListener(emitter::onError);
+            }
+        });
+    }
+
+    public Single<List<TravelMemory>> getMemories() {
+        return Single.create(emitter -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                DocumentReference userRef = fStore.collection(LIBIHB_USER_PATH_KEY).document(currentUser.getUid());
+                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
+                        memoriesRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            List<TravelMemory> travelMemories = new ArrayList<>();
+                            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                TravelMemory memory = snapshot.toObject(TravelMemory.class);
+                                if (memory != null) {
+                                    travelMemories.add(memory);
+                                }
+                            }
+                            emitter.onSuccess(travelMemories);
+                        }).addOnFailureListener(e -> emitter.onSuccess(new ArrayList<>()));
+                    } else {
+                        Log.e(TAG, "getMemories: ERROR");
                     }
                 }).addOnFailureListener(emitter::onError);
             }

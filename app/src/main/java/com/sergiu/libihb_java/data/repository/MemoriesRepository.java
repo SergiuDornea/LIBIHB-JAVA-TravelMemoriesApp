@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.api.LogDescriptor;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
 import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
@@ -259,7 +260,7 @@ public class MemoriesRepository {
                                     Log.e(TAG, "insertTravelMemory: room ERROR ", error);
                                     return Completable.complete();
                                 });
-                        Completable firestoreCompletable = memoriesRemoteDataSource.saveTravelMemory(travelMemory)
+                        Completable firestoreCompletable = memoriesRemoteDataSource.insertTravelMemory(travelMemory)
                                 .onErrorResumeNext(error -> {
                                     Log.e(TAG, "insertTravelMemory: firestore ERROR ", error);
                                     return Completable.complete();
@@ -272,11 +273,28 @@ public class MemoriesRepository {
     }
 
     public Flowable<List<TravelMemory>> getMemories() {
+        if (dataIsExpired(diskDataStore.getMemoriesExpireDate())) {
+            Log.d(TAG, "getMemories: REMOTE");
+            return memoriesRemoteDataSource.getMemories()
+                    .toFlowable()
+                    .doOnNext(this::updateLocalData)
+                    .doOnError(error -> Log.e(TAG, "getMemories: ERROR", error));
+
+        } else {
+            Log.d(TAG, "getMemories: LOCAL");
+        }
         return dao.getMemories();
     }
 
     public Flowable<TravelMemory> getMemoryById(String memoryId) {
         return dao.getMemoryById(memoryId);
+    }
+
+    public Completable resetUserData() {
+        Log.d(TAG, "resetUserData: enter");
+        Completable completableDeleteAll = dao.deleteAll();
+        Completable completableResetUserData = diskDataStore.resetUserDataValues();
+        return Completable.mergeArray(completableDeleteAll, completableResetUserData);
     }
 
     public Completable updateTravelMemory(TravelMemory travelMemory) {
@@ -362,6 +380,14 @@ public class MemoriesRepository {
         List<String> listConcat = new ArrayList<>(list1);
         listConcat.addAll(list2);
         return listConcat;
+    }
+
+    private void updateLocalData(List<TravelMemory> memoryList) {
+        diskDataStore.writeMemoriesExpireDate();
+        dao.deleteAll();
+        for (TravelMemory memory : memoryList) {
+            dao.insertTravelMemory(memory);
+        }
     }
 
     private boolean dataIsExpired(Date date) {
