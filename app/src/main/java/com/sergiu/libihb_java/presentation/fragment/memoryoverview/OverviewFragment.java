@@ -128,8 +128,8 @@ public class OverviewFragment extends Fragment {
 
         if (mapFragment != null) {
             mapFragment.getMapAsync(googleMap -> {
-                googleMap.addMarker(new MarkerOptions().position(form.getCoordinates() != null ? form.getCoordinates() : DEFAULT_COORDINATES));
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(form.getCoordinates() != null ? form.getCoordinates() : DEFAULT_COORDINATES, 8));
+                googleMap.addMarker(new MarkerOptions().position(form.getLatitude() != 0 || form.getLongitude() != 0 ? new LatLng(form.getLatitude(), form.getLongitude()) : DEFAULT_COORDINATES));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(form.getLatitude() != 0 || form.getLongitude() != 0 ? new LatLng(form.getLatitude(), form.getLongitude()) : DEFAULT_COORDINATES, 8));
             });
         }
         memoryOverviewAdapter.updateImgUriList(form.getListOfImgUri());

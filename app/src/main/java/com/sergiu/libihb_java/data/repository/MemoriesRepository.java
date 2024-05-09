@@ -41,7 +41,8 @@ public class MemoriesRepository {
                     "",
                     "",
                     "",
-                    null,
+                    0,
+                    0,
                     null,
                     null,
                     null,
@@ -84,7 +85,8 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     formState.getValue().getPlaceCountryName(),
                     formState.getValue().getPlaceAdminName(),
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     formState.getValue().getDateOfTravel(),
                     null,
                     formState.getValue().getMemoryNameError(),
@@ -104,7 +106,8 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     formState.getValue().getPlaceCountryName(),
                     formState.getValue().getPlaceAdminName(),
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     formState.getValue().getDateOfTravel(),
                     formState.getValue().getListOfImgUriError(),
                     null,
@@ -124,7 +127,8 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     formState.getValue().getPlaceCountryName(),
                     formState.getValue().getPlaceAdminName(),
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     formState.getValue().getDateOfTravel(),
                     formState.getValue().getListOfImgUriError(),
                     formState.getValue().getMemoryNameError(),
@@ -144,7 +148,8 @@ public class MemoriesRepository {
                     ((MemoryFormEvent.MemoryPlaceLocationNameChanged) event).placeLocationName,
                     formState.getValue().getPlaceCountryName(),
                     formState.getValue().getPlaceAdminName(),
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     formState.getValue().getDateOfTravel(),
                     formState.getValue().getListOfImgUriError(),
                     formState.getValue().getMemoryNameError(),
@@ -164,7 +169,8 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     ((MemoryFormEvent.MemoryPlaceCountryNameChanged) event).memoryPlaceCountryName,
                     formState.getValue().getPlaceAdminName(),
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     formState.getValue().getDateOfTravel(),
                     formState.getValue().getListOfImgUriError(),
                     formState.getValue().getMemoryNameError(),
@@ -184,7 +190,8 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     formState.getValue().getPlaceCountryName(),
                     ((MemoryFormEvent.MemoryPlaceAdminNameChanged) event).placeLocationAdminName,
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     formState.getValue().getDateOfTravel(),
                     formState.getValue().getListOfImgUriError(),
                     formState.getValue().getMemoryNameError(),
@@ -196,7 +203,7 @@ public class MemoriesRepository {
                     formState.getValue().getDateOfTravelError()
             ));
         }
-        if (event instanceof MemoryFormEvent.MemoryCoordinatesChanged) {
+        if (event instanceof MemoryFormEvent.MemoryLatChanged) {
             updateFormState(new MemoryFormState(
                     formState.getValue().getListOfImgUri(),
                     formState.getValue().getMemoryName(),
@@ -204,7 +211,28 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     formState.getValue().getPlaceCountryName(),
                     formState.getValue().getPlaceAdminName(),
-                    ((MemoryFormEvent.MemoryCoordinatesChanged) event).coordinates,
+                    ((MemoryFormEvent.MemoryLatChanged) event).latitude,
+                    formState.getValue().getLongitude(),
+                    formState.getValue().getDateOfTravel(),
+                    formState.getValue().getListOfImgUriError(),
+                    formState.getValue().getMemoryNameError(),
+                    formState.getValue().getMemoryDescriptionError(),
+                    formState.getValue().getPlaceLocationNameError(),
+                    formState.getValue().getPlaceCountryNameError(),
+                    formState.getValue().getPlaceAdminNameError(),
+                    null,
+                    formState.getValue().getDateOfTravelError()
+            ));
+        } else if (event instanceof MemoryFormEvent.MemoryLngChanged) {
+            updateFormState(new MemoryFormState(
+                    formState.getValue().getListOfImgUri(),
+                    formState.getValue().getMemoryName(),
+                    formState.getValue().getMemoryDescription(),
+                    formState.getValue().getPlaceLocationName(),
+                    formState.getValue().getPlaceCountryName(),
+                    formState.getValue().getPlaceAdminName(),
+                    formState.getValue().getLatitude(),
+                    ((MemoryFormEvent.MemoryLngChanged) event).longitude,
                     formState.getValue().getDateOfTravel(),
                     formState.getValue().getListOfImgUriError(),
                     formState.getValue().getMemoryNameError(),
@@ -224,7 +252,8 @@ public class MemoriesRepository {
                     formState.getValue().getPlaceLocationName(),
                     formState.getValue().getPlaceCountryName(),
                     formState.getValue().getPlaceAdminName(),
-                    formState.getValue().getCoordinates(),
+                    formState.getValue().getLatitude(),
+                    formState.getValue().getLongitude(),
                     ((MemoryFormEvent.MemoryDateOfTravelChanged) event).dateOfTravel,
                     formState.getValue().getListOfImgUriError(),
                     formState.getValue().getMemoryNameError(),
@@ -259,7 +288,7 @@ public class MemoriesRepository {
                                     Log.e(TAG, "insertTravelMemory: room ERROR ", error);
                                     return Completable.complete();
                                 });
-                        Completable firestoreCompletable = memoriesRemoteDataSource.saveTravelMemory(travelMemory)
+                        Completable firestoreCompletable = memoriesRemoteDataSource.insertTravelMemory(travelMemory)
                                 .onErrorResumeNext(error -> {
                                     Log.e(TAG, "insertTravelMemory: firestore ERROR ", error);
                                     return Completable.complete();
@@ -272,11 +301,28 @@ public class MemoriesRepository {
     }
 
     public Flowable<List<TravelMemory>> getMemories() {
-        return dao.getMemories();
+        if (dataIsExpired(diskDataStore.getMemoriesExpireDate())) {
+            Log.d(TAG, "getMemories: REMOTE");
+            return memoriesRemoteDataSource.getMemories()
+                    .toFlowable()
+                    .doOnNext(this::updateLocalData)
+                    .doOnError(error -> Log.e(TAG, "getMemories: ERROR", error));
+
+        } else {
+            Log.d(TAG, "getMemories: LOCAL");
+            return dao.getMemories();
+        }
     }
 
     public Flowable<TravelMemory> getMemoryById(String memoryId) {
         return dao.getMemoryById(memoryId);
+    }
+
+    public Completable resetUserData() {
+        Log.d(TAG, "resetUserData: enter");
+        Completable completableDeleteAll = dao.deleteAll();
+        Completable completableResetUserData = diskDataStore.resetUserDataValues();
+        return Completable.mergeArray(completableDeleteAll, completableResetUserData);
     }
 
     public Completable updateTravelMemory(TravelMemory travelMemory) {
@@ -362,6 +408,14 @@ public class MemoriesRepository {
         List<String> listConcat = new ArrayList<>(list1);
         listConcat.addAll(list2);
         return listConcat;
+    }
+
+    private void updateLocalData(List<TravelMemory> memoryList) {
+        diskDataStore.writeMemoriesExpireDate();
+        dao.deleteAll();
+        for (TravelMemory memory : memoryList) {
+            dao.insertTravelMemory(memory);
+        }
     }
 
     private boolean dataIsExpired(Date date) {

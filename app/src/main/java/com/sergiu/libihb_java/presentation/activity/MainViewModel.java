@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.data.repository.AuthRepository;
+import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 
 import javax.inject.Inject;
 
@@ -21,11 +22,13 @@ import io.reactivex.rxjava3.core.Completable;
 public class MainViewModel extends ViewModel {
     private static final String TAG = MainViewModel.class.getSimpleName();
     private final AuthRepository authRepository;
+    private final MemoriesRepository memoriesRepository;
     private final MutableLiveData<UploadProfileImageEvent> uploadProfileImageEvent = new MutableLiveData<>();
 
     @Inject
-    public MainViewModel(AuthRepository authRepository) {
+    public MainViewModel(AuthRepository authRepository, MemoriesRepository memoriesRepository) {
         this.authRepository = authRepository;
+        this.memoriesRepository = memoriesRepository;
     }
 
     public LiveData<UploadProfileImageEvent> getUploadProfileImageEvent() {
@@ -33,7 +36,9 @@ public class MainViewModel extends ViewModel {
     }
 
     public Completable logOut() {
-        return authRepository.writeIsLoggedIn(false);
+        Completable completableResetUserData = memoriesRepository.resetUserData();
+        Completable completableLogout = authRepository.writeIsLoggedIn(false);
+        return Completable.mergeArray(completableResetUserData, completableLogout);
     }
 
     public void uploadProfileImage(Uri imgUri) {

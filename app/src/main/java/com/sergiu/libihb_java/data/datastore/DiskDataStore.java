@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.data.datastore;
 import static com.sergiu.libihb_java.presentation.utils.Constants.BASE_DISCOVER_TILE_COUNT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_CONTACT;
 
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.datastore.preferences.core.MutablePreferences;
@@ -141,6 +142,21 @@ public class DiskDataStore {
             Boolean isLoggedIn = preferences.get(LOGGED_IN);
             return isLoggedIn != null ? isLoggedIn : false;
         });
+    }
+
+    public Completable resetUserDataValues() {
+        Log.d("MemoriesRepository", "resetUserDataValues: enter");
+        Single<Preferences> updateSingle = dataStore.updateDataAsync(preferences -> {
+            MutablePreferences mutablePreferences = preferences.toMutablePreferences();
+            mutablePreferences.remove(EMERGENCY_CONTACT);
+            mutablePreferences.set(NUMBER_OF_DISCOVER_TILES, BASE_DISCOVER_TILE_COUNT);
+            mutablePreferences.set(UNIT_OF_MEASUREMENT, baseUnit);
+            mutablePreferences.set(MEMORIES_EXPIRE_DATE, new Date().getTime());
+
+            return Single.just(mutablePreferences);
+        });
+        Log.d("MemoriesRepository", "resetUserDataValues: enter2");
+        return Completable.fromSingle(updateSingle);
     }
 
     private Long getNextDate(int daysUntilDataExpires) {

@@ -95,7 +95,8 @@ public class MapsFragment extends Fragment {
                     setMarkerAtGivenLatLng(latLng);
                     binding.searchBar.clearFocus();
 
-                    viewModel.onEvent(new MemoryFormEvent.MemoryCoordinatesChanged(latLng));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryLatChanged(latLng.latitude));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryLngChanged(latLng.longitude));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceCountryNameChanged(address.getCountryName()));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceLocationNameChanged(address.getFeatureName()));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceAdminNameChanged(address.getAdminArea()));

@@ -2,15 +2,13 @@ package com.sergiu.libihb_java.domain.usecasevalidate.addMemory;
 
 import android.content.Context;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.domain.usecasevalidate.Validate;
 import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
 
 import javax.inject.Inject;
 
-public class ValidateMemoryCoordinates implements Validate<LatLng> {
-    private static final int INVALID_LATLNG = 0;
+public class ValidateMemoryCoordinates implements Validate<String> {
     private final Context context;
 
     @Inject
@@ -19,17 +17,17 @@ public class ValidateMemoryCoordinates implements Validate<LatLng> {
     }
 
     @Override
-    public boolean inputNotBlank(LatLng inputType) {
-        return inputType != null;
+    public boolean inputNotBlank(String inputType) {
+        return !inputType.trim().isEmpty();
     }
 
     @Override
-    public boolean matchesRequiredType(LatLng inputType) {
-        return inputType.latitude > INVALID_LATLNG && inputType.longitude > INVALID_LATLNG;
+    public boolean matchesRequiredType(String inputType) {
+        return false;
     }
 
     @Override
-    public ValidateResult validate(LatLng inputType) {
+    public ValidateResult validate(String inputType) {
         if (!inputNotBlank(inputType)) {
             return new ValidateResult(false, context.getString(R.string.input_is_blank_address));
         }
