@@ -1,6 +1,5 @@
 package com.sergiu.libihb_java.domain.model;
 
-
 import static com.sergiu.libihb_java.presentation.utils.Constants.DATE_FORMAT_PATTERN;
 
 import androidx.annotation.NonNull;
@@ -9,9 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.sergiu.libihb_java.presentation.utils.converters.DateConverter;
-import com.sergiu.libihb_java.presentation.utils.converters.LatLngConverter;
 import com.sergiu.libihb_java.presentation.utils.converters.ListStringConverter;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Entity(tableName = "memories")
-@TypeConverters({ListStringConverter.class, LatLngConverter.class, DateConverter.class})
+@TypeConverters({ListStringConverter.class, DateConverter.class})
 public class TravelMemory {
     @PrimaryKey()
     @NotNull
@@ -39,8 +36,10 @@ public class TravelMemory {
     private String placeCountryName;
     @ColumnInfo(name = "place_admin_area_name")
     private String placeAdminAreaName;
-    @ColumnInfo(name = "coordinates")
-    private LatLng coordinates;
+    @ColumnInfo(name = "latitude")
+    private double latitude;
+    @ColumnInfo(name = "longitude")
+    private double longitude;
     @ColumnInfo(name = "date_of_travel")
     private Date dateOfTravel;
     @ColumnInfo(name = "is_favorite")
@@ -50,7 +49,8 @@ public class TravelMemory {
             List<String> imageList,
             String memoryName,
             String memoryDescription,
-            LatLng coordinates,
+            double latitude,
+            double longitude,
             Date dateOfTravel,
             String placeLocationName,
             String placeCountryName,
@@ -58,7 +58,8 @@ public class TravelMemory {
         this.imageList = imageList;
         this.memoryName = memoryName;
         this.memoryDescription = memoryDescription;
-        this.coordinates = coordinates;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.dateOfTravel = dateOfTravel;
         this.placeLocationName = placeLocationName;
         this.placeCountryName = placeCountryName;
@@ -76,10 +77,6 @@ public class TravelMemory {
 
     public String getMemoryName() {
         return memoryName;
-    }
-
-    public LatLng getCoordinates() {
-        return coordinates;
     }
 
     public Date getDateOfTravel() {
@@ -148,11 +145,23 @@ public class TravelMemory {
         this.placeAdminAreaName = placeAdminAreaName;
     }
 
-    public void setCoordinates(LatLng coordinates) {
-        this.coordinates = coordinates;
-    }
-
     public void setDateOfTravel(Date dateOfTravel) {
         this.dateOfTravel = dateOfTravel;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

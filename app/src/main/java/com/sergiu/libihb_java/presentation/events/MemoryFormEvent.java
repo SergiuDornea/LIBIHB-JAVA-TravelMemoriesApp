@@ -1,7 +1,5 @@
 package com.sergiu.libihb_java.presentation.events;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.Date;
 import java.util.List;
 
@@ -58,11 +56,19 @@ public abstract class MemoryFormEvent {
         }
     }
 
-    public static class MemoryCoordinatesChanged extends MemoryFormEvent {
-        public final LatLng coordinates;
+    public static class MemoryLngChanged extends MemoryFormEvent {
+        public final double longitude;
 
-        public MemoryCoordinatesChanged(LatLng coordinates) {
-            this.coordinates = coordinates;
+        public MemoryLngChanged(double longitude) {
+            this.longitude = longitude;
+        }
+    }
+
+    public static class MemoryLatChanged extends MemoryFormEvent {
+        public final double latitude;
+
+        public MemoryLatChanged(double latitude) {
+            this.latitude = latitude;
         }
     }
 

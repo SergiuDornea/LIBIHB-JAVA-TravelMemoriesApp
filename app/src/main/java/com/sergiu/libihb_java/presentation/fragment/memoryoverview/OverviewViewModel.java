@@ -81,7 +81,7 @@ public class OverviewViewModel extends ViewModel {
         ValidateResult listValid = validateMemoryImgList.validate(formState.getValue().getListOfImgUri());
         ValidateResult memoryNameValid = validateMemoryName.validate(formState.getValue().getMemoryName());
         ValidateResult memoryDescriptionValid = validateMemoryDescription.validate(formState.getValue().getMemoryDescription());
-        ValidateResult memoryCoordinatesValid = validateMemoryCoordinates.validate(formState.getValue().getCoordinates());
+        ValidateResult memoryCoordinatesValid = validateMemoryCoordinates.validate(formState.getValue().getPlaceLocationName());
         ValidateResult memoryDateValid = validateMemoryDate.validate(formState.getValue().getDateOfTravel());
 
         if (!listValid.isValid()
@@ -97,7 +97,8 @@ public class OverviewViewModel extends ViewModel {
                             formState.getValue().getPlaceLocationName(),
                             formState.getValue().getPlaceCountryName(),
                             formState.getValue().getPlaceAdminName(),
-                            formState.getValue().getCoordinates(),
+                            formState.getValue().getLatitude(),
+                            formState.getValue().getLongitude(),
                             formState.getValue().getDateOfTravel(),
                             listValid.getMessageIfNotValid(),
                             memoryNameValid.getMessageIfNotValid(),
@@ -128,7 +129,8 @@ public class OverviewViewModel extends ViewModel {
                     "",
                     "",
                     "",
-                    null,
+                    0,
+                    0,
                     null,
                     null,
                     null,
@@ -149,7 +151,8 @@ public class OverviewViewModel extends ViewModel {
                                 formState.getValue().getListOfImgUri(),
                                 formState.getValue().getMemoryName(),
                                 formState.getValue().getMemoryDescription(),
-                                formState.getValue().getCoordinates(),
+                                formState.getValue().getLatitude(),
+                                formState.getValue().getLongitude(),
                                 formState.getValue().getDateOfTravel(),
                                 formState.getValue().getPlaceLocationName(),
                                 formState.getValue().getPlaceCountryName(),

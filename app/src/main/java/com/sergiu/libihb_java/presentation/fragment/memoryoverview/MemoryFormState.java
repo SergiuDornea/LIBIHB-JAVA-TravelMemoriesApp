@@ -1,7 +1,5 @@
 package com.sergiu.libihb_java.presentation.fragment.memoryoverview;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
@@ -14,7 +12,8 @@ public class MemoryFormState {
     private final String placeLocationName;
     private final String placeCountryName;
     private final String placeAdminName;
-    private final LatLng coordinates;
+    private final double latitude;
+    private final double longitude;
     private final Date dateOfTravel;
     private final String listOfImgUriError;
     private final String memoryNameError;
@@ -32,7 +31,8 @@ public class MemoryFormState {
             @NotNull String placeLocationName,
             @NotNull String placeCountryName,
             String placeAdminName,
-            LatLng coordinates,
+            double latitude,
+            double longitude,
             Date dateOfTravel,
             String listOfImgUriError,
             String memoryNameError,
@@ -49,7 +49,8 @@ public class MemoryFormState {
         this.placeLocationName = placeLocationName;
         this.placeCountryName = placeCountryName;
         this.placeAdminName = placeAdminName;
-        this.coordinates = coordinates;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.dateOfTravel = dateOfTravel;
         this.listOfImgUriError = listOfImgUriError;
         this.memoryNameError = memoryNameError;
@@ -85,8 +86,12 @@ public class MemoryFormState {
         return placeAdminName;
     }
 
-    public LatLng getCoordinates() {
-        return coordinates;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public Date getDateOfTravel() {

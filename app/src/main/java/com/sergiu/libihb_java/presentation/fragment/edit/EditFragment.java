@@ -130,7 +130,8 @@ public class EditFragment extends Fragment {
                 travelMemory.getPlaceLocationName(),
                 travelMemory.getPlaceCountryName(),
                 travelMemory.getPlaceAdminAreaName(),
-                travelMemory.getCoordinates(),
+                travelMemory.getLatitude(),
+                travelMemory.getLongitude(),
                 travelMemory.getDateOfTravel(),
                 null,
                 null,
@@ -150,7 +151,7 @@ public class EditFragment extends Fragment {
         binding.locationNameEditTextView.setText(form.getPlaceLocationName());
         binding.locationCountryEditTextView.setText(form.getPlaceCountryName());
         editAdapter.updateImgUriList(form.getListOfImgUri());
-        setMarkerAtGivenLatLng(form.getCoordinates());
+        setMarkerAtGivenLatLng(new LatLng(form.getLatitude(), form.getLongitude()));
     }
 
     private void displayInteractiveMessage(String message) {
@@ -238,7 +239,8 @@ public class EditFragment extends Fragment {
                     binding.locationCountryEditTextView.setText(address.getCountryName());
                     binding.editSearchBar.clearFocus();
 
-                    viewModel.onEvent(new MemoryFormEvent.MemoryCoordinatesChanged(latLng));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryLatChanged(address.getLatitude()));
+                    viewModel.onEvent(new MemoryFormEvent.MemoryLngChanged(address.getLongitude()));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceCountryNameChanged(address.getCountryName()));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceLocationNameChanged(address.getFeatureName()));
                     viewModel.onEvent(new MemoryFormEvent.MemoryPlaceAdminNameChanged(address.getAdminArea()));

@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
@@ -94,7 +95,7 @@ public class DetailsFragment extends Fragment {
             currentMemory = memory;
             setUi(memory);
             if (getView() != null) {
-                viewModel.getCurrentWeatherByLatAndLong(memory.getCoordinates())
+                viewModel.getCurrentWeatherByLatAndLong(new LatLng(memory.getLatitude(), memory.getLongitude()))
                         .observe(getViewLifecycleOwner(), this::setCurrentWeatherUi);
             }
         });
@@ -166,8 +167,8 @@ public class DetailsFragment extends Fragment {
     private void setUi(TravelMemory memory) {
         if (mapFragment != null) {
             mapFragment.getMapAsync(googleMap -> {
-                googleMap.addMarker(new MarkerOptions().position(memory.getCoordinates()));
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(memory.getCoordinates(), 9));
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(memory.getLatitude(), memory.getLongitude())));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(memory.getLatitude(), memory.getLongitude()), 9));
             });
         }
 
