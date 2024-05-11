@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
+import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateEmailRegister;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateName;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidatePasswordRegister;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidatePhone;
 import com.sergiu.libihb_java.domain.usecasevalidate.auth.ValidateRepeatPasswordRegister;
-import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
 import com.sergiu.libihb_java.presentation.events.RegisterFormEvent;
 
 import java.util.Objects;
@@ -116,7 +116,7 @@ public class RegisterViewModel extends ViewModel {
                     formState.getValue().getEmail(),
                     formState.getValue().getName(),
                     formState.getValue().getPhone(),
-                    ((RegisterFormEvent.RepeatedPasswordChanged) event).repeteadPassword,
+                    ((RegisterFormEvent.RepeatedPasswordChanged) event).repeatedPassword,
                     formState.getValue().getPasswordError(),
                     formState.getValue().getEmailError(),
                     formState.getValue().getNameError(),
@@ -143,8 +143,8 @@ public class RegisterViewModel extends ViewModel {
             updateFormState(new RegisterFormState(
                     formState.getValue().getPassword(),
                     formState.getValue().getEmail(),
-                    formState.getValue().getPhone(),
                     formState.getValue().getName(),
+                    formState.getValue().getPhone(),
                     formState.getValue().getRepeatPassword(),
                     passValid.getMessageIfNotValid(),
                     emailValid.getMessageIfNotValid(),

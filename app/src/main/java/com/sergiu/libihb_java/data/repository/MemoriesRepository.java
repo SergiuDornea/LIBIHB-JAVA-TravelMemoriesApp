@@ -348,6 +348,7 @@ public class MemoriesRepository {
                 });
     }
 
+
     public Completable deleteTravelMemory(TravelMemory travelMemory) {
         return Completable.defer(() -> {
             Completable roomCompletable = dao.deleteTravelMemory(travelMemory)

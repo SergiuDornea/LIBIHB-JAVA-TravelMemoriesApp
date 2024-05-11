@@ -37,10 +37,10 @@ public abstract class RegisterFormEvent {
     }
 
     public static class RepeatedPasswordChanged extends RegisterFormEvent {
-        public final String repeteadPassword;
+        public final String repeatedPassword;
 
-        public RepeatedPasswordChanged(String repeteadPassword) {
-            this.repeteadPassword = repeteadPassword;
+        public RepeatedPasswordChanged(String repeatedPassword) {
+            this.repeatedPassword = repeatedPassword;
         }
     }
 }
