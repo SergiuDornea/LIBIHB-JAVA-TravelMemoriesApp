@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setDrawerHeaderData(String nameText, String emailText, String imgUrl) {
+        headerView.findViewById(R.id.profile_loading_indicator).setVisibility(View.GONE);
         TextView name = headerView.findViewById(R.id.user_name);
         TextView email = headerView.findViewById(R.id.user_email);
         ImageView profileImg = headerView.findViewById(R.id.profile_picture);
