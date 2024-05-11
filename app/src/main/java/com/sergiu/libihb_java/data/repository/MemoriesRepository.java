@@ -319,10 +319,7 @@ public class MemoriesRepository {
     }
 
     public Completable resetUserData() {
-        Log.d(TAG, "resetUserData: enter");
-        Completable completableDeleteAll = dao.deleteAll()
-                .doOnError(error -> Log.e(TAG, "Error deleting all memories: " + error.getMessage()))
-                .doOnComplete(() -> Log.d(TAG, "All memories deleted successfully"));
+        Completable completableDeleteAll = dao.deleteAll();
         Completable completableResetUserData = diskDataStore.resetUserDataValues();
         return Completable.mergeArray(completableDeleteAll, completableResetUserData);
     }
@@ -350,7 +347,6 @@ public class MemoriesRepository {
                 });
     }
 
-
     public Completable deleteTravelMemory(TravelMemory travelMemory) {
         return Completable.defer(() -> {
             Completable roomCompletable = dao.deleteTravelMemory(travelMemory)
@@ -374,7 +370,9 @@ public class MemoriesRepository {
     }
 
     public Completable updateIsFavorite(String id, boolean isFavorite) {
-        return dao.updateIsFavorite(id, isFavorite);
+        Completable completableLocal = dao.updateIsFavorite(id, isFavorite);
+        Completable completableFb = memoriesRemoteDataSource.updateMemoryFavorite(id, isFavorite);
+        return Completable.mergeArray(completableFb, completableLocal);
     }
 
     public Flowable<List<TravelMemory>> getAllFavoriteMemories() {

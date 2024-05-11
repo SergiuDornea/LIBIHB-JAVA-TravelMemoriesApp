@@ -79,6 +79,9 @@ public class HomeFragment extends Fragment {
     private void setObservers() {
         viewModel.observeDiscoverableMountains();
         viewModel.getMountainLiveData().observe(getViewLifecycleOwner(), currentMountains -> {
+            if (currentMountains.size() > 0) {
+                binding.mountainLoadingIndicator.setVisibility(View.GONE);
+            }
             Integer numberOfDiscoverItems = viewModel.getNumberOfTilesLiveData().getValue();
             discoverAdapter.updateMountainsToDiscoverList(currentMountains, numberOfDiscoverItems != null ? numberOfDiscoverItems : BASE_DISCOVER_TILE_COUNT);
         });

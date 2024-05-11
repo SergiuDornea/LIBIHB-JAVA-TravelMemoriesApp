@@ -1,6 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.LIBIHBJAVA" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.LIBIHBJAVA" parent="Theme.Material3.Light.NoActionBar">
+
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -27,7 +28,5 @@
         <item name="colorOutline">@color/md_theme_light_outline</item>
         <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
     </style>
-
-    <style name="Theme.LIBIHBJAVA" parent="Base.Theme.LIBIHBJAVA" />
 </resources>
 

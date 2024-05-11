@@ -159,6 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
                 android:text="@string/_23"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/weather_main_text_view"
                 app:layout_constraintStart_toStartOf="parent"
@@ -168,6 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/degrees"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/weather_temp_text_view"
                 app:layout_constraintTop_toTopOf="@id/weather_temp_text_view" />
 
@@ -195,6 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_30"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ic_wind_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -225,6 +228,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_96"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ic_temp_max_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -233,6 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/degrees"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toEndOf="@id/max_text_view"
                     app:layout_constraintTop_toTopOf="@id/max_text_view" />
 
@@ -252,6 +257,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_96"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ic_temp_min_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -260,6 +266,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/degrees"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toEndOf="@id/min_text_view"
                     app:layout_constraintTop_toTopOf="@id/min_text_view" />
 
@@ -289,6 +296,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_96"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ic_humidity_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -301,6 +309,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
                 android:text="@string/cloudy"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weather_temp_text_view" />
@@ -328,6 +337,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_10_12"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ic_sunrise_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -348,6 +358,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/feels_like"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -358,6 +369,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@string/_23"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/feels_like_text_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -366,6 +378,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/degrees"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toEndOf="@id/feels_like_actual_data_text_view"
                     app:layout_constraintTop_toTopOf="@id/feels_like_actual_data_text_view" />
 

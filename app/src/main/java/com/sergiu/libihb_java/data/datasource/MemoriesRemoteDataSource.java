@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -110,6 +109,31 @@ public class MemoriesRemoteDataSource {
                                 .addOnFailureListener(emitter::onError);
                     } else {
                         Log.e(TAG, "updateTravelMemory: User document not found");
+                    }
+                }).addOnFailureListener(emitter::onError);
+            }
+        });
+    }
+
+    public Completable updateMemoryFavorite(String id, boolean isFavorite) {
+        return Completable.create(emitter -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                DocumentReference userRef = fStore.collection(LIBIHB_USER_PATH_KEY).document(currentUser.getUid());
+                userRef.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
+                        memoriesRef.whereEqualTo(ID_KEY, id)
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    DocumentSnapshot snapshot = queryDocumentSnapshots.getDocuments().get(0);
+                                    snapshot.getReference().update("favorite", isFavorite)
+                                            .addOnSuccessListener(aVoid -> emitter.onComplete())
+                                            .addOnFailureListener(emitter::onError);
+                                })
+                                .addOnFailureListener(emitter::onError);
+                    } else {
+                        Log.e(TAG, "updateMemoryFavorite: User document not found");
                     }
                 }).addOnFailureListener(emitter::onError);
             }

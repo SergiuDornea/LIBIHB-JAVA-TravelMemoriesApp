@@ -3,9 +3,7 @@ package com.sergiu.libihb_java.presentation.activity;
 import static com.sergiu.libihb_java.presentation.utils.Constants.FAIL;
 import static com.sergiu.libihb_java.presentation.utils.Constants.SUCCESS;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -23,7 +21,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class MainViewModel extends ViewModel {
-    private static final String TAG = MainViewModel.class.getSimpleName();
     private final AuthRepository authRepository;
     private final MemoriesRepository memoriesRepository;
     private final MutableLiveData<UploadProfileImageEvent> uploadProfileImageEvent = new MutableLiveData<>();
@@ -38,31 +35,24 @@ public class MainViewModel extends ViewModel {
         return uploadProfileImageEvent;
     }
 
-    @SuppressLint("CheckResult")
     public void logOut() {
         Completable completableResetUserData = memoriesRepository.resetUserData();
         Completable completableLogout = authRepository.writeIsLoggedIn(false);
         Completable.mergeArray(completableResetUserData, completableLogout).
                 subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    Log.d(TAG, "Reset user data completed successfully");
-                }, error -> {
-                    Log.e(TAG, "Error resetting user data: " + error.getMessage());
-                });
+                .subscribe();
     }
 
     public void uploadProfileImage(Uri imgUri) {
         authRepository.uploadProfileImage(imgUri, new AuthRepository.UpdateProfilePictureCallback() {
             @Override
             public void onSuccess() {
-                Log.d(TAG, "onSuccess: ");
                 uploadProfileImageEvent.postValue(new UploadProfileImageEvent(SUCCESS));
             }
 
             @Override
             public void onFailure() {
-                Log.d(TAG, "onFailure");
                 uploadProfileImageEvent.postValue(new UploadProfileImageEvent(FAIL));
             }
         });

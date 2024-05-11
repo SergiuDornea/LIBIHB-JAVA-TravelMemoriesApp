@@ -49,14 +49,6 @@ public class HomeViewModel extends ViewModel {
         getDiscoverNumberOfTileSetting();
     }
 
-    @SuppressLint("CheckResult")
-    public void observeDiscoverableMountains() {
-        mountainRepository.getAllMountains()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mountainsLiveData::setValue);
-    }
-
     public LiveData<List<TravelMemory>> getMemoriesLiveData() {
         return memoriesLiveData;
     }
@@ -75,6 +67,14 @@ public class HomeViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread());
         flowable.subscribe();
         return LiveDataReactiveStreams.fromPublisher(flowable);
+    }
+
+    @SuppressLint("CheckResult")
+    public void observeDiscoverableMountains() {
+        mountainRepository.getAllMountains()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mountainsLiveData::setValue);
     }
 
     @SuppressLint("CheckResult")

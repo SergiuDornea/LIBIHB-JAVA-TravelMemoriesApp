@@ -49,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/md_theme_light_onPrimary"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_drawer" />
 
