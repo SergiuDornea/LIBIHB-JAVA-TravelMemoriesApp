@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.presentation.activity;
 import static com.sergiu.libihb_java.presentation.utils.Constants.FAIL;
 import static com.sergiu.libihb_java.presentation.utils.Constants.SUCCESS;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.util.Log;
 
@@ -16,7 +17,9 @@ import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class MainViewModel extends ViewModel {
@@ -35,10 +38,18 @@ public class MainViewModel extends ViewModel {
         return uploadProfileImageEvent;
     }
 
-    public Completable logOut() {
+    @SuppressLint("CheckResult")
+    public void logOut() {
         Completable completableResetUserData = memoriesRepository.resetUserData();
         Completable completableLogout = authRepository.writeIsLoggedIn(false);
-        return Completable.mergeArray(completableResetUserData, completableLogout);
+        Completable.mergeArray(completableResetUserData, completableLogout).
+                subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    Log.d(TAG, "Reset user data completed successfully");
+                }, error -> {
+                    Log.e(TAG, "Error resetting user data: " + error.getMessage());
+                });
     }
 
     public void uploadProfileImage(Uri imgUri) {

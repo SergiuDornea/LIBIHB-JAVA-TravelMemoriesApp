@@ -58,7 +58,7 @@
     <string name="email_is_already_used">User email or phone already exists</string>
     <string name="not_complex_password">The password must include: lowercase and uppercase letters, digits, no white spaces</string>
     <string name="input_is_blank_name">The name can\'t be empty</string>
-    <string name="does_not_match_required_type_name">The phone name is not valid</string>
+    <string name="does_not_match_required_type_name">The name must be longer</string>
     <string name="input_is_blank_email">The email can\'t be empty</string>
     <string name="does_not_match_required_type_email">The email is not valid</string>
     <string name="app_logo">App logo</string>

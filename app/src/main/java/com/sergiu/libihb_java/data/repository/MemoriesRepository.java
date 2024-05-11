@@ -320,7 +320,9 @@ public class MemoriesRepository {
 
     public Completable resetUserData() {
         Log.d(TAG, "resetUserData: enter");
-        Completable completableDeleteAll = dao.deleteAll();
+        Completable completableDeleteAll = dao.deleteAll()
+                .doOnError(error -> Log.e(TAG, "Error deleting all memories: " + error.getMessage()))
+                .doOnComplete(() -> Log.d(TAG, "All memories deleted successfully"));
         Completable completableResetUserData = diskDataStore.resetUserDataValues();
         return Completable.mergeArray(completableDeleteAll, completableResetUserData);
     }
@@ -347,6 +349,7 @@ public class MemoriesRepository {
                     });
                 });
     }
+
 
     public Completable deleteTravelMemory(TravelMemory travelMemory) {
         return Completable.defer(() -> {
@@ -412,9 +415,11 @@ public class MemoriesRepository {
 
     private void updateLocalData(List<TravelMemory> memoryList) {
         diskDataStore.writeMemoriesExpireDate();
-        dao.deleteAll();
         for (TravelMemory memory : memoryList) {
-            dao.insertTravelMemory(memory);
+            dao.insertTravelMemory(memory)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe();
         }
     }
 
