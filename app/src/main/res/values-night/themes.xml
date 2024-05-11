@@ -1,36 +1,31 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.LIBIHBJAVA" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-<!--        <item name="primary">@color/dark_primary</item>-->
-<!--        <item name="onPrimary">@color/dark_on_primary</item>-->
-<!--        <item name="primaryContainer">@color/dark_primary_container</item>-->
-<!--        <item name="onPrimaryContainer">@color/dark_on_primary_container</item>-->
-<!--        <item name="secondary">@color/dark_secondary</item>-->
-<!--        <item name="onSecondary">@color/dark_on_secondary</item>-->
-<!--        <item name="secondaryContainer">@color/dark_secondary_container</item>-->
-<!--        <item name="onSecondaryContainer">@color/dark_on_secondary_container</item>-->
-<!--        <item name="tertiary">@color/dark_tertiary</item>-->
-<!--        <item name="onTertiary">@color/dark_on_tertiary</item>-->
-<!--        <item name="tertiaryContainer">@color/dark_tertiary_container</item>-->
-<!--        <item name="onTertiaryContainer">@color/dark_on_tertiary_container</item>-->
-<!--        <item name="error">@color/dark_error</item>-->
-<!--        <item name="errorContainer">@color/dark_error_container</item>-->
-<!--        <item name="onError">@color/dark_on_error</item>-->
-<!--        <item name="onErrorContainer">@color/dark_on_error_container</item>-->
-<!--        <item name="background">@color/dark_background</item>-->
-<!--        <item name="onBackground">@color/dark_on_background</item>-->
-<!--        <item name="surface">@color/dark_surface</item>-->
-<!--        <item name="onSurface">@color/dark_on_surface</item>-->
-<!--        <item name="surfaceVariant">@color/dark_surface_variant</item>-->
-<!--        <item name="onSurfaceVariant">@color/dark_on_surface_variant</item>-->
-<!--        <item name="outline">@color/dark_outline</item>-->
-<!--        <item name="inverseOnSurface">@color/dark_inverse_on_surface</item>-->
-<!--        <item name="inverseSurface">@color/dark_inverse_surface</item>-->
-<!--        <item name="inversePrimary">@color/dark_inverse_primary</item>-->
-<!--        <item name="surfaceTint">@color/dark_surface_tint</item>-->
-<!--        <item name="outlineVariant">@color/dark_outline_variant</item>-->
-<!--        <item name="scrim">@color/dark_scrim</item>-->
+        Customize your dark theme here.
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:windowBackground">@color/md_theme_light_background</item>
+        <item name="android:colorBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
 
     </style>
 </resources>

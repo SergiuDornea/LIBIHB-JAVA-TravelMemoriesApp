@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LIBIHBJAVA"
+        android:theme="@style/Base.Theme.LIBIHBJAVA"
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
