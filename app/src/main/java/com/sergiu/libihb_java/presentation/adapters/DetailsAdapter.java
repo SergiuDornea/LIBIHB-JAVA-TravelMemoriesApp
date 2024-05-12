@@ -23,6 +23,10 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsC
         this.onItemClickListener = onItemClickListener;
     }
 
+    public List<String> getImgUriList() {
+        return imgUriList;
+    }
+
     @NonNull
     @Override
     public DetailsCarouselViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

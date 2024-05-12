@@ -40,6 +40,7 @@ import com.sergiu.libihb_java.domain.model.weather.CurrentWeather;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 import com.sergiu.libihb_java.presentation.adapters.DetailsAdapter;
 import com.sergiu.libihb_java.presentation.fragment.edit.EditFragment;
+import com.sergiu.libihb_java.presentation.fragment.zoomedimage.ZoomedImageDialogFragment;
 
 import java.util.Objects;
 
@@ -202,6 +203,9 @@ public class DetailsFragment extends Fragment {
     }
 
     private void zoomClickedPictureIn(int position) {
+        String clickedImageUri = detailsCarouselAdapter.getImgUriList().get(position);
+        ZoomedImageDialogFragment fullScreenImageDialog = ZoomedImageDialogFragment.newInstance(clickedImageUri);
+        fullScreenImageDialog.show(getChildFragmentManager(), "ZoomedImageDialogFragment");
     }
 
     private void showDeleteAlertDialog() {
