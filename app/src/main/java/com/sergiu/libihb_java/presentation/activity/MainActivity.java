@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View headerView;
     private TextView chooseProfileImgTextView;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
+    private final NavController.OnDestinationChangedListener destinationChangeListener =
+            (navController, destination, arguments) -> setAnimationOnFirstLaunch(destination.getId());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
         navController = navHostFragment.getNavController();
+        navController.addOnDestinationChangedListener(destinationChangeListener);
 
         NavigationView navigationView = binding.navView;
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, binding.toolbar, R.string.nav_open, R.string.nav_close);
@@ -196,6 +201,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setAnimationOnFirstLaunch(int destinationId) {
+        if (destinationId == R.id.mainFragment && viewModel.isFirstLaunch()) {
+            slideToolbarAnimation();
+            viewModel.setFirstLaunch(false);
+        }
+    }
+
+    private void slideToolbarAnimation() {
+        TranslateAnimation slideInRight = new TranslateAnimation(
+                Animation.RELATIVE_TO_PARENT, 1.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f
+        );
+        slideInRight.setDuration(700);
+        binding.toolbar.startAnimation(slideInRight);
     }
 
     private void setOnBackPressedCallback() {

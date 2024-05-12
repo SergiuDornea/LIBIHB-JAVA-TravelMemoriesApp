@@ -10,21 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.sergiu.libihb_java.R;
+import com.sergiu.libihb_java.databinding.FragmentSplashBinding;
 import com.sergiu.libihb_java.presentation.activity.MainActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
-
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 public class SplashScreen extends Fragment {
     private SplashViewModel viewModel;
+    private FragmentSplashBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,16 +35,16 @@ public class SplashScreen extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_splash, container, false);
+        binding = FragmentSplashBinding.inflate(inflater, container, false);
         disableNavDrawerAnAppBar();
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (view != null && view.getContext() != null) {
-                navigateAccordingToUserSession(view);
+            if (binding.getRoot().getContext() != null) {
+                navigateAccordingToUserSession(binding.getRoot());
             }
         }, 1500);
-        return view;
+        return binding.getRoot();
     }
 
     public void navigateAccordingToUserSession(View view) {
@@ -62,7 +64,6 @@ public class SplashScreen extends Fragment {
                 .setPopEnterAnim(R.anim.slide_in_from_left)
                 .setPopExitAnim(R.anim.slide_out_to_right)
                 .build();
-
         findNavController(view).navigate(destination, null, navOptions);
     }
 

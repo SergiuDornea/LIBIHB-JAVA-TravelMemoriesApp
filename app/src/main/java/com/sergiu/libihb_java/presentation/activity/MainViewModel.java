@@ -21,6 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class MainViewModel extends ViewModel {
+    private boolean isFirstLaunch = true;
     private final AuthRepository authRepository;
     private final MemoriesRepository memoriesRepository;
     private final MutableLiveData<UploadProfileImageEvent> uploadProfileImageEvent = new MutableLiveData<>();
@@ -33,6 +34,14 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<UploadProfileImageEvent> getUploadProfileImageEvent() {
         return uploadProfileImageEvent;
+    }
+
+    public boolean isFirstLaunch() {
+        return isFirstLaunch;
+    }
+
+    public void setFirstLaunch(boolean firstLaunch) {
+        isFirstLaunch = firstLaunch;
     }
 
     public void logOut() {
