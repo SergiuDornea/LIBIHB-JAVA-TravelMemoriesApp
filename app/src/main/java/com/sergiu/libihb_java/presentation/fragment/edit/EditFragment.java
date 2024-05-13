@@ -99,6 +99,7 @@ public class EditFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(EditFragment.this);
+        editAdapter = new EditAdapter();
         initializeMap();
         setToolbar();
         setObservers();
@@ -165,7 +166,6 @@ public class EditFragment extends Fragment {
     }
 
     private void setListeners() {
-        editAdapter = new EditAdapter(position -> editAdapter.removeImgUriFromList(position));
         binding.choosePhotosEditMaterialButton.setOnClickListener(view -> choosePhotosFromGallery());
         setChooseADate();
         setSearchBar();

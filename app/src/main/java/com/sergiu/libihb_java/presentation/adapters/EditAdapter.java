@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -18,18 +17,13 @@ import java.util.List;
 
 public class EditAdapter extends RecyclerView.Adapter<EditAdapter.MemoryEditViewHolder> {
     private final List<String> imgUriList = new ArrayList<>();
-    private final OnDeleteClickListener onDeleteClickListener;
-
-    public EditAdapter(OnDeleteClickListener onDeleteClickListener) {
-        this.onDeleteClickListener = onDeleteClickListener;
-    }
 
     @NonNull
     @Override
     public MemoryEditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_edit, parent, false);
-        return new EditAdapter.MemoryEditViewHolder(view, onDeleteClickListener);
+        return new EditAdapter.MemoryEditViewHolder(view);
     }
 
     @Override
@@ -48,20 +42,9 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.MemoryEditView
     public static class MemoryEditViewHolder extends RecyclerView.ViewHolder {
         private final ImageView memoryImage;
 
-        public MemoryEditViewHolder(@NonNull View itemView, OnDeleteClickListener onClickListener) {
+        public MemoryEditViewHolder(@NonNull View itemView) {
             super(itemView);
             this.memoryImage = itemView.findViewById(R.id.photo_image_edit);
-            ImageButton removeButton = itemView.findViewById(R.id.delete_image_button_edit);
-
-
-            removeButton.setOnClickListener(view -> {
-                if (onClickListener != null) {
-                    int currentPosition = getAdapterPosition();
-                    if (currentPosition != RecyclerView.NO_POSITION) {
-                        onClickListener.onDeleteClick(currentPosition);
-                    }
-                }
-            });
         }
 
         public void bind(String imgUri) {
@@ -78,14 +61,5 @@ public class EditAdapter extends RecyclerView.Adapter<EditAdapter.MemoryEditView
         this.imgUriList.clear();
         this.imgUriList.addAll(imgUriList);
         notifyDataSetChanged();
-    }
-
-    public void removeImgUriFromList(int position) {
-        imgUriList.remove(position);
-        notifyDataSetChanged();
-    }
-
-    public interface OnDeleteClickListener {
-        void onDeleteClick(int position);
     }
 }

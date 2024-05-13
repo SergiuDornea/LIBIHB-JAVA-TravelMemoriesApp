@@ -67,17 +67,13 @@ public class OverviewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(OverviewFragment.this);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_details);
-        setListeners();
+        memoryOverviewAdapter = new OverviewAdapter();
+        binding.saveMemoryMaterialButton.setOnClickListener(v -> viewModel.onEvent(MemoryFormEvent.SubmitClicked));
         setObservers();
     }
 
     public void setNavigateCallback(NavigateCallback navigateCallback) {
         this.navigateCallback = navigateCallback;
-    }
-
-    private void setListeners() {
-        memoryOverviewAdapter = new OverviewAdapter(position -> memoryOverviewAdapter.removeImgUriFromList(position));
-        binding.saveMemoryMaterialButton.setOnClickListener(view -> viewModel.onEvent(MemoryFormEvent.SubmitClicked));
     }
 
     private void setObservers() {
