@@ -4,10 +4,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.sergiu.libihb_java.data.dao.TravelMemoryDao;
+import com.sergiu.libihb_java.data.datasource.EducationRemoteDataSource;
 import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.data.datasource.WeatherRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.data.repository.AuthRepository;
+import com.sergiu.libihb_java.data.repository.EducationRepository;
 import com.sergiu.libihb_java.data.repository.EmergencyRepository;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.data.repository.SettingsRepository;
@@ -54,5 +56,11 @@ public class RepositoryModule {
     @Singleton
     public SettingsRepository provideSettingsRepository(DiskDataStore diskDataStore) {
         return new SettingsRepository(diskDataStore);
+    }
+
+    @Provides
+    @Singleton
+    public EducationRepository provideEducationRepository(DiskDataStore diskDataStore, EducationRemoteDataSource educationRemoteDataSource) {
+        return new EducationRepository(diskDataStore, educationRemoteDataSource);
     }
 }

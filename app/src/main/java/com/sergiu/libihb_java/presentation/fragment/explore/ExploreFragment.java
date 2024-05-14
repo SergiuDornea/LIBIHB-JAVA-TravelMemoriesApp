@@ -25,6 +25,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentExploreBinding;
+import com.sergiu.libihb_java.presentation.adapters.EducationAdapter;
 import com.sergiu.libihb_java.presentation.adapters.ExploreAdapter;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.OverviewFragment;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
@@ -37,6 +38,7 @@ public class ExploreFragment extends Fragment implements OverviewFragment.Naviga
     private NavController navController;
     private FragmentExploreBinding binding;
     private ExploreAdapter exploreAdapter;
+    private EducationAdapter educationAdapter;
     private final MutableLiveData<Integer> position = new MutableLiveData<>(INVALID_POSITION);
 
     @Override
@@ -61,9 +63,10 @@ public class ExploreFragment extends Fragment implements OverviewFragment.Naviga
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         exploreAdapter = new ExploreAdapter();
+        educationAdapter = new EducationAdapter();
         setObservers();
         setToolbar();
-        setUpViewPager();
+        setUpScrollableLists();
     }
 
     @Override
@@ -79,16 +82,17 @@ public class ExploreFragment extends Fragment implements OverviewFragment.Naviga
         viewModel.getDiscoverableMountains().observe(getViewLifecycleOwner(), currentMountainList -> {
             exploreAdapter.updateExploreList(currentMountainList);
             if (position.getValue() != INVALID_POSITION) {
-                binding.viewPagerExplore.post(() -> {
-                    binding.viewPagerExplore.setCurrentItem(position.getValue());
-                });
+                binding.viewPagerExplore.post(() -> binding.viewPagerExplore.setCurrentItem(position.getValue()));
             }
         });
+
+        viewModel.getAllEducationData().observe(getViewLifecycleOwner(), educationList -> educationAdapter.updateMemoryList(educationList));
     }
 
-    private void setUpViewPager() {
+    private void setUpScrollableLists() {
         binding.viewPagerExplore.setAdapter(exploreAdapter);
         binding.viewPagerExplore.setPageTransformer(new ZoomOutFragmentAnimation());
+        binding.educationRecycleView.setAdapter(educationAdapter);
     }
 
     private void setToolbar() {

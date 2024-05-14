@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.explore.ExploreFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/education_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/view_pager_explore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        tools:listitem="@layout/item_education" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_explore"
         android:layout_width="0dp"
@@ -17,9 +30,9 @@
         android:paddingHorizontal="28dp"
         android:paddingVertical="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.9"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHeight_percent="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_recycle_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
