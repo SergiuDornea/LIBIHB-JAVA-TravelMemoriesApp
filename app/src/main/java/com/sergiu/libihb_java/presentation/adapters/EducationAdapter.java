@@ -39,19 +39,19 @@ public class EducationAdapter extends RecyclerView.Adapter<EducationAdapter.Educ
     }
 
     public static class EducationViewHolder extends RecyclerView.ViewHolder {
-        private final TextView title;
+        private final TextView inCaseOfTextView;
 
         public EducationViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.education_in_case_of_text_view);
+            inCaseOfTextView = itemView.findViewById(R.id.title_text_view);
         }
 
-        public void bind(Education education) {
-            title.setText(education.getInCaseOf());
+        private void bind(Education education) {
+            inCaseOfTextView.setText(education.getInCaseOf());
         }
     }
 
-    public void updateMemoryList(List<Education> educationList) {
+    public void updateEducationList(List<Education> educationList) {
         this.educationList.clear();
         this.educationList.addAll(educationList);
         notifyDataSetChanged();

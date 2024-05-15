@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
@@ -29,6 +31,8 @@ import com.sergiu.libihb_java.presentation.adapters.EducationAdapter;
 import com.sergiu.libihb_java.presentation.adapters.ExploreAdapter;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.OverviewFragment;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
+
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -86,13 +90,16 @@ public class ExploreFragment extends Fragment implements OverviewFragment.Naviga
             }
         });
 
-        viewModel.getAllEducationData().observe(getViewLifecycleOwner(), educationList -> educationAdapter.updateMemoryList(educationList));
+        viewModel.getAllEducationData().observe(getViewLifecycleOwner(), educationList -> educationAdapter.updateEducationList(educationList));
     }
 
     private void setUpScrollableLists() {
         binding.viewPagerExplore.setAdapter(exploreAdapter);
         binding.viewPagerExplore.setPageTransformer(new ZoomOutFragmentAnimation());
         binding.educationRecycleView.setAdapter(educationAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.educationRecycleView.getContext(), DividerItemDecoration.HORIZONTAL);
+        dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(binding.educationRecycleView.getContext(), R.drawable.item_divider_horizontal)));
+        binding.educationRecycleView.addItemDecoration(dividerItemDecoration);
     }
 
     private void setToolbar() {

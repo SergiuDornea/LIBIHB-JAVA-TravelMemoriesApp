@@ -184,4 +184,8 @@
     <string name="profile_photo_changed">Profile photo changed</string>
     <string name="profile_photo_changed_fail">Could not change profile photo, try again later</string>
     <string name="profile_photo_changed_error">An error occurred, try again later</string>
+    <string name="in_case_of">In case of:</string>
+    <string name="do_this">Do:</string>
+    <string name="do_not">Do not:</string>
+    <string name="prevent">Prevent:</string>
 </resources>
