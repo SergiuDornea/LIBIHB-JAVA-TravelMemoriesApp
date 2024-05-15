@@ -83,7 +83,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.addFragment.AddFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.addmemory.AddFragment"
         android:label="AddMemory">
         <action
             android:id="@+id/action_addMemory_to_mapsFragment2"
@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.sergiu.libihb_java.presentation.fragment.overviewFragment.OverviewFragment"
+        android:name="com.sergiu.libihb_java.presentation.fragment.memoryoverview.OverviewFragment"
         android:label="fragment_memory_overview"
         tools:layout="@layout/fragment_overview" />
     <fragment

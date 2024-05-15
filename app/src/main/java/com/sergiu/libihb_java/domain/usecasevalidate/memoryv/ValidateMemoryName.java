@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.domain.usecasevalidate.addMemory;
+package com.sergiu.libihb_java.domain.usecasevalidate.memoryv;
 
 import android.content.Context;
 
@@ -8,11 +8,11 @@ import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
 
 import javax.inject.Inject;
 
-public class ValidateMemoryDescription implements Validate<String> {
+public class ValidateMemoryName implements Validate<String> {
     private final Context context;
 
     @Inject
-    public ValidateMemoryDescription(Context context) {
+    public ValidateMemoryName(Context context) {
         this.context = context;
     }
 
@@ -29,7 +29,7 @@ public class ValidateMemoryDescription implements Validate<String> {
     @Override
     public ValidateResult validate(String inputType) {
         if (!inputNotBlank(inputType)) {
-            return new ValidateResult(false, context.getString(R.string.input_is_blank_description));
+            return new ValidateResult(false, context.getString(R.string.input_is_blank_title));
         }
         return new ValidateResult(true);
     }

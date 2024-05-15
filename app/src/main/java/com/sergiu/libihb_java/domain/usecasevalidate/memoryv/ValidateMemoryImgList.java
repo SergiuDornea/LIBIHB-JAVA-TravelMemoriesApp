@@ -1,4 +1,4 @@
-package com.sergiu.libihb_java.domain.usecasevalidate.addMemory;
+package com.sergiu.libihb_java.domain.usecasevalidate.memoryv;
 
 import android.content.Context;
 

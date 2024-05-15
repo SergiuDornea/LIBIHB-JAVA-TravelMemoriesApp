@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModel;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
-import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryCoordinates;
-import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryDate;
-import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryDescription;
-import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryImgList;
-import com.sergiu.libihb_java.domain.usecasevalidate.addMemory.ValidateMemoryName;
+import com.sergiu.libihb_java.domain.usecasevalidate.memoryv.ValidateMemoryCoordinates;
+import com.sergiu.libihb_java.domain.usecasevalidate.memoryv.ValidateMemoryDate;
+import com.sergiu.libihb_java.domain.usecasevalidate.memoryv.ValidateMemoryDescription;
+import com.sergiu.libihb_java.domain.usecasevalidate.memoryv.ValidateMemoryImgList;
+import com.sergiu.libihb_java.domain.usecasevalidate.memoryv.ValidateMemoryName;
 import com.sergiu.libihb_java.presentation.events.MemoryFormEvent;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.MemoryFormState;
 
