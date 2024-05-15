@@ -4,7 +4,6 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.EXPLORE_POSITI
 import static com.sergiu.libihb_java.presentation.utils.Constants.INVALID_POSITION;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
@@ -29,15 +27,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 import com.sergiu.libihb_java.databinding.FragmentExploreBinding;
-import com.sergiu.libihb_java.domain.model.Education;
 import com.sergiu.libihb_java.presentation.adapters.EducationAdapter;
 import com.sergiu.libihb_java.presentation.adapters.ExploreAdapter;
 import com.sergiu.libihb_java.presentation.fragment.memoryoverview.OverviewFragment;
 import com.sergiu.libihb_java.presentation.fragment.zoomededucation.ZoomedEducationDialogFragment;
 import com.sergiu.libihb_java.presentation.utils.ZoomOutFragmentAnimation;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -90,7 +85,6 @@ public class ExploreFragment extends Fragment implements OverviewFragment.Naviga
     private void setAdapters() {
         exploreAdapter = new ExploreAdapter();
         educationAdapter = new EducationAdapter(id -> {
-            Log.d("edu", "setAdapters: id " + id);
             if (id != null) {
                 ZoomedEducationDialogFragment dialogFragment = ZoomedEducationDialogFragment.newInstance(id);
                 dialogFragment.show(getChildFragmentManager(), "ZoomedEducationDialogFragment");
@@ -106,9 +100,7 @@ public class ExploreFragment extends Fragment implements OverviewFragment.Naviga
             }
         });
 
-        viewModel.getAllEducationData().observe(getViewLifecycleOwner(), list -> {
-            educationAdapter.updateEducationList(list);
-        });
+        viewModel.getAllEducationData().observe(getViewLifecycleOwner(), list -> educationAdapter.updateEducationList(list));
     }
 
     private void setUpScrollableLists() {

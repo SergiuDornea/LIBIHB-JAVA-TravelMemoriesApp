@@ -2,7 +2,8 @@ package com.sergiu.libihb_java.presentation.events;
 
 public abstract class LoginFormEvent {
 
-    public static final LoginFormEvent LoginClicked = new LoginFormEvent() {};
+    public static final LoginFormEvent LoginClicked = new LoginFormEvent() {
+    };
 
     public static class PasswordChanged extends LoginFormEvent {
         public final String password;

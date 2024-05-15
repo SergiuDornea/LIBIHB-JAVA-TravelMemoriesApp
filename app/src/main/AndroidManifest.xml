@@ -27,7 +27,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDnXo56pkIfuv_IPp5QyG8byZVY0R2r9NQ" />
-
         <activity
             android:name=".presentation.activity.MainActivity"
             android:exported="true"

@@ -46,7 +46,6 @@ public class RegisterViewModel extends ViewModel {
         this.validateName = validateName;
         this.validateRepeatPassword = validateRepeatPassword;
         this.authRepository = authRepository;
-
     }
 
     public LiveData<RegisterFormState> observeFormState() {

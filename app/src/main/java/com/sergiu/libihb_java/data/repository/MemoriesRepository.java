@@ -323,7 +323,6 @@ public class MemoriesRepository {
     }
 
     public Completable updateTravelMemory(TravelMemory travelMemory) {
-        Log.d(TAG, "updateTravelMemory: list size " + travelMemory.getImageList().size());
         return uploadImages(travelMemory.getImageList())
                 .flatMapCompletable(imageUrls -> {
                     travelMemory.setImageList(imageUrls);

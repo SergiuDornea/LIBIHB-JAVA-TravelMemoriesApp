@@ -73,7 +73,7 @@ public class DetailsViewModel extends ViewModel {
 
     @SuppressLint("CheckResult")
     public void loadIsCurrentMemoryInFavorites(String id) {
-        memoriesRepository.isMemoryInFavorites(id)                .distinctUntilChanged()
+        memoriesRepository.isMemoryInFavorites(id).distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isMemoryInFavorites::setValue);

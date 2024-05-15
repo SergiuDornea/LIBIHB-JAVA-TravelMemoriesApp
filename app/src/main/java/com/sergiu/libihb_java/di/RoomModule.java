@@ -19,6 +19,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class RoomModule {
+
     @Provides
     @Singleton
     public DiskDatabase provideMemoriesDatabase(@ApplicationContext Context context) {

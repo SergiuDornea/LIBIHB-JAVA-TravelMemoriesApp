@@ -40,7 +40,6 @@ public class SearchViewModel extends ViewModel {
         return LiveDataReactiveStreams.fromPublisher(flowable);
     }
 
-
     @SuppressLint("CheckResult")
     public void getAllMountains() {
         mountainRepository.getAllMountains()

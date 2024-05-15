@@ -1,8 +1,5 @@
 package com.sergiu.libihb_java.presentation.fragment.edit;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -27,7 +24,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class EditViewModel extends ViewModel {
-    private static final String TAG = EditViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
     private final ValidateMemoryImgList validateMemoryImgList;
     private final ValidateMemoryName validateMemoryName;
@@ -134,7 +130,6 @@ public class EditViewModel extends ViewModel {
         }
     }
 
-    @SuppressLint("CheckResult")
     private void saveEditedMemory() {
         TravelMemory memory = new TravelMemory(
                 formState.getValue().getListOfImgUri(),
@@ -151,8 +146,7 @@ public class EditViewModel extends ViewModel {
         memoriesRepository.updateTravelMemory(memory)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> Log.d(TAG, "saveEditedMemory: edited memory saved "),
-                        throwable -> Log.e(TAG, "Error saving edited memory", throwable));
+                .subscribe();
     }
 
     public static class SaveEditedMemoryClickedEvent {

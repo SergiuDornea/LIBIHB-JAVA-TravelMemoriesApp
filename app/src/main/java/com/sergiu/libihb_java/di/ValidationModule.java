@@ -23,6 +23,7 @@ import dagger.hilt.components.SingletonComponent;
 @Module
 @InstallIn(SingletonComponent.class)
 public class ValidationModule {
+
     @Provides
     public ValidateName provideValidateName(Context context) {
         return new ValidateName(context);

@@ -6,7 +6,6 @@ import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
 public class EmergencyRepository {
@@ -17,8 +16,8 @@ public class EmergencyRepository {
         this.diskDataStore = diskDataStore;
     }
 
-    public Completable writeEmergencyContact(String name, String phone) {
-        return diskDataStore.writeEmergencyContact(name, phone);
+    public void writeEmergencyContact(String name, String phone) {
+        diskDataStore.writeEmergencyContact(name, phone);
     }
 
     public Flowable<Pair<String, String>> getEmergencyContact() {

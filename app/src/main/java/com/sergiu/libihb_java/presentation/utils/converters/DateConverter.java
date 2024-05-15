@@ -18,7 +18,6 @@ public class DateConverter {
             return value == null ? null : sdf.parse(value);
         } catch (ParseException e) {
             e.printStackTrace();
-            // todo change exception handler
             return null;
         }
     }

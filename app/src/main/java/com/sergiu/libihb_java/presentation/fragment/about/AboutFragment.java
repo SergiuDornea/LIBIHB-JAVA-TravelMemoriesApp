@@ -13,6 +13,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.sergiu.libihb_java.R;
 
 public class AboutFragment extends Fragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +23,6 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about, container, false);
     }
 

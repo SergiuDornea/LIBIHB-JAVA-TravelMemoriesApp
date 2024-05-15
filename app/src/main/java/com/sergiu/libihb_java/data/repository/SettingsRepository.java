@@ -4,7 +4,6 @@ import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
 public class SettingsRepository {
@@ -15,16 +14,16 @@ public class SettingsRepository {
         this.diskDataStore = diskDataStore;
     }
 
-    public Completable saveDiscoverNumberTilesSetting(int numberOfTiles) {
-        return diskDataStore.writeDiscoverTitleSetting(numberOfTiles);
+    public void saveDiscoverNumberTilesSetting(int numberOfTiles) {
+        diskDataStore.writeDiscoverTitleSetting(numberOfTiles);
     }
 
     public Flowable<Integer> getDiscoverTitleSetting() {
         return diskDataStore.getDiscoverTitleSetting();
     }
 
-    public Completable saveUnitOfMeasurementSetting(String unit) {
-        return diskDataStore.writeUnitOfMeasurementSetting(unit);
+    public void saveUnitOfMeasurementSetting(String unit) {
+        diskDataStore.writeUnitOfMeasurementSetting(unit);
     }
 
     public Flowable<String> getUnitOfMeasurementSetting() {

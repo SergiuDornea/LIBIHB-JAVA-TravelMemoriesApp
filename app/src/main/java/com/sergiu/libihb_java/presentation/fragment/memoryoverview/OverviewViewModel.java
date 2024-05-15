@@ -7,9 +7,6 @@ import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_DESCRIPT
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_IMG_LIST;
 import static com.sergiu.libihb_java.presentation.utils.Constants.CAUSE_NAME;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -77,7 +74,6 @@ public class OverviewViewModel extends ViewModel {
     }
 
     private void onSubmit() {
-        Log.d(TAG, "onSubmit: Submit button clicked");
         ValidateResult listValid = validateMemoryImgList.validate(formState.getValue().getListOfImgUri());
         ValidateResult memoryNameValid = validateMemoryName.validate(formState.getValue().getMemoryName());
         ValidateResult memoryDescriptionValid = validateMemoryDescription.validate(formState.getValue().getMemoryDescription());
@@ -144,7 +140,6 @@ public class OverviewViewModel extends ViewModel {
         }
     }
 
-    @SuppressLint("CheckResult")
     private void saveMemory() {
         memoriesRepository.insertTravelMemory(
                         new TravelMemory(
@@ -160,8 +155,7 @@ public class OverviewViewModel extends ViewModel {
                         ))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> Log.d(TAG, "saveMemory: memory saved "),
-                        throwable -> Log.e(TAG, "Error saving memory", throwable));
+                .subscribe();
     }
 
     public static class SaveMemoryClickedEvent {

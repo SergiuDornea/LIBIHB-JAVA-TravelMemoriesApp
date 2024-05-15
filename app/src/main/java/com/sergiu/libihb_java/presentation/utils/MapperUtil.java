@@ -2,6 +2,7 @@ package com.sergiu.libihb_java.presentation.utils;
 
 import static com.sergiu.libihb_java.domain.model.mountain.CurrentMountain.CURRENT_EMPTY_MOUNTAIN;
 import static com.sergiu.libihb_java.domain.model.weather.CurrentWeather.CURRENT_EMPTY_WEATHER;
+import static com.sergiu.libihb_java.presentation.utils.Constants.SIMPLE_DATE_FORMAT;
 
 import com.sergiu.libihb_java.domain.model.mountain.CurrentMountain;
 import com.sergiu.libihb_java.domain.model.mountain.Mountain;
@@ -35,7 +36,7 @@ public final class MapperUtil {
     }
 
     private static String getTimeFromInt(int time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.getDefault());
         Date unformattedDate = new Date((long) time * 1000);
         return sdf.format(unformattedDate);
     }

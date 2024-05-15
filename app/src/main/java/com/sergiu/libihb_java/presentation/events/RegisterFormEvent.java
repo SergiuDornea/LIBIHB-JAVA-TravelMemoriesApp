@@ -2,7 +2,8 @@ package com.sergiu.libihb_java.presentation.events;
 
 public abstract class RegisterFormEvent {
 
-    public static final RegisterFormEvent RegisterClicked = new RegisterFormEvent() {};
+    public static final RegisterFormEvent RegisterClicked = new RegisterFormEvent() {
+    };
 
     public static class PasswordChanged extends RegisterFormEvent {
         public final String password;
