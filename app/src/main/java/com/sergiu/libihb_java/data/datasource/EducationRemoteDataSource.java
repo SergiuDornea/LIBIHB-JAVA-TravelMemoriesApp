@@ -1,5 +1,7 @@
 package com.sergiu.libihb_java.data.datasource;
 
+import android.util.Log;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sergiu.libihb_java.domain.model.Education;
@@ -27,6 +29,7 @@ public class EducationRemoteDataSource {
 
         return Single.create(emitter -> storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
             String jsonData = new String(bytes);
+            Log.d("edu", "getEducationData: json data " + jsonData.toString());
             List<Education> list = jsonConversionUtil.fromStringToEducationList(jsonData);
             emitter.onSuccess(list);
         }).addOnFailureListener(emitter::onError));

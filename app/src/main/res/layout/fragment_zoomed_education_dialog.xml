@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/md_theme_light_primary"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/education_label_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/in_case_of"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/education_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/this_field"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/education_label_title_text_view"
+        app:layout_constraintTop_toTopOf="@+id/education_label_title_text_view" />
+
+    <TextView
+        android:id="@+id/education_label_do_actions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/do_this"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_title_text_view" />
+
+    <TextView
+        android:id="@+id/education_do_actions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/this_field"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_label_do_actions_text_view" />
+
+    <TextView
+        android:id="@+id/education_label_do_not_actions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/do_not"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_do_actions_text_view" />
+
+    <TextView
+        android:id="@+id/education_do_not_actions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/this_field"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_label_do_not_actions_text_view" />
+
+    <TextView
+        android:id="@+id/education_label_prevent_actions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/prevent"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_do_not_actions_text_view"
+        app:layout_constraintVertical_bias="0.508" />
+
+    <TextView
+        android:id="@+id/education_prevent_actions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/this_field"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/education_label_prevent_actions_text_view" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

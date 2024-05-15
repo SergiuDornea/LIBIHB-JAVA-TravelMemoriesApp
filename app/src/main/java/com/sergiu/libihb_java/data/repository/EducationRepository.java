@@ -42,6 +42,10 @@ public class EducationRepository {
         }
     }
 
+    public Flowable<Education> getEducationById(String id) {
+        return diskDataStore.getEducationById(id);
+    }
+
     private boolean dataIsExpired(Date date) {
         return new Date().after(date);
     }

@@ -136,7 +136,7 @@
     <string name="location_flag_image">Location flag image</string>
     <string name="first_climber">First climber:</string>
     <string name="first_climbed_in">First climbed in:</string>
-    <string name="explore">Explore</string>
+    <string name="explore">Learn and explore</string>
     <string name="a_backpack_artwork">A backpack artwork</string>
     <string name="sos">SOS</string>
     <string name="enable_sos_system">LIBIHB SOS system</string>
@@ -188,4 +188,5 @@
     <string name="do_this">Do:</string>
     <string name="do_not">Do not:</string>
     <string name="prevent">Prevent:</string>
+    <string name="this_field">This action</string>
 </resources>

@@ -3,6 +3,7 @@ package com.sergiu.libihb_java.data.datastore;
 import static com.sergiu.libihb_java.presentation.utils.Constants.BASE_DISCOVER_TILE_COUNT;
 import static com.sergiu.libihb_java.presentation.utils.Constants.NO_EMERGENCY_CONTACT;
 
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.datastore.preferences.core.MutablePreferences;
@@ -196,6 +197,21 @@ public class DiskDataStore {
                 return new ArrayList<>();
             }
         });
+    }
+
+    public Flowable<Education> getEducationById(String id) {
+        return Flowable.defer(() -> dataStore.data().map(preferences -> {
+            String educationListJson = preferences.get(EDUCATION_LIST_KEY);
+            if (educationListJson != null) {
+                List<Education> educationList = jsonConversionUtil.fromStringToEducationList(educationListJson);
+                for (Education education : educationList) {
+                    if (education.getId().equals(id)) {
+                        return education;
+                    }
+                }
+            }
+            return null;
+        }));
     }
 
     private Long getNextDate(int daysUntilDataExpires) {
