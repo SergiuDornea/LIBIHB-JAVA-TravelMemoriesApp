@@ -87,7 +87,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
             }
             Glide.with(context)
                     .load(currentMountain.getMountainImg())
-                    .placeholder(R.drawable.rimetea)
+                    .placeholder(R.drawable.img_memory_placeholder)
                     .error(R.drawable.i_unavailable_img)
                     .into(backgroundImage);
             mountainId = currentMountain.getId();

@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/a_memory_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/negoiu" />
+        android:src="@drawable/rimetea" />
 
 </com.google.android.material.card.MaterialCardView>

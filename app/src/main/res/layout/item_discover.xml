@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/an_image_of_the_presented_location"
             android:scaleType="centerCrop"
-            android:src="@drawable/rimetea"
+            android:src="@drawable/img_memory_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
             android:background="@color/semiTransparentWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintHeight_percent="0.35"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
@@ -51,7 +51,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:autoSizeTextType="uniform"
+                android:ellipsize="end"
                 android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/mountain_name_text_view"
@@ -75,6 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:autoSizeTextType="uniform"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +86,6 @@
                 tools:text="@sample/mountain.json/altitude" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

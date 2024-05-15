@@ -126,10 +126,12 @@ public class MemoriesRemoteDataSource {
                         memoriesRef.whereEqualTo(ID_KEY, id)
                                 .get()
                                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                                    DocumentSnapshot snapshot = queryDocumentSnapshots.getDocuments().get(0);
-                                    snapshot.getReference().update("favorite", isFavorite)
-                                            .addOnSuccessListener(aVoid -> emitter.onComplete())
-                                            .addOnFailureListener(emitter::onError);
+                                    if (!queryDocumentSnapshots.isEmpty()) {
+                                        DocumentSnapshot snapshot = queryDocumentSnapshots.getDocuments().get(0);
+                                        snapshot.getReference().update("favorite", isFavorite)
+                                                .addOnSuccessListener(aVoid -> emitter.onComplete())
+                                                .addOnFailureListener(emitter::onError);
+                                    }
                                 })
                                 .addOnFailureListener(emitter::onError);
                     } else {

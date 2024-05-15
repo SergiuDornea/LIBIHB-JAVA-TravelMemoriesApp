@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ultraRoundedCorners"
-        tools:src="@drawable/negoiu" />
+        tools:src="@drawable/rimetea" />
 
     <TextView
         android:id="@+id/change_profile_picture_text_view"

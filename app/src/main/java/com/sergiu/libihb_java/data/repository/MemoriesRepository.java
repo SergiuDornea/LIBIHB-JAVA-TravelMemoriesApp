@@ -302,14 +302,12 @@ public class MemoriesRepository {
 
     public Flowable<List<TravelMemory>> getMemories() {
         if (dataIsExpired(diskDataStore.getMemoriesExpireDate())) {
-            Log.d(TAG, "getMemories: REMOTE");
             return memoriesRemoteDataSource.getMemories()
                     .toFlowable()
                     .doOnNext(this::updateLocalData)
                     .doOnError(error -> Log.e(TAG, "getMemories: ERROR", error));
 
         } else {
-            Log.d(TAG, "getMemories: LOCAL");
             return dao.getMemories();
         }
     }

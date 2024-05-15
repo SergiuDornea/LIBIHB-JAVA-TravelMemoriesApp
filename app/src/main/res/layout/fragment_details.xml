@@ -307,11 +307,12 @@
                 android:id="@+id/weather_main_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="24dp"
                 android:text="@string/cloudy"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sunrise_constraint_layout"
                 app:layout_constraintTop_toBottomOf="@+id/weather_temp_text_view" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -320,6 +321,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/feels_like_constraint_layout"
                 app:layout_constraintStart_toEndOf="@id/weather_main_text_view">
 
                 <ImageView
@@ -339,6 +341,7 @@
                     android:text="@string/_10_12"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ic_sunrise_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -348,6 +351,7 @@
                 android:id="@+id/feels_like_constraint_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/sunset_constraint_layout"
                 app:layout_constraintStart_toEndOf="@+id/sunrise_constraint_layout"
@@ -358,7 +362,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/feels_like"
-                    android:textColor="@color/black"
+                    android:textColor="@color/md_theme_light_primary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -397,6 +401,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_20_00"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ic_sunset_image_view"
                     app:layout_constraintTop_toTopOf="parent" />
