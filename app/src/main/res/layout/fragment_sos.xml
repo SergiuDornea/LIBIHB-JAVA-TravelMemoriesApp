@@ -97,7 +97,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emergency_phone_input_text_field_layout"
             android:layout_width="0dp"

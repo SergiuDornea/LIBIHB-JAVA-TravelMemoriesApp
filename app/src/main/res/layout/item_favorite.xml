@@ -101,7 +101,6 @@
                 app:layout_constraintTop_toBottomOf="@id/favorite_location_country"
                 tools:text="@sample/mountain.json/location" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
