@@ -1,7 +1,5 @@
 package com.sergiu.libihb_java.data.repository;
 
-import android.util.Log;
-
 import com.sergiu.libihb_java.data.datasource.EducationRemoteDataSource;
 import com.sergiu.libihb_java.data.datastore.DiskDataStore;
 import com.sergiu.libihb_java.domain.model.Education;
@@ -27,17 +25,12 @@ public class EducationRepository {
 
     public Flowable<List<Education>> getAllEducationData() {
         if (dataIsExpired(diskDataStore.getEducationExpireDate())) {
-        Log.d("rem", "getAllEducationData: REMOTE education");
-        diskDataStore.writeEducationExpireDate();
-        return educationRemoteDataSource.getEducationData()
-                .observeOn(Schedulers.io())
-                .flatMapCompletable(data -> Completable.fromAction(() -> {
-                    Log.d("rem", "getAllEducationData: data " + data.get(0).getInCaseOf());
-                    diskDataStore.writeEducationList(data);
-                }))
-                .andThen(diskDataStore.getEducationList());
+            diskDataStore.writeEducationExpireDate();
+            return educationRemoteDataSource.getEducationData()
+                    .observeOn(Schedulers.io())
+                    .flatMapCompletable(data -> Completable.fromAction(() -> diskDataStore.writeEducationList(data)))
+                    .andThen(diskDataStore.getEducationList());
         } else {
-            Log.d("rem", "getAllEducationData: LOCAL education");
             return diskDataStore.getEducationList();
         }
     }

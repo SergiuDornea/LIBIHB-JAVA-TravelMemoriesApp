@@ -3,7 +3,6 @@ package com.sergiu.libihb_java.presentation.fragment.zoomededucation;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.sergiu.libihb_java.databinding.FragmentZoomedEducationDialogBinding;
-
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -69,24 +66,15 @@ public class ZoomedEducationDialogFragment extends DialogFragment {
 
     private void observeEducationById() {
         viewModel.getEducationById(id).observe(getViewLifecycleOwner(), education -> {
-            Log.d("edu", "observeEducationById: education  in frag " + education.getInCaseOf());
             binding.educationTitleTextView.setText(education.getInCaseOf());
-            binding.educationDoActionsTextView.setText(formatList(education.getDoList()));
-            binding.educationDoNotActionsTextView.setText(formatList(education.getDoNotList()));
-            binding.educationPreventActionsTextView.setText(formatList(education.getPreventList()));
+            binding.educationDoActionsTextView.setText(education.getDoThis());
+            binding.educationDoNotActionsTextView.setText(education.getDoNot());
+            if (education.getPrevent().isEmpty()) {
+                binding.educationLabelPreventActionsTextView.setVisibility(View.GONE);
+            } else {
+                binding.educationPreventActionsTextView.setText(education.getPrevent());
+            }
         });
-    }
-
-
-    private String formatList(List<String> list) {
-        if (list == null) {
-            return "";
-        }
-        StringBuilder builder = new StringBuilder();
-        for (String item : list) {
-            builder.append("• ").append(item).append("\n");
-        }
-        return builder.toString();
     }
 
     @Override

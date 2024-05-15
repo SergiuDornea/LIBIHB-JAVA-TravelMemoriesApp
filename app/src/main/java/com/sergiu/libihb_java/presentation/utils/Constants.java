@@ -14,7 +14,7 @@ public final class Constants {
     public static final String OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org/";
     public static final String OPEN_WEATHER_API_KEY = "091592242ee53d481c498231905b90ca";
     public static final String MOUNTAIN_API_BASE_URL = "https://mountain-api1.p.rapidapi.com/api/mountains/";
-    public static final String MOUNTAIN_API_KEY = "e0a87770c7msh0db957b49c41453p187fb4jsn9951e1b6405b";
+    public static final String MOUNTAIN_API_KEY = "89f5282587mshbd6d6a0869a7cecp12199cjsnf2c06ef6c20a";
     public static final String MOUNTAIN_RAPID_API = "X-RapidAPI-Key";
     public static final String MOUNTAIN_API_HOST = "mountain-api1.p.rapidapi.com";
     public static final String MOUNTAIN_API_HOST_NAME = "X-RapidAPI-Host";
