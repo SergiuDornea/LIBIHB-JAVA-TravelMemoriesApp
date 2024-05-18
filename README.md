@@ -63,11 +63,13 @@ Once the user provides valid input it will be registered using FirebaseAuth and 
 From top to bottom: 
 - Top toolbar containing the screen name and a hamburger button - at on click opens the navigation drawer
 
-![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/eedc74e6-bb64-4602-a6d8-3669c9d6152b)
+![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/43b339c9-1f52-493a-b2e7-f1cb6e9f28dd)
+
 
 - "Discover new places" section (details bellow) - a scrollable horizontal list
 
-[discover_new_places_slide.webm](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/2250c614-eb8f-49d0-a117-9f23e2b11108)
+[discover_new_places_slide.webm](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/2250c614-eb8f-49d0-a117-9f23e2b11108)   ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/cbbe54ff-c55e-46b5-8ce1-cfdffe5bb535)
+
 
 When an item is clicked the user is redirected to DiscoverScreen:
 
