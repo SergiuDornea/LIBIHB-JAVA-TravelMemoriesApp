@@ -49,6 +49,10 @@ public class HomeViewModel extends ViewModel {
         getDiscoverNumberOfTileSetting();
     }
 
+    public void resetForm() {
+        memoriesRepository.resetFormState();
+    }
+
     public LiveData<List<TravelMemory>> getMemoriesLiveData() {
         return memoriesLiveData;
     }
