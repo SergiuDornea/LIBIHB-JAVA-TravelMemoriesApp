@@ -70,7 +70,10 @@ public class HomeFragment extends Fragment {
     private void setListeners() {
         travelMemoryAdapter = new TravelMemoryAdapter(this::navigateToDetailsWithId);
         discoverAdapter = new DiscoverAdapter(this::navigateToDiscoverWithId);
-        binding.fab.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
+        binding.fab.setOnClickListener(v -> {
+            viewModel.resetForm();
+            navController.navigate(R.id.addMemorySliderFragment);
+        });
         binding.homeAddNewMemoryMaterialButton.setOnClickListener(v -> navController.navigate(R.id.addMemorySliderFragment));
         binding.homeSosMaterialButton.setOnClickListener(v -> navController.navigate(R.id.sosFragment));
         binding.homeExploreMaterialButton.setOnClickListener(v -> navController.navigate(R.id.exploreFragment));

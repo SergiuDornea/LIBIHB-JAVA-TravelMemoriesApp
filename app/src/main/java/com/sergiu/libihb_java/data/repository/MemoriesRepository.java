@@ -33,26 +33,7 @@ public class MemoriesRepository {
     private final MemoriesRemoteDataSource memoriesRemoteDataSource;
     private final DiskDataStore diskDataStore;
     private SubmitCallback submitCallback;
-    private final MutableLiveData<MemoryFormState> formState = new MutableLiveData<>(
-            new MemoryFormState(
-                    new ArrayList<>(),
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0,
-                    0,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            ));
+    private final MutableLiveData<MemoryFormState> formState = getEmptyFormState();
 
     @Inject
     public MemoriesRepository(
@@ -62,6 +43,34 @@ public class MemoriesRepository {
         this.dao = travelMemoryDao;
         this.memoriesRemoteDataSource = memoriesRemoteDataSource;
         this.diskDataStore = diskDataStore;
+    }
+
+    public MutableLiveData<MemoryFormState> getEmptyFormState() {
+        return new MutableLiveData<>(
+                new MemoryFormState(
+                        new ArrayList<>(),
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        0,
+                        0,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                ));
+
+    }
+
+    public void resetFormState() {
+        formState.setValue(getEmptyFormState().getValue());
     }
 
     public void setFormState(MemoryFormState formState) {
