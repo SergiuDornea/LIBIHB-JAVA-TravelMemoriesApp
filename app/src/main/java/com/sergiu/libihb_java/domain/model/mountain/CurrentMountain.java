@@ -25,7 +25,7 @@ public class CurrentMountain {
     private String location;
     @ColumnInfo(name = "first_climber")
     private String firstClimber;
-    @ColumnInfo(name = "first_climber_date")
+    @ColumnInfo(name = "first_climbed_date")
     private String firstClimbedDate;
     @ColumnInfo(name = "mountain_img")
     private String mountainImg;

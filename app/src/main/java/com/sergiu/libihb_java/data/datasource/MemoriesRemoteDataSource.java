@@ -53,7 +53,8 @@ public class MemoriesRemoteDataSource {
                 userRef.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         CollectionReference memoriesRef = userRef.collection(TRAVEL_MEMORIES_KEY);
-                        memoriesRef.add(travelMemory)
+                        DocumentReference memoryRef = memoriesRef.document(travelMemory.getId());
+                        memoryRef.set(travelMemory)
                                 .addOnSuccessListener(documentReference -> emitter.onComplete())
                                 .addOnFailureListener(emitter::onError);
                     } else {
