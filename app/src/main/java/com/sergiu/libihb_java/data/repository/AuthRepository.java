@@ -69,31 +69,31 @@ public class AuthRepository {
     }
 
     public void registerUser(String name, String email, String phone, String password, RegisterCallback callback) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(executor, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                        if (firebaseUser != null) {
-                            String userID = firebaseUser.getUid();
-                            checkPhoneExists(phone, phoneExists -> {
-                                if (phoneExists) {
-                                    Log.d(TAG, "registerUser: PHONE ALREADY EXISTS");
-                                    callback.onEmailOrPhoneAlreadyUsed();
-                                } else {
+        checkPhoneExists(phone, phoneExists -> {
+            if (phoneExists) {
+                Log.d(TAG, "registerUser: PHONE ALREADY EXISTS");
+                callback.onEmailOrPhoneAlreadyUsed();
+            } else {
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(executor, task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                if (firebaseUser != null) {
+                                    String userID = firebaseUser.getUid();
                                     saveUserToFirestore(userID, name, phone, callback);
+                                } else {
+                                    Log.w(TAG, "registerUser: USER IS NULL");
                                 }
-                            });
-                        } else {
-                            Log.w(TAG, "registerUser: USER IS NULL");
-                        }
-                    } else {
-                        Log.e(TAG, "registerUser: FAIL ", task.getException());
-                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            Log.d(TAG, "registerUser: INSTANCE OF FirebaseAuthUserCollisionException");
-                            callback.onEmailOrPhoneAlreadyUsed();
-                        }
-                    }
-                });
+                            } else {
+                                Log.e(TAG, "registerUser: FAIL ", task.getException());
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    Log.d(TAG, "registerUser: INSTANCE OF FirebaseAuthUserCollisionException");
+                                    callback.onEmailOrPhoneAlreadyUsed();
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     public Flowable<User> getCurrentUserData() {
