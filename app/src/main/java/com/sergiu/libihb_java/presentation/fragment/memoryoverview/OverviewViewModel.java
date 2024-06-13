@@ -11,7 +11,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sergiu.libihb_java.data.datasource.MemoriesRemoteDataSource;
 import com.sergiu.libihb_java.data.repository.MemoriesRepository;
 import com.sergiu.libihb_java.domain.model.TravelMemory;
 import com.sergiu.libihb_java.domain.usecasevalidate.ValidateResult;
@@ -32,7 +31,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class OverviewViewModel extends ViewModel {
-    private static final String TAG = OverviewViewModel.class.getSimpleName();
     private final MemoriesRepository memoriesRepository;
     private final MutableLiveData<MemoryFormState> formState;
     private final ValidateMemoryImgList validateMemoryImgList;
@@ -49,8 +47,7 @@ public class OverviewViewModel extends ViewModel {
             ValidateMemoryName validateMemoryName,
             ValidateMemoryDescription validateMemoryDescription,
             ValidateMemoryCoordinates validateMemoryCoordinates,
-            ValidateMemoryDate validateMemoryDate,
-            MemoriesRemoteDataSource memoriesRemoteDataSource) {
+            ValidateMemoryDate validateMemoryDate) {
         this.memoriesRepository = memoriesRepository;
         this.formState = (MutableLiveData<MemoryFormState>) memoriesRepository.getFormState();
         this.validateMemoryImgList = validateMemoryImgList;
