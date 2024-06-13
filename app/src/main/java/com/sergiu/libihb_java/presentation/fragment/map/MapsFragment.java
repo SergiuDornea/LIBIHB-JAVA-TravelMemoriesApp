@@ -83,7 +83,7 @@ public class MapsFragment extends Fragment {
 
                 Geocoder geocoder = new Geocoder(requireContext());
                 try {
-                    addressList = geocoder.getFromLocationName(location, 1);
+                    addressList = geocoder.getFromLocationName(location, 3);
                 } catch (Exception e) {
                     Log.e(TAG, "onQueryTextSubmit: " + e);
                 }
