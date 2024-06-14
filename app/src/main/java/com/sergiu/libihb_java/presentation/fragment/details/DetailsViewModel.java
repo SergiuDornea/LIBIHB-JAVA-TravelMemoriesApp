@@ -80,11 +80,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public void toggleFavoriteIcon(String id) {
-        updateIsFavorite(id, Boolean.FALSE.equals(isMemoryInFavorites.getValue()));
-    }
-
-    private void updateIsFavorite(String id, boolean isFavorite) {
-        memoriesRepository.updateIsFavorite(id, isFavorite)
+        memoriesRepository.updateIsFavorite(id, Boolean.FALSE.equals(isMemoryInFavorites.getValue()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
