@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="@string/select_the_number_of_recomended_places_to_discover"
+            android:text="@string/select_the_number_of_recommended_places_to_discover"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/settings_number_of_discover_tiles_slider"
             app:layout_constraintEnd_toEndOf="parent"
