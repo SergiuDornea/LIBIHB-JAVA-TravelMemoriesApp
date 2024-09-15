@@ -34,6 +34,14 @@ Additionally, the details screen should display the following information: • W
 
 Authentication with Firebase 🔥 and data persistence with ROOM.
 
+Use Case diagram: 
+
+![usecasev4](https://github.com/user-attachments/assets/faa1aff9-31c2-44da-848e-d2d9b7e0abda)
+
+Deployment diagram:
+
+![deploymentv2](https://github.com/user-attachments/assets/227ea81a-c8d4-492a-8c19-f258d6a21421)
+
 Splash Screen:
 
 ![image](https://github.com/SergiuDornea/LIBIHB-JAVA-TravelMemoriesApp/assets/88648596/eecb94ea-4d4b-4e61-8585-98752770f937)
